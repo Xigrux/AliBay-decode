@@ -23,24 +23,26 @@ let signup = (req, res, dbo) => {
     console.log("Before dbo call");
     dbo
       .collection(signupType)
-      .insertOne({ username, password, email, region, cart: [] }), (
-      err,
-      user
-    ) => {
-      if (err) {
-        console.log("error", err);
-      }
-      res.send({ success: true });
-    };
+      .insertOne({ username, password, email, region, cart: [] }),
+      (err, user) => {
+        if (err) {
+          console.log("error", err);
+        }
+        res.send({ success: true });
+      };
   });
 };
 
 let login = (req, res, dbo) => {
+  console.log("Login hit");
+
   //loginType is either "users" or "merchants"
-  let loginType = req.body.signupType;
+  let signupType = req.body.signupType;
   let username = req.body.username;
   let enteredPassword = req.body.password;
-  dbo.collection(signupType).findOne({ username }), (err, user) => {
+  console.log("credentials", signupType, username, enteredPassword);
+
+  dbo.collection(signupType).findOne({ username }, (err, user) => {
     if (err) {
       //if database returns error, login process ends here
       console.log("There was an error at login: ", err);
@@ -51,14 +53,18 @@ let login = (req, res, dbo) => {
       return res.send(JSON.stringify({ success: false, err }));
     }
     if (user.password === enteredPassword) {
+      console.log("LOGIN SUCCESS******");
+
       //password match. login success. generate session ID
       let sid = generateSID();
       dbo.collection("cookies").insertOne({ username, sid });
       return res.send(JSON.stringify({ success: true }));
     }
     //default: no login
+    console.log("DEFAULT RESPONSE");
+
     res.send(JSON.stringify({ success: false }));
-  };
+  });
 };
 
 let usernameTaken = () => {

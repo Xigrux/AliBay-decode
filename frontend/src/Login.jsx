@@ -6,20 +6,21 @@ class UnconnectedLogin extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      signupType: ""
     };
   }
-
-  componentDidMount = () => {
-    let autoLogin = async () => {
-      console.log("auto-login hit");
-      await fetch("/autologin", {
-        method: "POST"
-      });
-      this.props.dispatch({ type: "login-success" });
-    };
-    autoLogin();
-  };
+  // UNCOMMENT WHEN ENDPOINT IS ACTIVE
+  // componentDidMount = () => {
+  //   let autoLogin = async () => {
+  //     console.log("auto-login hit");
+  //     await fetch("/autologin", {
+  //       method: "POST"
+  //     });
+  //     this.props.dispatch({ type: "login-success" });
+  //   };
+  //   autoLogin();
+  // };
 
   handleUsernameChange = event => {
     console.log("new login username", event.target.value);
@@ -31,12 +32,18 @@ class UnconnectedLogin extends Component {
     this.setState({ password: event.target.value });
   };
 
+  handleSignupType = event => {
+    console.log("login type? ", event.target.value);
+    this.setState({ signupType: event.target.value });
+  };
+
   handleSubmit = async event => {
     event.preventDefault();
     console.log("login form submitted");
     let data = new FormData();
     data.append("username", this.state.username);
     data.append("password", this.state.password);
+    data.append("signupType", this.state.signupType);
     let response = await fetch("/login", {
       method: "POST",
       body: data,
@@ -61,6 +68,20 @@ class UnconnectedLogin extends Component {
         <input type="text" onChange={this.handleUsernameChange} />
         Password
         <input type="text" onChange={this.handlePasswordChange} />
+        User account
+        <input
+          type="radio"
+          onChange={this.handleSignupType}
+          value="users"
+          name="account-type"
+        />
+        Merchant account
+        <input
+          type="radio"
+          onChange={this.handleSignupType}
+          value="merchants"
+          name="account-type"
+        />
         <input type="submit" />
       </form>
     );

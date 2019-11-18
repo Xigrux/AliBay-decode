@@ -8,7 +8,7 @@ class UnconnectedSignup extends Component {
       username: "",
       email: "",
       password: "",
-      isMerchant: false
+      signupType: ""
     };
   }
 
@@ -28,8 +28,8 @@ class UnconnectedSignup extends Component {
   };
 
   handleSignupType = event => {
-    console.log("is merchant? ", event.target.checked);
-    this.setState({ isMerchant: event.target.checked });
+    console.log("signup type? ", event.target.value);
+    this.setState({ signupType: event.target.value });
   };
 
   handleSubmit = async event => {
@@ -39,11 +39,7 @@ class UnconnectedSignup extends Component {
     data.append("username", this.state.username);
     data.append("email", this.state.email);
     data.append("password", this.state.password);
-    if (this.state.isMerchant) {
-      data.append("signupType", "merchants");
-    } else if (!this.state.isMerchant) {
-      data.append("signupType", "users");
-    }
+    data.append("signupType", this.state.signupType);
     let response = await fetch("/signup", {
       method: "POST",
       body: data,
@@ -69,8 +65,20 @@ class UnconnectedSignup extends Component {
         <input type="email" onChange={this.handleEmailChange} required />
         Password
         <input type="text" onChange={this.handlePasswordChange} />
+        User account
+        <input
+          type="radio"
+          onChange={this.handleSignupType}
+          value="users"
+          name="account-type"
+        />
         Merchant account
-        <input type="checkbox" onChange={this.handleSignupType} />
+        <input
+          type="radio"
+          onChange={this.handleSignupType}
+          value="merchants"
+          name="account-type"
+        />
         <input type="submit" />
       </form>
     );
