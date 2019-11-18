@@ -25,8 +25,8 @@ class UnconnectedApp extends Component {
     return (
       <div>
         Homepage route Testing
-        <Link to="/login">Login Button</Link>;
-        <Link to="/signup">Sign up Button</Link>
+        <Link to="/login">Login Button - </Link>
+        <Link to="/signup">Sign up Button - </Link>
         <Link to="/cart">Cart Button</Link>
       </div>
     );
@@ -61,7 +61,7 @@ class UnconnectedApp extends Component {
       <>
         <BrowserRouter>
           <div>
-            <Route path="/homepage" exact={true} render={this.renderHomepage} />
+            <Route path="/" exact={true} render={this.renderHomepage} />
             <Route path="/login" exact={true} render={this.renderLogin} />
             <Route path="/signup" exact={true} render={this.renderSignup} />
             <Route path="/cart" exact={true} render={this.renderCart} />
@@ -80,6 +80,7 @@ class UnconnectedApp extends Component {
               exact={true}
               render={this.renderMerchantDash}
             />
+            --
             {this.props.test}, {this.state.backend}
             <Link to="/homepage">Back to homepage</Link>
           </div>
