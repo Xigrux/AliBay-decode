@@ -7,7 +7,8 @@ let reducer = (state, action) => {
 
 // PLEASE POPULATE THE INITIAL STORE STATE SEPERATLY
 let initialState = {
-  test: "Store connected"
+  test: "Store connected",
+  loggedIn: true
 };
 
 let store = createStore(

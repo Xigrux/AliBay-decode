@@ -1,6 +1,7 @@
 // PLEASE IMPORT ALL AT THE TOP
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Navbar from "./Navbar.jsx";
 
 //COMPONENT DECLARATION
 class app extends Component {
@@ -24,6 +25,8 @@ class app extends Component {
   render() {
     return (
       <>
+        Navbar!:
+        <Navbar></Navbar>
         {this.props.test}, {this.state.backend}
       </>
     );
