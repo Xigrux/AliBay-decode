@@ -13,7 +13,7 @@ class app extends Component {
 
   componentDidMount = async () => {
     // fetch test string from explicit endpoint
-    let response = await fetch("http://localhost:4000/test");
+    let response = await fetch("/test");
     let test = await response.text();
     // update state's backend property
     this.setState({ backend: test });
