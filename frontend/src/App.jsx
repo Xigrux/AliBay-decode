@@ -16,7 +16,7 @@ class app extends Component {
     // fetch test string from /test GET endpoint
     let response = await fetch("/test");
     let test = await response.text();
-
+    fdsafjsdlfjl;
     // fetch test string from /textdb GET endpoint
     let responsedb = await fetch("/testdb");
     // parsing the array and only storing the test first obj
