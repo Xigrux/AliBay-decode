@@ -40,9 +40,9 @@ class UnconnectedSignup extends Component {
     data.append("email", this.state.email);
     data.append("password", this.state.password);
     if (this.state.isMerchant) {
-      data.append("signupType", "merchant");
+      data.append("signupType", "merchants");
     } else if (!this.state.isMerchant) {
-      data.append("signupType", "user");
+      data.append("signupType", "users");
     }
     let response = await fetch("/signup", {
       method: "POST",
