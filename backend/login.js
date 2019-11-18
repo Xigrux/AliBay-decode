@@ -2,6 +2,7 @@ let signup = (req, res, dbo) => {
   //signupType is either "users" or "merchants"
   let signupType = req.body.signupType;
   console.log("signupType: ", signupType);
+
   let username = req.body.username;
   let password = req.body.password;
   let email = req.body.email;
@@ -13,6 +14,7 @@ let signup = (req, res, dbo) => {
       console.log("There was an error at signup: ", err);
       return res.send(JSON.stringify({ success: false, err }));
     }
+
     if (user !== null) {
       //if there is not already a user with that name, return err false
       return res.send(JSON.stringify({ success: false, err }));
