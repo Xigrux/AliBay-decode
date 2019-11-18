@@ -42,7 +42,7 @@ app.post("/signup", upload.none(), (req, res) => {
       console.log("There was an error at signup: ", err);
       return res.send(JSON.stringify({ success: false, err }));
     }
-    if (user === null) {
+    if (user !== null) {
       //if there is not already a user with that name, return err false
       return res.send(JSON.stringify({ success: false, err }));
     }
