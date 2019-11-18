@@ -1,9 +1,10 @@
 // PLEASE IMPORT ALL AT THE TOP
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 //COMPONENT DECLARATION
-class app extends Component {
+class UnconnectedApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,11 +21,53 @@ class app extends Component {
     // update state's properties
     this.setState({ backend: test });
   };
-
+  renderHomepage = () => {
+    return <div>Homepage route Testing</div>;
+    //Will return the the Banner, Featured products and the CategoryMenu Components
+  };
+  renderCart = () => {
+    return <div>Render Cart Testing</div>;
+    //will list each of the products added to the cart
+  };
+  renderProduct = routerData => {
+    let id = routerData.match.params.productId;
+    return (
+      <div>
+        Product page route test : <i>{id}</i>
+      </div>
+    );
+  };
+  renderUserDashboard = () => {
+    return <b>User dashboard route test</b>;
+  };
+  renderMerchantDash = () => {
+    return <i>merchant dashboard route test</i>;
+  };
   render() {
     return (
       <>
-        {this.props.test}, {this.state.backend}
+        <BrowserRouter>
+          <div>
+            <Route path="/homepage" exact={true} render={this.renderHomepage} />
+            <Route path="/cart" exact={true} render={this.renderCart} />
+            <Route
+              path="/product/:productId"
+              exact={true}
+              render={this.renderProduct}
+            />
+            <Route
+              path="/user-dashboard"
+              exact={true}
+              render={this.renderUserDashboard}
+            />
+            <Route
+              path="/merchant-dashboard"
+              exact={true}
+              render={this.renderMerchantDash}
+            />
+            {this.props.test}, {this.state.backend}
+          </div>
+        </BrowserRouter>
       </>
     );
   }
@@ -35,6 +78,6 @@ class app extends Component {
 let propList = parentState => {
   return { test: parentState.test };
 };
-let App = connect(propList)(app);
+let App = connect(propList)(UnconnectedApp);
 
 export default App;
