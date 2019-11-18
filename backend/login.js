@@ -20,10 +20,18 @@ let signup = (req, res, dbo) => {
       return res.send(JSON.stringify({ success: false, err }));
     }
     //if all goes well, user, pw and email are added to db
+    console.log("Before dbo call");
     dbo
       .collection(signupType)
-      .insertOne({ username, password, email, region, cart: [] });
-    res.send({ success: true });
+      .insertOne({ username, password, email, region, cart: [] }), (
+      err,
+      user
+    ) => {
+      if (err) {
+        console.log("error", err);
+      }
+      res.send({ success: true });
+    };
   });
 };
 

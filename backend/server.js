@@ -24,7 +24,7 @@ let url =
 app.use("/", express.static("build"));
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
-  dbo = db.db("alibay");
+  dbo = db.db("AliBay");
 });
 
 //=============================== GET ENDPOINTS ===============================//
