@@ -1,4 +1,5 @@
-let signup = () => {
+let signup = (req, res, dbo) => {
+  console.log("inside");
   //signupType is either "users" or "merchants"
   let signupType = req.body.signupType;
   let username = req.body.username;
@@ -22,7 +23,7 @@ let signup = () => {
   });
 };
 
-let login = () => {
+let login = (req, res, dbo) => {
   //loginType is either "users" or "merchants"
   let loginType = req.body.signupType;
   let username = req.body.username;

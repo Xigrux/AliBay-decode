@@ -37,12 +37,13 @@ app.get("/test-image", (req, res) => {
 //=============================== POST ENDPOINTS ===============================//
 
 app.post("/signup", upload.none(), (req, res) => {
-  login.signup();
-  login.login();
+  console.log("accessing");
+  login.signup(req, res, dbo);
+  // login.login(req, res, dbo);
 });
 
 app.post("/login", upload.none(), (req, res) => {
-  login.login();
+  login.login(req, res, dbo);
 });
 
 //this endpoint is used to check if a username has been taken
