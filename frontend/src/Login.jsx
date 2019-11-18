@@ -60,6 +60,7 @@ class UnconnectedLogin extends Component {
         <input type="text" onChange={this.handleUsernameChange} />
         Password
         <input type="text" onChange={this.handlePasswordChange} />
+        <input type="submit" />
       </form>
     );
   };
