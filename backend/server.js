@@ -13,13 +13,37 @@ app.use("/uploads", express.static("uploads"));
 // setting for cors, do not touch, frontend is on localhost3000
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
+
+// settings for mongo
 let dbo;
 let url =
   "mongodb+srv://XGD:RF6hIcElSxkoQPrI@cluster0-xc8we.mongodb.net/test?retryWrites=true&w=majority";
 app.use("/", express.static("build"));
+
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
   dbo = db.db("alibay");
 });
+
+
+//=============================== GET ENDPOINTS ===============================//
+app.get("/test", (req, res) => {
+  res.send("Backend connected");
+});
+
+app.get("/testdb", (req, res) => {
+  dbo
+    .collection("test")
+    .find({ _id: ObjectID("5dd21fe11c9d44000054cab8") })
+    .toArray((error, test) => {
+      if (error) {
+        res.send(JSON.stringify({ success: false }));
+      } else {
+        res.send(JSON.stringify(test));
+      }
+    });
+});
+
+//=============================== POST ENDPOINTS ===============================//
 
 app.post("/signup", upload.none(), (req, res) => {
   let signupType = req.body.signupType;
@@ -80,10 +104,6 @@ app.post("/username-taken", upload.none(), (req, res) => {
   });
 });
 
-//=============================== GET ENDPOINTS ===============================//
-app.get("/test", (req, res) => {
-  res.send("Backend connected");
-});
 
 //=============================== LISTENER ===============================//
 app.listen("4000", () => {

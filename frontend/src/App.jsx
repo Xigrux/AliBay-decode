@@ -7,22 +7,29 @@ class app extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      backend: ""
+      backend: "",
+      database: ""
     };
   }
 
   componentDidMount = async () => {
-    // fetch test string from explicit endpoint
-    let response = await fetch("http://localhost:4000/test");
+    // fetch test string from /test GET endpoint
+    let response = await fetch("/test");
     let test = await response.text();
-    // update state's backend property
-    this.setState({ backend: test });
+
+    // fetch test string from /textdb GET endpoint
+    let responsedb = await fetch("/testdb");
+    // parsing the array and only storing the test first obj
+    let testdb = JSON.parse(await responsedb.text())[0];
+
+    // update state's properties
+    this.setState({ backend: test, database: testdb });
   };
 
   render() {
     return (
       <>
-        {this.props.test}, {this.state.backend}
+        {this.props.test}, {this.state.backend}, {this.state.database.test}
       </>
     );
   }
