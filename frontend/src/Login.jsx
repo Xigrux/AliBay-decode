@@ -46,7 +46,7 @@ class UnconnectedLogin extends Component {
     console.log("/login endpoint response body: ", responseBody);
     let parsedBody = JSON.parse(responseBody);
     console.log("parsed /login response body: ", parsedBody);
-    if (!body.success) {
+    if (!parsedBody.success) {
       window.alert("Login failed, check your credentials");
       return;
     }

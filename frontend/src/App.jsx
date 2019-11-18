@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import Login from "./Login.jsx";
+import Signup from "./Signup.jsx";
 
 //COMPONENT DECLARATION
 class UnconnectedApp extends Component {
@@ -33,10 +35,12 @@ class UnconnectedApp extends Component {
     //Will return the the Banner, Featured products and the CategoryMenu Components
   };
   renderLogin = () => {
-    return <div>Login route test</div>;
+    //return <div>Login route test</div>;
+    return <Login />;
   };
   renderSignup = () => {
-    return <div>Signup route test </div>;
+    // return <div>Signup route test </div>;
+    return <Signup />;
   };
   renderCart = () => {
     return <div>Render Cart Testing</div>;
