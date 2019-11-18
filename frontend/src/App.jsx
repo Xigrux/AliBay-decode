@@ -17,19 +17,14 @@ class app extends Component {
     let response = await fetch("/test");
     let test = await response.text();
 
-    // fetch test string from /textdb GET endpoint
-    let responsedb = await fetch("/testdb");
-    // parsing the array and only storing the test first obj
-    let testdb = JSON.parse(await responsedb.text())[0];
-
     // update state's properties
-    this.setState({ backend: test, database: testdb });
+    this.setState({ backend: test });
   };
 
   render() {
     return (
       <>
-        {this.props.test}, {this.state.backend}, {this.state.database.test}
+        {this.props.test}, {this.state.backend}
       </>
     );
   }

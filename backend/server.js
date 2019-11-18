@@ -13,7 +13,6 @@ app.use("/uploads", express.static("uploads"));
 // setting for cors, do not touch, frontend is on localhost3000
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
-
 // settings for mongo
 let dbo;
 let url =
@@ -24,23 +23,9 @@ MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
   dbo = db.db("alibay");
 });
 
-
 //=============================== GET ENDPOINTS ===============================//
 app.get("/test", (req, res) => {
   res.send("Backend connected");
-});
-
-app.get("/testdb", (req, res) => {
-  dbo
-    .collection("test")
-    .find({ _id: ObjectID("5dd21fe11c9d44000054cab8") })
-    .toArray((error, test) => {
-      if (error) {
-        res.send(JSON.stringify({ success: false }));
-      } else {
-        res.send(JSON.stringify(test));
-      }
-    });
 });
 
 //=============================== POST ENDPOINTS ===============================//
@@ -71,25 +56,26 @@ app.post("/login", upload.none(), (req, res) => {
   let signupType = req.body.signupType;
   let username = req.body.username;
   let enteredPassword = req.body.password;
-  dbo.collection(signupType).findOne({ username }), (err, user) => {
-    if (err) {
-      //if database returns error, login process ends here
-      console.log("There was an error at login: ", err);
-      return res.send(JSON.stringify({ success: false, err }));
-    }
-    if (user === null) {
-      //if there is no user with that name, return err false
-      return res.send(JSON.stringify({ success: false, err }));
-    }
-    if (user.password === enteredPassword) {
-      //password match. login success. generate session ID
-      let sid = generateSID();
-      dbo.collection("cookies").insertOne({ username, sid });
-      return res.send(JSON.stringify({ success: true }));
-    }
-    //default: no login
-    res.send(JSON.stringify({ success: false }));
-  };
+  dbo.collection(signupType).findOne({ username }),
+    (err, user) => {
+      if (err) {
+        //if database returns error, login process ends here
+        console.log("There was an error at login: ", err);
+        return res.send(JSON.stringify({ success: false, err }));
+      }
+      if (user === null) {
+        //if there is no user with that name, return err false
+        return res.send(JSON.stringify({ success: false, err }));
+      }
+      if (user.password === enteredPassword) {
+        //password match. login success. generate session ID
+        let sid = generateSID();
+        dbo.collection("cookies").insertOne({ username, sid });
+        return res.send(JSON.stringify({ success: true }));
+      }
+      //default: no login
+      res.send(JSON.stringify({ success: false }));
+    };
 });
 
 //this endpoint is used to check if a username has been taken
@@ -103,7 +89,6 @@ app.post("/username-taken", upload.none(), (req, res) => {
     return res.send(JSON.stringify({ success: true }));
   });
 });
-
 
 //=============================== LISTENER ===============================//
 app.listen("4000", () => {
