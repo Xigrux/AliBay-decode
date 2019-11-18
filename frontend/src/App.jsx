@@ -22,8 +22,21 @@ class UnconnectedApp extends Component {
     this.setState({ backend: test });
   };
   renderHomepage = () => {
-    return <div>Homepage route Testing</div>;
+    return (
+      <div>
+        Homepage route Testing
+        <Link to="/login">Login Button</Link>;
+        <Link to="/signup">Sign up Button</Link>
+        <Link to="/cart">Cart Button</Link>
+      </div>
+    );
     //Will return the the Banner, Featured products and the CategoryMenu Components
+  };
+  renderLogin = () => {
+    return <div>Login route test</div>;
+  };
+  renderSignup = () => {
+    return <div>Signup route test </div>;
   };
   renderCart = () => {
     return <div>Render Cart Testing</div>;
@@ -49,6 +62,8 @@ class UnconnectedApp extends Component {
         <BrowserRouter>
           <div>
             <Route path="/homepage" exact={true} render={this.renderHomepage} />
+            <Route path="/login" exact={true} render={this.renderLogin} />
+            <Route path="/signup" exact={true} render={this.renderSignup} />
             <Route path="/cart" exact={true} render={this.renderCart} />
             <Route
               path="/product/:productId"
@@ -66,6 +81,7 @@ class UnconnectedApp extends Component {
               render={this.renderMerchantDash}
             />
             {this.props.test}, {this.state.backend}
+            <Link to="/homepage">Back to homepage</Link>
           </div>
         </BrowserRouter>
       </>
