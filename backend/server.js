@@ -14,13 +14,22 @@ app.use("/uploads", express.static("uploads"));
 // setting for cors, do not touch, frontend is on localhost3000
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
+// settings for mongo
 let dbo;
 let url =
   "mongodb+srv://XGD:RF6hIcElSxkoQPrI@cluster0-xc8we.mongodb.net/test?retryWrites=true&w=majority";
 app.use("/", express.static("build"));
+
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
   dbo = db.db("alibay");
 });
+
+//=============================== GET ENDPOINTS ===============================//
+app.get("/test", (req, res) => {
+  res.send("Backend connected");
+});
+
+//=============================== POST ENDPOINTS ===============================//
 
 app.post("/signup", upload.none(), (req, res) => {
   login.signup();
@@ -69,11 +78,6 @@ app.post("/post-item", upload.array("media"), (req, res) => {
     rating,
     frontendPath
   });
-});
-
-//=============================== GET ENDPOINTS ===============================//
-app.get("/test", (req, res) => {
-  res.send("Backend connected");
 });
 
 //=============================== LISTENER ===============================//

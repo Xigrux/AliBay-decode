@@ -7,15 +7,17 @@ class app extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      backend: ""
+      backend: "",
+      database: ""
     };
   }
 
   componentDidMount = async () => {
-    // fetch test string from explicit endpoint
-    let response = await fetch("http://localhost:4000/test");
+    // fetch test string from /test GET endpoint
+    let response = await fetch("/test");
     let test = await response.text();
-    // update state's backend property
+
+    // update state's properties
     this.setState({ backend: test });
   };
 
