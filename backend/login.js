@@ -60,6 +60,10 @@ let usernameTaken = () => {
   });
 };
 
+let generateSID = () => {
+  return Math.floor(Math.random() * 100000000);
+};
+
 module.exports.signup = signup;
 module.exports.login = login;
 module.exports.usernameTaken = usernameTaken;

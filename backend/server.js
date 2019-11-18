@@ -9,7 +9,9 @@ let login = require("./login.js");
 //=============================== INITIALIZE LIBRARIES ===============================//
 let app = express();
 // setting for multer, for now we are saving upload files to local uploads directory
-let upload = multer({ dest: __dirname + "/uploads" });
+let upload = multer({
+  dest: __dirname + "/uploads"
+});
 app.use("/uploads", express.static("uploads"));
 // setting for cors, do not touch, frontend is on localhost3000
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
@@ -29,6 +31,9 @@ app.get("/test", (req, res) => {
   res.send("Backend connected");
 });
 
+app.get("/test-image", (req, res) => {
+  res.send("/uploads/test.png");
+});
 //=============================== POST ENDPOINTS ===============================//
 
 app.post("/signup", upload.none(), (req, res) => {
@@ -84,7 +89,3 @@ app.post("/post-item", upload.array("media"), (req, res) => {
 app.listen("4000", () => {
   console.log("Server up");
 });
-
-let generateSID = () => {
-  return Math.floor(Math.random() * 100000000);
-};
