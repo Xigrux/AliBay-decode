@@ -5,6 +5,7 @@ let cors = require("cors");
 let MongoClient = require("mongodb").MongoClient;
 let ObjectID = require("mongodb").ObjectID;
 let login = require("./login.js");
+let cart = require("./cart.js");
 
 //=============================== INITIALIZE LIBRARIES ===============================//
 let app = express();
@@ -86,6 +87,17 @@ app.post("/post-item", upload.array("media"), (req, res) => {
   });
 });
 
+app.post("/add-to-cart", upload.none(), (req, res) => {
+  cart.addToCart(req);
+});
+
+app.post("/remove-from-cart", upload.none(), (req, res) => {
+  cart.removeFromCart(req);
+});
+
+app.post("/cart", upload.none(), (req, res) => {
+  cart.cart(req);
+});
 //=============================== LISTENER ===============================//
 app.listen("4000", () => {
   console.log("Server up");
