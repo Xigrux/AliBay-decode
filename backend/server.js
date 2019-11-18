@@ -4,11 +4,15 @@ let multer = require("multer");
 let cors = require("cors");
 let MongoClient = require("mongodb").MongoClient;
 let ObjectID = require("mongodb").ObjectID;
+let login = require("./login.js");
+let cart = require("./cart.js");
 
 //=============================== INITIALIZE LIBRARIES ===============================//
 let app = express();
 // setting for multer, for now we are saving upload files to local uploads directory
-let upload = multer({ dest: __dirname + "/uploads" });
+let upload = multer({
+  dest: __dirname + "/uploads"
+});
 app.use("/uploads", express.static("uploads"));
 // setting for cors, do not touch, frontend is on localhost3000
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
@@ -20,7 +24,7 @@ let url =
 app.use("/", express.static("build"));
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
-  dbo = db.db("alibay");
+  dbo = db.db("AliBay");
 });
 
 //=============================== GET ENDPOINTS ===============================//
@@ -28,73 +32,73 @@ app.get("/test", (req, res) => {
   res.send("Backend connected");
 });
 
+app.get("/test-image", (req, res) => {
+  res.send("/uploads/test.png");
+});
 //=============================== POST ENDPOINTS ===============================//
 
 app.post("/signup", upload.none(), (req, res) => {
-  let signupType = req.body.signupType;
-  let username = req.body.username;
-  let password = req.body.password;
-  let email = req.body.email;
-  //checking against database to see if email already in use
-  dbo.collection(signupType).findOne({ email }, (err, user) => {
-    if (err) {
-      //if database returns error, signup process ends here
-      console.log("There was an error at signup: ", err);
-      return res.send(JSON.stringify({ success: false, err }));
-    }
-    if (user === null) {
-      //if there is not already a user with that name, return err false
-      return res.send(JSON.stringify({ success: false, err }));
-    }
-    //if all goes well, user, pw and email are added to db
-    dbo.collection(signupType).insertOne({ username, password, email });
-    res.send({ success: true });
-  });
+  console.log("accessing");
+  login.signup(req, res, dbo);
+  // login.login(req, res, dbo);
 });
 
 app.post("/login", upload.none(), (req, res) => {
-  let signupType = req.body.signupType;
-  let username = req.body.username;
-  let enteredPassword = req.body.password;
-  dbo.collection(signupType).findOne({ username }),
-    (err, user) => {
-      if (err) {
-        //if database returns error, login process ends here
-        console.log("There was an error at login: ", err);
-        return res.send(JSON.stringify({ success: false, err }));
-      }
-      if (user === null) {
-        //if there is no user with that name, return err false
-        return res.send(JSON.stringify({ success: false, err }));
-      }
-      if (user.password === enteredPassword) {
-        //password match. login success. generate session ID
-        let sid = generateSID();
-        dbo.collection("cookies").insertOne({ username, sid });
-        return res.send(JSON.stringify({ success: true }));
-      }
-      //default: no login
-      res.send(JSON.stringify({ success: false }));
-    };
+  login.login(req, res, dbo);
 });
 
 //this endpoint is used to check if a username has been taken
 app.post("/username-taken", upload.none(), (req, res) => {
-  let signupType = req.body.signupType;
-  let username = req.body.username;
-  dbo.collection(signupType).findOne({ username }, (err, user) => {
-    if (user.username === username) {
-      return res.send(JSON.stringify({ success: false }));
+  login.usernameTaken();
+});
+
+app.post("/post-item", upload.array("media"), (req, res) => {
+  let media = req.files;
+  let productName = req.body.name;
+  let username = req.body.sellerName;
+  let description = req.body.description;
+  let location = req.body.location;
+  let inventory = req.body.inventory;
+  let date = new Date();
+  let rating = null;
+  let posts;
+  if (media !== undefined) {
+    for (let i = 0; i < media.length; i++) {
+      console.log("Uploaded file " + media[i]);
+      frontendPath = "/uploads/" + media[i].filename;
+      posts.push(frontendPath);
     }
-    return res.send(JSON.stringify({ success: true }));
+  } else {
+    frontendPath = ["/uploads/default.png"];
+  }
+  //find sellerID from merchants database
+  dbo.collection("merchants").findOne({ username }), (err, user) => {
+    sellerName = user._id;
+  };
+  dbo.collection("items").insertOne({
+    productName,
+    username,
+    description,
+    location,
+    inventory,
+    date,
+    rating,
+    frontendPath
   });
 });
 
+app.post("/add-to-cart", upload.none(), (req, res) => {
+  cart.addToCart(req);
+});
+
+app.post("/remove-from-cart", upload.none(), (req, res) => {
+  cart.removeFromCart(req);
+});
+
+app.post("/cart", upload.none(), (req, res) => {
+  cart.cart(req);
+});
 //=============================== LISTENER ===============================//
 app.listen("4000", () => {
   console.log("Server up");
 });
-
-let generateSID = () => {
-  return Math.floor(Math.random() * 100000000);
-};
