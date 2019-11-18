@@ -22,6 +22,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
 });
 
 app.post("/signup", upload.none(), (req, res) => {
+  //signupType is either "users" or "merchants"
   let signupType = req.body.signupType;
   let username = req.body.username;
   let password = req.body.password;
@@ -44,7 +45,8 @@ app.post("/signup", upload.none(), (req, res) => {
 });
 
 app.post("/login", upload.none(), (req, res) => {
-  let signupType = req.body.signupType;
+  //loginType is either "users" or "merchants"
+  let loginType = req.body.signupType;
   let username = req.body.username;
   let enteredPassword = req.body.password;
   dbo.collection(signupType).findOne({ username }), (err, user) => {
@@ -70,6 +72,7 @@ app.post("/login", upload.none(), (req, res) => {
 
 //this endpoint is used to check if a username has been taken
 app.post("/username-taken", upload.none(), (req, res) => {
+  //signupType is either "users" or "merchants"
   let signupType = req.body.signupType;
   let username = req.body.username;
   dbo.collection(signupType).findOne({ username }, (err, user) => {
