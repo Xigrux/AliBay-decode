@@ -22,11 +22,12 @@ MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
 });
 
 app.post("/signup", upload.none(), (req, res) => {
+  let signupType = req.body.signupType;
   let username = req.body.username;
   let password = req.body.password;
   let email = req.body.email;
   //checking against database to see if email already in use
-  dbo.collection("users").findOne({ email }, (err, user) => {
+  dbo.collection(signupType).findOne({ email }, (err, user) => {
     if (err) {
       //if database returns error, signup process ends here
       console.log("There was an error at signup: ", err);
@@ -37,15 +38,16 @@ app.post("/signup", upload.none(), (req, res) => {
       return res.send(JSON.stringify({ success: false, err }));
     }
     //if all goes well, user, pw and email are added to db
-    dbo.collection("users").insertOne({ username, password, email });
+    dbo.collection(signupType).insertOne({ username, password, email });
     res.send({ success: true });
   });
 });
 
 app.post("/login", upload.none(), (req, res) => {
+  let signupType = req.body.signupType;
   let username = req.body.username;
   let enteredPassword = req.body.password;
-  dbo.collection("users").findOne({ username }), (err, user) => {
+  dbo.collection(signupType).findOne({ username }), (err, user) => {
     if (err) {
       //if database returns error, login process ends here
       console.log("There was an error at login: ", err);
@@ -68,9 +70,10 @@ app.post("/login", upload.none(), (req, res) => {
 
 //this endpoint is used to check if a username has been taken
 app.post("/username-taken", upload.none(), (req, res) => {
+  let signupType = req.body.signupType;
   let username = req.body.username;
-  dbo.collection("users").findOne({ username }, (err, user) => {
-    if (user.usrname === username) {
+  dbo.collection(signupType).findOne({ username }, (err, user) => {
+    if (user.username === username) {
       return res.send(JSON.stringify({ success: false }));
     }
     return res.send(JSON.stringify({ success: true }));
