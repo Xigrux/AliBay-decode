@@ -50,6 +50,7 @@ class UnconnectedLogin extends Component {
       window.alert("Login failed, check your credentials");
       return;
     }
+    window.alert("Login successful");
     this.props.dispatch({ type: "login-success" });
   };
 
