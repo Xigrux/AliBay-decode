@@ -82,7 +82,7 @@ class UnconnectedApp extends Component {
             />
             --
             {this.props.test}, {this.state.backend}
-            <Link to="/homepage">Back to homepage</Link>
+            <Link to="/">Back to homepage</Link>
           </div>
         </BrowserRouter>
       </>
