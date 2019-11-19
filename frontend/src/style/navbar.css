@@ -55,7 +55,6 @@ nav {
   width: 26px;
   color: transparent;
   background-color: transparent;
-  border-bottom: 2px #333333 solid;
   transition: ease-in-out 300ms all;
 }
 .search-input:focus,
