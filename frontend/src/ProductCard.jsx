@@ -8,7 +8,7 @@ class ProductCard extends Component {
       //The data displayed on the card will be passed down from the parent component as props
       //The parent component will map through the array of items received from the db and display a product card for each
       <Link to={"/product/" + this.props.id}>
-        <img src="placeholderImgData"></img>
+        <img src={this.props.frontEndPath}></img>
         <div>Title:{this.props.title}</div>
         <div>smol desc:{this.props.description}</div>
         <div>price:{this.props.price}</div>
