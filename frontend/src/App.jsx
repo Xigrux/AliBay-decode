@@ -21,8 +21,7 @@ class UnconnectedApp extends Component {
     return (
       <div>
         Homepage route Testing
-        <Link to="/login">Login Button - </Link>
-        <Link to="/signup">Sign up Button - </Link>
+        <Link to="/login">Login Button</Link>
         <Link to="/cart">Cart Button</Link>
       </div>
     );
