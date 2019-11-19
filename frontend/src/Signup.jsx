@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class UnconnectedSignup extends Component {
   constructor(props) {
@@ -58,29 +59,32 @@ class UnconnectedSignup extends Component {
 
   render = () => {
     return (
-      <form onSubmit={this.handleSubmit}>
-        Username
-        <input type="text" onChange={this.handleUsernameChange} required />
-        Email
-        <input type="email" onChange={this.handleEmailChange} required />
-        Password
-        <input type="text" onChange={this.handlePasswordChange} />
-        User account
-        <input
-          type="radio"
-          onChange={this.handleSignupType}
-          value="users"
-          name="account-type"
-        />
-        Merchant account
-        <input
-          type="radio"
-          onChange={this.handleSignupType}
-          value="merchants"
-          name="account-type"
-        />
-        <input type="submit" />
-      </form>
+      <>
+        <form onSubmit={this.handleSubmit}>
+          Username
+          <input type="text" onChange={this.handleUsernameChange} required />
+          Email
+          <input type="email" onChange={this.handleEmailChange} required />
+          Password
+          <input type="text" onChange={this.handlePasswordChange} />
+          User account
+          <input
+            type="radio"
+            onChange={this.handleSignupType}
+            value="users"
+            name="account-type"
+          />
+          Merchant account
+          <input
+            type="radio"
+            onChange={this.handleSignupType}
+            value="merchants"
+            name="account-type"
+          />
+          <input type="submit" />
+        </form>
+        <Link to="/login">Login Button</Link>
+      </>
     );
   };
 }
