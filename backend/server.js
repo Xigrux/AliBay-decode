@@ -60,7 +60,8 @@ app.post("/add-product", upload.array("media"), (req, res) => {
   let location = req.body.location;
   let inventory = req.body.inventory;
   let date = new Date();
-  let rating = null;
+  date = date.toLocaleDateString;
+  let ratings = {};
   let posts;
   let tags = req.body.tags;
   let category = req.body.category;
@@ -84,10 +85,32 @@ app.post("/add-product", upload.array("media"), (req, res) => {
     location,
     inventory,
     date,
-    rating,
+    ratings,
     frontendPath,
     tags,
     category
+  });
+});
+
+app.post("/rating", upload.none(), (req, res) => {
+  let rating = req.body.rating;
+  let id = req.body.id;
+  let username = req.body.username;
+  dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
+    let ratings = [...item.ratings];
+    let keys = Object.keys(ratings);
+    keys = keys.filter(key => {
+      return key === username;
+    });
+    if (keys.length === 0) {
+      ratings[username] = rating;
+      dbo
+        .collection("items")
+        .updateOne({ _id: ObjectID(id) }, { $set: { ratings } });
+      return res.send(JSON.stringify({ succes: true }));
+    } else {
+      return res.send(JSON.stringify({ succes: false }));
+    }
   });
 });
 
@@ -168,7 +191,35 @@ app.post("/product-list", upload.none(), (req, res) => {
 //see the list of sold things
 //app.post("/sales-record")
 
-// app.post("/checkout", upload.none(), (req, res) => {});
+app.post("/confirm-payement", upload.none(), (req, res) => {
+  let username = req.body.username;
+  dbo.collection("users").findOne({ username }, (err, user) => {
+    let cart = [...user.cart];
+    let purchased = [...user.purchased];
+    let ids = cart.map(item => {
+      return ObjectID(item._id);
+    });
+    dbo
+      .collection("items")
+      .updateMany({ _id: { $in: ids } }, { $inc: { inventory: -1 } });
+    // dbo
+    //   .collection("items")
+    //   .find({ _id: { $in: ids } })
+    //   .toArray((err, items) => {
+    //     items = items.map(item => {
+    //       return item.inventory - 1;
+    //     });
+    //   });
+    cart.forEach(item => {
+      purchased.push(item);
+    });
+    cart = [];
+    dbo
+      .collection("users")
+      .updateOne({ _id: ObjectID(user._id) }, { $set: { cart, purchased } });
+  });
+  return res.send(JSON.stringify({ success: true, items }));
+});
 
 //app.post("/purchase-history")
 

@@ -28,7 +28,14 @@ let signup = (req, res, dbo) => {
     //if all goes well, user, pw and email are added to db
     dbo
       .collection(signupType)
-      .insertOne({ username, password, email, region, cart: [] });
+      .insertOne({
+        username,
+        password,
+        email,
+        region,
+        cart: [],
+        purchased: []
+      });
     res.send({ success: true });
   });
 };
