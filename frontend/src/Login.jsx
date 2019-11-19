@@ -65,7 +65,7 @@ class UnconnectedLogin extends Component {
     window.alert("Login successful");
     this.props.dispatch({
       type: "login-success",
-      username: this.state.username
+      username: this.state.username // LULU UPDATE: SEND OBJECT TO STORE REGION ETC
     });
   };
 
