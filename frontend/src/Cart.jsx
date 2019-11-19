@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+// let globalCart = [
+//   { productName: "shoe", descriptionBody: "test1234444545645" },
+//   { productName: "shoe", descriptionBody: "test1234444545645" },
+//   { productName: "mat", descriptionBody: "test1234444545645" },
+//   { productName: "hat", descriptionBody: "test1234444545645" },
+//   { productName: "gnat", descriptionBody: "test1234444545645" }
+// ];
+
 class UnconnectedCart extends Component {
   getCartItems = async () => {
     let data = new FormData();
@@ -16,8 +24,9 @@ class UnconnectedCart extends Component {
   };
   render = () => {
     let cart = this.getCartItems();
-    let items = this.props.itemIds.map(itemId, index => {
+    let items = this.props.itemIds.map((itemId, index) => {
       let quantityToBuy = 0;
+
       cart.forEach(item => {
         if (item.productName === cart[index].productName) {
           quantityToBuy++;
@@ -28,18 +37,18 @@ class UnconnectedCart extends Component {
           <div>{cart[index].productName}</div>
           <div>Quantity: {quantityToBuy}</div>
           <div>
-            <Link to={"/product/" + itemId} />
+            <Link to={"/product/" + itemId}>View item</Link>
           </div>
           <div>{cart[index].descriptionBody}</div>
         </div>
       );
     });
-    return { items };
+    return items;
   };
 }
 
 let mapStateToProps = state => {
-  itemIds: state.cart;
+  return { itemIds: state.cart };
 };
 
 let Cart = connect(mapStateToProps)(UnconnectedCart);

@@ -16,6 +16,7 @@ let initialState = {
   test: "Store connected",
   loggedIn: false,
   username: undefined
+  // ADD CART IN STATE OF STORE!!!
 };
 
 let store = createStore(
