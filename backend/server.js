@@ -52,7 +52,7 @@ app.post("/username-taken", upload.none(), (req, res) => {
   login.usernameTaken();
 });
 
-app.post("/post-item", upload.array("media"), (req, res) => {
+app.post("/add-product", upload.array("media"), (req, res) => {
   let media = req.files;
   let productName = req.body.name;
   let username = req.body.sellerName;
@@ -133,6 +133,44 @@ app.post("/product-page", upload.none(), (req, res) => {
     res.send(JSON.stringify({ success: true, item }));
   });
 });
+
+app.post("/product-list", upload.none(), (req, res) => {
+  //name of the category
+  let category = req.body.category;
+  //page number of items being displayed
+  let pageNo = req.body.offset;
+  //max number of items being displayed
+  let max = req.body.max;
+  //give the sort parameter (quantity, price, whatever). Has to match the parameter name in the database
+  let sortParam = req.body.sortParam;
+  //give sort direction. Asc is 1, desc is -1
+  let direction = req.body.direction;
+  let currentPage = pageNo * max;
+  let sort = {};
+  sort[sortParam] = direction;
+  dbo
+    .collection("item")
+    .find({ category })
+    .sort(sort)
+    .limit(max)
+    .skip(currentPage)
+    .toArray((err, items) => {
+      if (err) {
+        console.log("Error getting product list");
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ items }));
+    });
+});
+
+//app.post("/merchant-invetory");
+
+//see the list of sold things
+//app.post("/sales-record")
+
+// app.post("/checkout", upload.none(), (req, res) => {});
+
+//app.post("/purchase-history")
 
 //=============================== LISTENER ===============================//
 app.listen("4000", () => {

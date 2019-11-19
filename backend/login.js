@@ -6,6 +6,14 @@ let signup = (req, res, dbo) => {
   let password = req.body.password;
   let email = req.body.email;
   let region = req.body.region;
+  if (
+    username === undefined ||
+    enteredPassword === undefined ||
+    email === undefined ||
+    region === undefined
+  ) {
+    return res.send(JSON.stringify({ success: false }));
+  }
   //checking against database to see if email already in use
   dbo.collection(signupType).findOne({ email }, (err, user) => {
     if (err) {
@@ -30,6 +38,9 @@ let login = (req, res, dbo) => {
   let loginType = req.body.signupType;
   let username = req.body.username;
   let enteredPassword = req.body.password;
+  if (username === undefined || enteredPassword === undefined) {
+    return res.send(JSON.stringify({ success: false }));
+  }
   dbo.collection(signupType).findOne({ username }), (err, user) => {
     if (err) {
       //if database returns error, login process ends here

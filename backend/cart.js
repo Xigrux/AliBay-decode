@@ -38,12 +38,12 @@ let cart = (req, res, dbo) => {
     if (err) {
       return res.send(JSON.stringify({ success: false }));
     }
-    let cart = returnCart(user);
+    let cart = returnCart(user, dbo);
     return res.send(JSON.stringify({ success: true, cart }));
   };
 };
 
-let returnCart = user => {
+let returnCart = (user, dbo) => {
   user.cart.map(item => {
     return dbo.collection("items").findOne({ _id: ObjectID(item) }), (
       err,
