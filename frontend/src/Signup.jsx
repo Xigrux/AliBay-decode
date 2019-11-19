@@ -60,7 +60,10 @@ class UnconnectedSignup extends Component {
       window.alert("Username in use");
       return;
     }
-    this.props.dispatch({ type: "login-success" });
+    this.props.dispatch({
+      type: "login-success",
+      givenUsername: this.state.username
+    });
   };
 
   render = () => {

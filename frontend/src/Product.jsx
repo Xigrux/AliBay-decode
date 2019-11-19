@@ -6,7 +6,7 @@ class UnconnectedProduct extends Component {
     super(props);
     this.state = {
       productName: "",
-      sellerName: this.props.merchant.username, // FIX ME
+      sellerName: this.props.name,
       productDescHeader: "",
       productDescText: "",
       productCat: "",
@@ -66,7 +66,7 @@ class UnconnectedProduct extends Component {
     let tags = this.state.assocTags.split(",");
     let data = new FormData();
     data.append("name", this.state.productName);
-    data.append("sellerName");
+    data.append("sellerName", this.state.sellerName);
     data.append("description-header", this.state.productDescHeader);
     data.append("description-text", this.state.productDescText);
     data.append("category", this.state.productCat);
@@ -152,6 +152,12 @@ class UnconnectedProduct extends Component {
 
 // connect component to Provider and store
 
-let Product = connect()(UnconnectedProduct);
+let mapStateToProps = state => {
+  {
+    name: state.username;
+  }
+};
+
+let Product = connect(mapStateToProps)(UnconnectedProduct);
 
 export default Product;
