@@ -24,6 +24,10 @@ class UnconnecterNavbar extends Component {
   render = () => {
     return (
       <nav class="flex-container flex-center-v">
+        <Link to="/" class="logo">
+          <img src="/img/logo.png" alt="alibay logo" height="25" width="logo" />
+        </Link>
+
         {!this.props.isLoggedIn && (
           /*Link to the Login and Signup components */
           <button class="user">

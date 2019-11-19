@@ -4,6 +4,13 @@ nav {
   padding: 10px 20px;
 }
 
+.logo {
+  position: absolute;
+  top: 17px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .user {
   width: 50px;
   height: 100%;
@@ -47,6 +54,7 @@ nav {
   bottom: 0px;
   width: 26px;
   color: transparent;
+  background-color: transparent;
   border-bottom: 2px #333333 solid;
   transition: ease-in-out 300ms all;
 }
@@ -55,6 +63,7 @@ nav {
   width: 190px;
   right: 30px;
   color: #333333;
+  background-color: white;
 }
 
 .search-button {
