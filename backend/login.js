@@ -7,6 +7,7 @@ let signup = (req, res, dbo) => {
   let password = req.body.password;
   let email = req.body.email;
   let region = req.body.region;
+
   if (
     username === undefined ||
     password === undefined ||
