@@ -24,7 +24,7 @@ let url =
 app.use("/", express.static("build"));
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
-  dbo = db.db("alibay");
+  dbo = db.db("AliBay");
 });
 
 //=============================== GET ENDPOINTS ===============================//
@@ -62,6 +62,8 @@ app.post("/post-item", upload.array("media"), (req, res) => {
   let date = new Date();
   let rating = null;
   let posts;
+  let tags = req.body.tags;
+  let category = req.body.category;
   if (media !== undefined) {
     for (let i = 0; i < media.length; i++) {
       console.log("Uploaded file " + media[i]);
@@ -83,21 +85,55 @@ app.post("/post-item", upload.array("media"), (req, res) => {
     inventory,
     date,
     rating,
-    frontendPath
+    frontendPath,
+    tags,
+    category
   });
 });
 
 app.post("/add-to-cart", upload.none(), (req, res) => {
-  cart.addToCart(req);
+  cart.addToCart(req, res, dbo);
 });
 
 app.post("/remove-from-cart", upload.none(), (req, res) => {
-  cart.removeFromCart(req);
+  cart.removeFromCart(req, res, dbo);
 });
 
 app.post("/cart", upload.none(), (req, res) => {
-  cart.cart(req);
+  cart.cart(req, res, dbo);
 });
+
+app.post("/search", upload.none(), (req, res) => {
+  let productName = req.body.productName;
+  let tags = req.body.tags;
+  tags = tags.map(tag => {
+    return new RegExp(tag);
+  });
+  dbo
+    .collection("items")
+    .find({ productName: new RegExp(productName), tags: { $in: tags } })
+    .toArray((err, array) => {
+      if (err) {
+        return res.send(JSON.stringify({ success: false }));
+      }
+      console.log("item: ", array);
+      return res.send(JSON.stringify({ array }));
+    });
+});
+
+app.post("/product-page", upload.none(), (req, res) => {
+  let id = req.body.id;
+  console.log("id: ", id);
+  dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
+    if (err) {
+      console.log("Error returning item from database");
+      return res.send(JSON.stringify({ success: false }));
+    }
+    console.log("Item: ", item);
+    res.send(JSON.stringify({ success: true, item }));
+  });
+});
+
 //=============================== LISTENER ===============================//
 app.listen("4000", () => {
   console.log("Server up");

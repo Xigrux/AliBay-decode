@@ -1,4 +1,4 @@
-let addToCart = req => {
+let addToCart = (req, res, dbo) => {
   let itemId = req.body.itemNo;
   let userId = req.body.userId;
   dbo.collection("users").findOne({ _id: ObjectID(userId) }), (err, user) => {
@@ -14,7 +14,7 @@ let addToCart = req => {
   };
 };
 
-let removeFromCart = req => {
+let removeFromCart = (req, res, dbo) => {
   let itemId = req.body.itemNo;
   let userId = req.body.userId;
   dbo.collection("users").findOne({ _id: ObjectID(userId) }), (err, user) => {
@@ -32,7 +32,7 @@ let removeFromCart = req => {
   };
 };
 
-let cart = req => {
+let cart = (req, res, dbo) => {
   let userId = req.body.userId;
   dbo.collection("users").findOne({ _id: ObjectID(userId) }), (err, user) => {
     if (err) {
