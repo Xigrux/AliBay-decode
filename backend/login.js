@@ -26,16 +26,14 @@ let signup = (req, res, dbo) => {
       return res.send(JSON.stringify({ success: false, err }));
     }
     //if all goes well, user, pw and email are added to db
-    dbo
-      .collection(signupType)
-      .insertOne({
-        username,
-        password,
-        email,
-        region,
-        cart: [],
-        purchased: []
-      });
+    dbo.collection(signupType).insertOne({
+      username,
+      password,
+      email,
+      region,
+      cart: [],
+      purchased: []
+    });
     res.send({ success: true });
   });
 };
@@ -62,7 +60,7 @@ let login = (req, res, dbo) => {
       //password match. login success. generate session ID
       let sid = generateSID();
       dbo.collection("cookies").insertOne({ username, sid });
-      return res.send(JSON.stringify({ success: true }));
+      return res.send(JSON.stringify({ success: true, user }));
     }
     //default: no login
     res.send(JSON.stringify({ success: false }));

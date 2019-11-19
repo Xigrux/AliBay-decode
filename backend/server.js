@@ -40,7 +40,6 @@ app.get("/test-image", (req, res) => {
 app.post("/signup", upload.none(), (req, res) => {
   console.log("accessing");
   login.signup(req, res, dbo);
-  // login.login(req, res, dbo);
 });
 
 app.post("/login", upload.none(), (req, res) => {
@@ -192,7 +191,7 @@ app.post("/product-list", upload.none(), (req, res) => {
 //app.post("/sales-record")
 
 app.post("/confirm-payement", upload.none(), (req, res) => {
-  let username = req.body.username;
+  let id = req.body.id;
   dbo.collection("users").findOne({ username }, (err, user) => {
     let cart = [...user.cart];
     let purchased = [...user.purchased];
