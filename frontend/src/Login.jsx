@@ -45,7 +45,10 @@ class UnconnectedLogin extends Component {
     let data = new FormData();
     data.append("username", this.state.username);
     data.append("password", this.state.password);
-    data.append("signupType", this.state.signupType);
+    data.append(
+      "signupType",
+      this.state.signupType === "" ? "users" : "merchants"
+    );
     let response = await fetch("/login", {
       method: "POST",
       body: data,
