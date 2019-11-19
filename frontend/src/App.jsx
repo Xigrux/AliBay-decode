@@ -1,6 +1,7 @@
 // PLEASE IMPORT ALL AT THE TOP
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Navbar from "./Navbar.jsx";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
@@ -15,14 +16,7 @@ class UnconnectedApp extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    // fetch test string from /test GET endpoint
-    let response = await fetch("/test");
-    let test = await response.text();
-
-    // update state's properties
-    this.setState({ backend: test });
-  };
+  componentDidMount = async () => {};
   renderHomepage = () => {
     return (
       <div>
@@ -61,34 +55,31 @@ class UnconnectedApp extends Component {
   };
   render() {
     return (
-      <>
-        <BrowserRouter>
-          <div>
-            <Route path="/" exact={true} render={this.renderHomepage} />
-            <Route path="/login" exact={true} render={this.renderLogin} />
-            <Route path="/signup" exact={true} render={this.renderSignup} />
-            <Route path="/cart" exact={true} render={this.renderCart} />
-            <Route
-              path="/product/:productId"
-              exact={true}
-              render={this.renderProduct}
-            />
-            <Route
-              path="/user-dashboard"
-              exact={true}
-              render={this.renderUserDashboard}
-            />
-            <Route
-              path="/merchant-dashboard"
-              exact={true}
-              render={this.renderMerchantDash}
-            />
-            --
-            {this.props.test}, {this.state.backend}
-            <Link to="/">Back to homepage</Link>
-          </div>
-        </BrowserRouter>
-      </>
+      <BrowserRouter>
+        <Navbar></Navbar>
+        <Route path="/" exact={true} render={this.renderHomepage} />
+        <Route path="/login" exact={true} render={this.renderLogin} />
+        <Route path="/signup" exact={true} render={this.renderSignup} />
+        <Route path="/cart" exact={true} render={this.renderCart} />
+        <Route
+          path="/product/:productId"
+          exact={true}
+          render={this.renderProduct}
+        />
+        <Route
+          path="/user-dashboard"
+          exact={true}
+          render={this.renderUserDashboard}
+        />
+        <Route
+          path="/merchant-dashboard"
+          exact={true}
+          render={this.renderMerchantDash}
+        />
+        --
+        {this.props.test}, {this.state.backend}
+        <Link to="/">Back to homepage</Link>
+      </BrowserRouter>
     );
   }
 }

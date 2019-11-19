@@ -3,7 +3,7 @@ import { createStore } from "redux";
 
 let reducer = (state, action) => {
   if (action.type === "login-success") {
-    return { ...state, loggedIn: true };
+    return { ...state, loggedIn: true, username: action.username };
   }
   if (action.type === "logout-success") {
     return { ...state, loggedIn: false };
@@ -14,7 +14,8 @@ let reducer = (state, action) => {
 // PLEASE POPULATE THE INITIAL STORE STATE SEPERATLY
 let initialState = {
   test: "Store connected",
-  loggedIn: false
+  loggedIn: false,
+  username: ""
 };
 
 let store = createStore(

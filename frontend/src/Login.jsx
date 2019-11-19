@@ -59,7 +59,10 @@ class UnconnectedLogin extends Component {
       return;
     }
     window.alert("Login successful");
-    this.props.dispatch({ type: "login-success" });
+    this.props.dispatch({
+      type: "login-success",
+      username: this.state.username
+    });
   };
 
   render = () => {

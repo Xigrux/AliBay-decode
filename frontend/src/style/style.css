@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+}
+#root {
+  width: 100vw;
+}
+.flex-container {
+  display: flex;
+}
+
+.flex-dir-h {
+  flex-direction: row;
+}
+
+.flex-dir-v {
+  flex-direction: column;
+}
+
+.flex-center-h {
+  justify-content: center;
+}
+
+.flex-between-h {
+  justify-content: space-between;
+}
+
+.flex-evenly-h {
+  justify-content: space-evenly;
+}
+
+.flex-around-h {
+  justify-content: space-around;
+}
+
+.flex-end-h {
+  justify-content: flex-end;
+}
+
+.flex-center-v {
+  align-items: center;
+}
+
+button {
+  padding: 0;
+  -webkit-appearance: none;
+  -webkit-writing-mode: unset !important;
+  color: unset;
+  background-color: unset;
+  cursor: pointer;
+  border-width: unset;
+  border-style: unset;
+  border-color: unset;
+  border-image: unset;
+}
+
+input {
+  -webkit-writing-mode: unset !important;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  background-color: unset;
+  cursor: text;
+  border-width: unset;
+  border-style: unset;
+  border-color: unset;
+  border-image: unset;
+  border-radius: unset;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+*:focus {
+  outline: 0;
+}
