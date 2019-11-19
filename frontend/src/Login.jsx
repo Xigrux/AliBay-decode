@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import "./style/login.css";
 
 class UnconnectedLogin extends Component {
   constructor(props) {
@@ -59,35 +60,69 @@ class UnconnectedLogin extends Component {
       return;
     }
     window.alert("Login successful");
-    this.props.dispatch({ type: "login-success" });
+    this.props.dispatch({
+      type: "login-success",
+      username: this.state.username
+    });
   };
 
   render = () => {
     return (
-      <>
+      <section>
         <form onSubmit={this.handleSubmit}>
-          Username
-          <input type="text" onChange={this.handleUsernameChange} />
-          Password
-          <input type="text" onChange={this.handlePasswordChange} />
-          User account
+          <div class="login-container">
+            <span class="login-title">Login as</span>
+            <input
+              class="hidden login-account"
+              id="user"
+              type="radio"
+              onChange={this.handleSignupType}
+              value="users"
+              name="account-type"
+              checked
+            />
+            <label class="user" for="user">
+              {" "}
+              User{" "}
+            </label>
+            <span style={{ order: 3 }}> or </span>
+            <input
+              class="hidden login-account"
+              id="merchant"
+              type="radio"
+              onChange={this.handleSignupType}
+              value="merchants"
+              name="account-type"
+            />
+            <label class="merchant" for="merchant">
+              {" "}
+              Merchant{" "}
+            </label>
+          </div>
           <input
-            type="radio"
-            onChange={this.handleSignupType}
-            value="users"
-            name="account-type"
+            class="login"
+            type="text"
+            onChange={this.handleUsernameChange}
+            placeholder="Username"
           />
-          Merchant account
+          <span class="input-prompt">></span>
           <input
-            type="radio"
-            onChange={this.handleSignupType}
-            value="merchants"
-            name="account-type"
+            class="login"
+            type="text"
+            onChange={this.handlePasswordChange}
+            placeholder="Password"
           />
-          <input type="submit" />
+          <span class="input-prompt">></span>
+
+          <button class="bump-button" onClick="submit">
+            Login
+          </button>
         </form>
-        <Link to="/signup">Sign up Button - </Link>
-      </>
+
+        <Link to="/signup">
+          <button class="subtle-button"></button>
+        </Link>
+      </section>
     );
   };
 }
