@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 
 class UnconnecterNavbar extends Component {
   constructor(props) {
@@ -20,14 +21,20 @@ class UnconnecterNavbar extends Component {
 
   render = () => {
     return (
-      <div>
-        {/* Cart button will go here */}
-        <b>Cart</b>
-        {/* //If  the user is not currently logged In - display Links to the Login an Signup forms */}
+      <nav class="flex-container">
+        <button class="cart"></button>
+
+        <form>
+          <input type="text" onChange={this.handleSearchChange}></input>
+          <button onClick="submit">
+            <FiSearch />
+          </button>
+        </form>
+
         {!this.props.isLoggedIn && (
-          /*Link to the Login and Signup components */ <div>
-            <Link to="/login">Log-in</Link> - <Link to="/signup">Signup</Link>
-          </div>
+          /*Link to the Login and Signup components */ <h3>
+            <Link to="/login">Log-in</Link> <Link to="/signup">Signup</Link>
+          </h3>
         )}
         {this.props
           .isLoggedIn /*Will display the name of the current user and will link to that user's profile aswell as a log out button if the user is logged in*/ && (
@@ -36,15 +43,7 @@ class UnconnecterNavbar extends Component {
             <button onClick={this.logOut}>log-out</button>
           </div>
         )}
-        <form>
-          <input
-            type="text"
-            placeholder="Search..."
-            onChange={this.handleSearchChange}
-          ></input>
-          <input type="button" value="Search"></input>
-        </form>
-      </div>
+      </nav>
     );
   };
 }

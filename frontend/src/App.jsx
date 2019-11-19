@@ -16,14 +16,7 @@ class UnconnectedApp extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    // fetch test string from /test GET endpoint
-    let response = await fetch("/test");
-    let test = await response.text();
-
-    // update state's properties
-    this.setState({ backend: test });
-  };
+  componentDidMount = async () => {};
   renderHomepage = () => {
     return (
       <div>
@@ -65,10 +58,7 @@ class UnconnectedApp extends Component {
     return (
       <BrowserRouter>
         <div>
-          {" "}
-          Navbar!:
           <Navbar></Navbar>
-          {this.props.test}, {this.state.backend}
           <Route path="/" exact={true} render={this.renderHomepage} />
           <Route path="/login" exact={true} render={this.renderLogin} />
           <Route path="/signup" exact={true} render={this.renderSignup} />

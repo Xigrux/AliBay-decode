@@ -1,0 +1,45 @@
+.flex-container {
+  display: flex;
+}
+
+.flex-dir-h {
+  flex-direction: row;
+}
+
+.flex-dir-v {
+  flex-direction: column;
+}
+
+.flex-center-h {
+  justify-content: center;
+}
+
+.flex-center-v {
+  align-items: center;
+}
+
+button {
+  -webkit-appearance: none;
+  -webkit-writing-mode: unset !important;
+  color: unset;
+  background-color: unset;
+  cursor: pointer;
+  border-width: unset;
+  border-style: unset;
+  border-color: unset;
+  border-image: unset;
+}
+
+input {
+  -webkit-writing-mode: unset !important;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  background-color: unset;
+  cursor: text;
+  border-width: unset;
+  border-style: unset;
+  border-color: unset;
+  border-image: unset;
+}
