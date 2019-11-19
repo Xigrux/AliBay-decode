@@ -43,7 +43,7 @@ class UnconnectedCart extends Component {
         </div>
       );
     });
-    return items;
+    return items; // TODO: filter items to prevent duplicates from being displayed
   };
 }
 

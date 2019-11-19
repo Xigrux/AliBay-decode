@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-class UnconnectedProduct extends Component {
+class UnconnectedProductForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -153,11 +153,11 @@ class UnconnectedProduct extends Component {
 // connect component to Provider and store
 
 let mapStateToProps = state => {
-  {
-    name: state.username;
-  }
+  return {
+    name: state.username
+  };
 };
 
-let Product = connect(mapStateToProps)(UnconnectedProduct);
+let ProductForm = connect(mapStateToProps)(UnconnectedProductForm);
 
-export default Product;
+export default ProductForm;
