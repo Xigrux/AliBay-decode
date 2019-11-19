@@ -1,8 +1,36 @@
 nav {
-  width: 100vw;
-  background-color: red;
+  height: 50px;
+  padding: 10px;
 }
 
-button {
-  background-color: pink;
+.cart {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 2px 5px #33333378;
+}
+
+.cart-icon {
+  height: 2em;
+  width: 2em;
+}
+
+.search-input {
+  width: 25px;
+  border-bottom: 2px #333333 solid;
+  transition: ease-in-out 300ms all;
+}
+.search-input:focus,
+.search-input:active {
+  width: 130px;
+}
+
+.search-button:active > .search-input {
+}
+
+.search-icon {
 }

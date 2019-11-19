@@ -56,31 +56,29 @@ class UnconnectedApp extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Navbar></Navbar>
-          <Route path="/" exact={true} render={this.renderHomepage} />
-          <Route path="/login" exact={true} render={this.renderLogin} />
-          <Route path="/signup" exact={true} render={this.renderSignup} />
-          <Route path="/cart" exact={true} render={this.renderCart} />
-          <Route
-            path="/product/:productId"
-            exact={true}
-            render={this.renderProduct}
-          />
-          <Route
-            path="/user-dashboard"
-            exact={true}
-            render={this.renderUserDashboard}
-          />
-          <Route
-            path="/merchant-dashboard"
-            exact={true}
-            render={this.renderMerchantDash}
-          />
-          --
-          {this.props.test}, {this.state.backend}
-          <Link to="/">Back to homepage</Link>
-        </div>
+        <Navbar></Navbar>
+        <Route path="/" exact={true} render={this.renderHomepage} />
+        <Route path="/login" exact={true} render={this.renderLogin} />
+        <Route path="/signup" exact={true} render={this.renderSignup} />
+        <Route path="/cart" exact={true} render={this.renderCart} />
+        <Route
+          path="/product/:productId"
+          exact={true}
+          render={this.renderProduct}
+        />
+        <Route
+          path="/user-dashboard"
+          exact={true}
+          render={this.renderUserDashboard}
+        />
+        <Route
+          path="/merchant-dashboard"
+          exact={true}
+          render={this.renderMerchantDash}
+        />
+        --
+        {this.props.test}, {this.state.backend}
+        <Link to="/">Back to homepage</Link>
       </BrowserRouter>
     );
   }
