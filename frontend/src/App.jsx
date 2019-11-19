@@ -1,6 +1,7 @@
 // PLEASE IMPORT ALL AT THE TOP
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Navbar from "./Navbar.jsx";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
@@ -16,14 +17,7 @@ class UnconnectedApp extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    // fetch test string from /test GET endpoint
-    let response = await fetch("/test");
-    let test = await response.text();
-
-    // update state's properties
-    this.setState({ backend: test });
-  };
+  componentDidMount = async () => {};
   renderHomepage = () => {
     return (
       <div>
@@ -93,8 +87,6 @@ class UnconnectedApp extends Component {
               exact={true}
               render={this.renderMerchantDash}
             />
-            --
-            {this.props.test}, {this.state.backend}
             <Link to="/">Back to homepage</Link>
           </div>
         </BrowserRouter>
