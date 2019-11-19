@@ -1,0 +1,89 @@
+.login-container {
+  width: 120%;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  font-size: 15px;
+}
+
+.login-account + label {
+  margin: 0 3px;
+  transition: ease-in-out 100ms all;
+}
+
+.login-title {
+  font-weight: bold;
+  font-size: 20px;
+  order: 1;
+}
+
+label.user {
+  order: 4;
+  font-weight: 500;
+}
+
+label.merchant {
+  order: 4;
+  font-weight: 500;
+}
+
+.login-account:checked + label.user {
+  font-weight: bold;
+  font-size: 20px;
+  order: 2;
+}
+.login-account:checked + label.merchant {
+  font-weight: bold;
+  font-size: 20px;
+  order: 2;
+}
+
+input.login {
+  width: 200px;
+  transition: ease-in-out 300ms all;
+}
+
+input.login::placeholder {
+  color: #333333;
+  opacity: 1;
+  transition: ease-in-out 300ms all;
+}
+input:focus.login::placeholder,
+input:active.login::placeholder {
+  color: #33333380;
+  opacity: 0.8;
+}
+
+.input-prompt {
+  position: absolute;
+}
+
+input:focus.login,
+input:active.login {
+}
+
+input:focus ~ .input-prompt,
+input:active ~ .input-prompt {
+  animation: alternate-reverse infinite cubic-bezier(1, 0, 0, 1) 500ms
+    side-bounce;
+}
+
+@keyframes side-bounce {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(2px);
+  }
+}
+
+.bump-button {
+  padding: 10px 15px;
+  margin: 10px;
+  border-radius: 50px;
+  box-shadow: 1px 0 5px #33333355;
+}
+
+.subtle {
+}
