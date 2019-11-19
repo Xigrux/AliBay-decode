@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+#root {
+  width: 100vw;
+}
 .flex-container {
   display: flex;
 }
@@ -35,6 +41,7 @@
 }
 
 button {
+  padding: 0;
   -webkit-appearance: none;
   -webkit-writing-mode: unset !important;
   color: unset;
@@ -67,4 +74,8 @@ input {
   /* Required for text-overflow to do anything */
   white-space: nowrap;
   overflow: hidden;
+}
+
+*:focus {
+  outline: 0;
 }

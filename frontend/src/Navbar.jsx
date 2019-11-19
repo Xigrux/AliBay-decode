@@ -23,47 +23,45 @@ class UnconnecterNavbar extends Component {
 
   render = () => {
     return (
-      <nav class="flex-container flex-center-v flex-end-h">
+      <nav class="flex-container flex-center-v">
+        {!this.props.isLoggedIn && (
+          /*Link to the Login and Signup components */
+          <button class="user">
+            <Link to="/login">Login</Link>
+          </button>
+        )}
+
+        {this.props.isLoggedIn && (
+          /*Will display the name of the current user and will link to that user's profile aswell as a log out button if the user is logged in*/
+          <>
+            <h3>{this.props.user}</h3>
+            <button onClick={this.logOut}>log-out</button>
+          </>
+        )}
+
+        <form class="seachbar">
+          <input
+            class="search-input"
+            type="text"
+            onChange={this.handleSearchChange}
+          ></input>
+          <button onClick="submit" class="search-button">
+            <IconContext.Provider value={{ className: "search-icon" }}>
+              <FiSearch />
+            </IconContext.Provider>
+          </button>
+        </form>
+
         <div class="cart flex-container flex-center-h flex-center-v">
           <Link to="/cart">
             <IconContext.Provider value={{ className: "cart-icon" }}>
               <FiShoppingBag />
             </IconContext.Provider>
           </Link>
-        </div>
-
-        <div>
-          <form>
-            <input
-              class="search-input ellipsis"
-              type="text"
-              placeholder="search"
-              onChange={this.handleSearchChange}
-            ></input>
-            <button onClick="submit" class="search-button">
-              <IconContext.Provider value={{ className: "search-icon" }}>
-                <FiSearch />
-              </IconContext.Provider>
-            </button>
-          </form>
-        </div>
-
-        {!this.props.isLoggedIn && (
-          /*Link to the Login and Signup components */
-          <div>
-            <button>
-              <Link to="/login">Log-in</Link>
-            </button>
+          <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
+            3
           </div>
-        )}
-
-        {this.props
-          .isLoggedIn /*Will display the name of the current user and will link to that user's profile aswell as a log out button if the user is logged in*/ && (
-          <div>
-            <h3>{this.props.user}</h3>
-            <button onClick={this.logOut}>log-out</button>
-          </div>
-        )}
+        </div>
       </nav>
     );
   };
