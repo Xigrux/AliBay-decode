@@ -9,7 +9,8 @@ class UnconnectedSignup extends Component {
       username: "",
       email: "",
       password: "",
-      signupType: ""
+      signupType: "",
+      region: ""
     };
   }
 
@@ -32,6 +33,10 @@ class UnconnectedSignup extends Component {
     console.log("signup type? ", event.target.value);
     this.setState({ signupType: event.target.value });
   };
+  handleRegionSelect = event => {
+    console.log("Selected Region:", event.target.value);
+    this.setState({ region: event.target.value });
+  };
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -41,6 +46,7 @@ class UnconnectedSignup extends Component {
     data.append("email", this.state.email);
     data.append("password", this.state.password);
     data.append("signupType", this.state.signupType);
+    data.append("region", this.state.region);
     let response = await fetch("/signup", {
       method: "POST",
       body: data,
@@ -66,13 +72,15 @@ class UnconnectedSignup extends Component {
           Email
           <input type="email" onChange={this.handleEmailChange} required />
           Password
-          <input type="text" onChange={this.handlePasswordChange} />
+          <input type="text" onChange={this.handlePasswordChange} required />
+          {/* ========================SIGNUP TYPES======================= */}
           User account
           <input
             type="radio"
             onChange={this.handleSignupType}
             value="users"
             name="account-type"
+            required
           />
           Merchant account
           <input
@@ -80,6 +88,43 @@ class UnconnectedSignup extends Component {
             onChange={this.handleSignupType}
             value="merchants"
             name="account-type"
+          />
+          {/* ===============================REGION SELECTION============================= */}
+          Select Region: Americas
+          <input
+            type="radio"
+            name="region-select"
+            value="Americas"
+            onClick={this.handleRegionSelect}
+            required
+          />
+          Asia
+          <input
+            type="radio"
+            name="region-select"
+            value="Asia"
+            onClick={this.handleRegionSelect}
+          />
+          Europe
+          <input
+            type="radio"
+            name="region-select"
+            value="Europe"
+            onClick={this.handleRegionSelect}
+          />
+          Africa
+          <input
+            type="radio"
+            name="region-select"
+            value="Africa"
+            onClick={this.handleRegionSelect}
+          />
+          Oceania
+          <input
+            type="radio"
+            name="region-select"
+            value="Oceania"
+            onClick={this.handleRegionSelect}
           />
           <input type="submit" />
         </form>
