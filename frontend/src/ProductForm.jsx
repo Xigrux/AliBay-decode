@@ -150,14 +150,13 @@ class UnconnectedProductForm extends Component {
   };
 }
 
-// connect component to Provider and store
-
 let mapStateToProps = state => {
   return {
     name: state.username
   };
 };
 
+// connect component to Provider and store
 let ProductForm = connect(mapStateToProps)(UnconnectedProductForm);
 
 export default ProductForm;
