@@ -13,7 +13,7 @@ class UnconnectedProductForm extends Component {
       productCat: "",
       assocTags: [],
       inventory: 0,
-      files: ""
+      files: []
     };
   }
 
@@ -68,7 +68,11 @@ class UnconnectedProductForm extends Component {
     data.append("tags", tags);
     data.append("location", this.state.productLocation);
     data.append("inventory", this.state.inventory);
-    data.append("files", this.state.files);
+
+    for (let i = 0; i < this.state.files.length; i++) {
+      data.append("files", this.state.files[i]);
+    }
+
     let response = await fetch("/add-product", {
       // fix fetch request path
       method: "POST",
