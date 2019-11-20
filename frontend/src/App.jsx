@@ -30,6 +30,10 @@ class UnconnectedApp extends Component {
     let categoryRoute = routerData.match.params.productCategory;
     return <ProductCategory category={categoryRoute} />;
   };
+  renderProductPage = routerData => {
+    let productId = routerData.match.params.productId;
+    return <ProductPage id={productId} />;
+  };
   componentDidMount = async () => {};
   render() {
     return (
@@ -53,9 +57,11 @@ class UnconnectedApp extends Component {
               exact={true}
               render={this.renderProductCategory}
             ></Route>
-            <Route path="/product/:productId" exact={true}>
-              <ProductPage />
-            </Route>
+            <Route
+              path="/product/:productId"
+              exact={true}
+              render={this.renderProductPage}
+            ></Route>
             <Route path="/merchant/:merchantId" exact={true}>
               <MerchantPage />
             </Route>
