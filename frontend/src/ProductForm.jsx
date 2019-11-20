@@ -159,13 +159,41 @@ class UnconnectedProductForm extends Component {
             required
           />
           {/* LOCATION */}
-          <label htmlFor="prod-location">Location</label>
+          Select product location: Americas
           <input
-            id="prod-location"
-            type="text"
-            value={this.state.productLocation}
-            onChange={this.handleLocationChange}
+            type="radio"
+            name="region-select"
+            value="Americas"
+            onClick={this.handleLocationChange}
             required
+          />
+          Asia
+          <input
+            type="radio"
+            name="region-select"
+            value="Asia"
+            onClick={this.handleLocationChange}
+          />
+          Europe
+          <input
+            type="radio"
+            name="region-select"
+            value="Europe"
+            onClick={this.handleLocationChange}
+          />
+          Africa
+          <input
+            type="radio"
+            name="region-select"
+            value="Africa"
+            onClick={this.handleLocationChange}
+          />
+          Oceania
+          <input
+            type="radio"
+            name="region-select"
+            value="Oceania"
+            onClick={this.handleLocationChange}
           />
           {/* INVENTORY */}
           <label htmlFor="prod-inventory">Inventory</label>
