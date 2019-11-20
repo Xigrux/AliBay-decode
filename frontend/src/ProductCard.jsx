@@ -7,12 +7,17 @@ class ProductCard extends Component {
       //Each item card will link to that item page.
       //The data displayed on the card will be passed down from the parent component as props
       //The parent component will map through the array of items received from the db and display a product card for each
-      <Link to={"/product/" + this.props.id}>
-        <img src={this.props.frontEndPath}></img>
-        <div>Title:{this.props.title}</div>
-        <div>smol desc:{this.props.description}</div>
-        <div>price:{this.props.price}</div>
-        <div>rating:{this.props.rating}</div>
+      <Link to={"/product/" + this.props.itemContents._id}>
+        <div>Title:{this.props.itemContents.productName}</div>
+        <div>smol desc:{this.props.itemContents.descriptionHeader}</div>
+        {/* will need to map through the posts array and create an img element foreach */}
+        <img
+          src={this.props.itemContents.posts[0]}
+          style={{ height: "40px" }}
+        ></img>
+        <div>price:{this.props.itemContents.price}</div>
+        {/* will need to get the average from all of the ratings in the ratings object */}
+        <div>rating:{this.props.itemContents.ratings[0]}</div>
       </Link>
     );
   };
