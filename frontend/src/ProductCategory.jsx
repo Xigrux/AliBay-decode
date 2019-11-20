@@ -32,27 +32,14 @@ let dummyDataItems = [
     rating: "3"
   }
 ];
-//gets all of the tags from the each of the items
-let allTags = [];
-dummyDataItems.forEach(item => {
-  item.tags.forEach(tag => {
-    allTags.push(tag);
-  });
-});
-//filters out the duplicate values so as to have unique tag buttons
-let filteredTags = [];
-allTags.forEach(tag => {
-  if (!filteredTags.includes(tag)) {
-    filteredTags.push(tag);
-  }
-});
 
 class UnconnectedProductCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
       filters: [],
-      itemsData: []
+      itemsData: [],
+      tagButtons: []
     };
   }
   componentDidMount = () => {
@@ -64,7 +51,7 @@ class UnconnectedProductCategory extends Component {
     let category = this.props.category;
     let data = new FormData();
     data.append("category", category);
-    let response = await fetch("/renderCategory", {
+    let response = await fetch("/render-category", {
       method: "POST",
       body: data
     });
@@ -72,7 +59,28 @@ class UnconnectedProductCategory extends Component {
     body = JSON.parse(body);
     this.setState({ itemsData: body });
     console.log("fetch response for category:", category, ", items:", body);
+    //calls method that will generate the appropriate tag filter buttons!
+    this.genFilterTags();
   };
+  genFilterTags = () => {
+    //gets all of the tags from the each of the items
+    let allTags = [];
+    this.state.itemsData.items.forEach(item => {
+      item.tags.forEach(tag => {
+        allTags.push(tag);
+      });
+    });
+    //filters out the duplicate values so as to have unique tag buttons
+    let filteredTags = [];
+    allTags.forEach(tag => {
+      if (!filteredTags.includes(tag)) {
+        filteredTags.push(tag);
+      }
+    });
+    //add the tag 'buttons' to the state
+    this.setState({ tagButtons: filteredTags });
+  };
+
   handleTagUpdate = event => {
     //if innactive, set the class to active and add the value to the filters array in the state
     if (event.target.className === "innactive") {
@@ -91,7 +99,8 @@ class UnconnectedProductCategory extends Component {
   };
 
   render = () => {
-    let tagButtons = filteredTags.map(tag => {
+    console.log("ITEMS IN ITEMDATA !!:", this.state.itemsData);
+    let tagButtons = this.state.tagButtons.map(tag => {
       //"-" in place temporarily to visually differenciate the buttons
       return (
         <button
@@ -108,25 +117,14 @@ class UnconnectedProductCategory extends Component {
     let itemCards = <div>HEllow</div>;
     if (this.state.itemsData.items !== undefined) {
       itemCards = this.state.itemsData.items.map(item => {
-        return (
-          <ProductCard
-            id={item.id}
-            title={item.productName}
-            frontEndPath={item.frontEndPath}
-            tags={item.tags}
-            description={item.descriptionHeader}
-            price={item.price}
-            rating={item.rating}
-          ></ProductCard>
-        );
+        return <ProductCard itemContents={item}></ProductCard>;
       });
 
       // if there are filters in place, modify the itemCards array
       if (this.state.filters[0] !== undefined) {
-        console.log("All active filters", this.state.filters);
         this.state.filters.forEach(tag => {
           itemCards = itemCards.filter(itemCard => {
-            return itemCard.props.tags.includes(tag);
+            return itemCard.props.itemContents.tags.includes(tag);
           });
         });
       }
