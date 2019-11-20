@@ -64,7 +64,8 @@ class UnconnectedSignup extends Component {
     }
     this.props.dispatch({
       type: "login-success",
-      user: parsedBody.user
+      user: parsedBody.user,
+      cart: []
     });
   };
 

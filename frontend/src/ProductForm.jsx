@@ -165,6 +165,7 @@ class UnconnectedProductForm extends Component {
             name="region-select"
             value="Americas"
             onClick={this.handleLocationChange}
+            checked
             required
           />
           Asia
