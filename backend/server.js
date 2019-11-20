@@ -28,13 +28,35 @@ MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
 });
 
 //=============================== GET ENDPOINTS ===============================//
-app.get("/test", (req, res) => {
-  res.send("Backend connected");
+app.get("/renderCategory", (req, res) => {
+  //name of the category
+  let category = req.body.category;
+  //page number of items being displayed
+  let pageNo = req.body.offset;
+  //max number of items being displayed
+  let max = req.body.max;
+  //give the sort parameter (quantity, price, whatever). Has to match the parameter name in the database
+  let sortParam = req.body.sortParam;
+  //give sort direction. Asc is 1, desc is -1
+  let direction = req.body.direction;
+  let currentPage = pageNo * max;
+  let sort = {};
+  sort[sortParam] = direction;
+  dbo
+    .collection("item")
+    .find({ category })
+    .sort(sort)
+    .limit(max)
+    .skip(currentPage)
+    .toArray((err, items) => {
+      if (err) {
+        console.log("Error getting product list");
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ items }));
+    });
 });
 
-app.get("/test-image", (req, res) => {
-  res.send("/uploads/test.png");
-});
 //=============================== POST ENDPOINTS ===============================//
 
 app.post("/signup", upload.none(), (req, res) => {
@@ -167,35 +189,6 @@ app.post("/product-page", upload.none(), (req, res) => {
     console.log("Item: ", item);
     res.send(JSON.stringify({ success: true, item }));
   });
-});
-
-app.post("/product-list", upload.none(), (req, res) => {
-  //name of the category
-  let category = req.body.category;
-  //page number of items being displayed
-  let pageNo = req.body.offset;
-  //max number of items being displayed
-  let max = req.body.max;
-  //give the sort parameter (quantity, price, whatever). Has to match the parameter name in the database
-  let sortParam = req.body.sortParam;
-  //give sort direction. Asc is 1, desc is -1
-  let direction = req.body.direction;
-  let currentPage = pageNo * max;
-  let sort = {};
-  sort[sortParam] = direction;
-  dbo
-    .collection("item")
-    .find({ category })
-    .sort(sort)
-    .limit(max)
-    .skip(currentPage)
-    .toArray((err, items) => {
-      if (err) {
-        console.log("Error getting product list");
-        return res.send(JSON.stringify({ success: false }));
-      }
-      return res.send(JSON.stringify({ items }));
-    });
 });
 
 //app.post("/merchant-invetory");
