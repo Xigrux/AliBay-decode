@@ -61,6 +61,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   let ratings = {};
   let posts = [];
   let tags = req.body.tags;
+  tags = tags.split(" ");
   let category = req.body.category;
   console.log(req);
   console.log("-------------------------------------");
