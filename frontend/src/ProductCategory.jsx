@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProductCard from "./ProductCard.jsx";
-import Navbar from "./Navbar.jsx";
 
 //======================dummy data========================
 let dummyDataItems = [
@@ -48,7 +47,7 @@ allTags.forEach(tag => {
   }
 });
 
-class UnconnectedProductCategories extends Component {
+class UnconnectedProductCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -111,7 +110,6 @@ class UnconnectedProductCategories extends Component {
     }
     return (
       <div>
-        <Navbar></Navbar>
         {tagButtons}
         {itemCards}
       </div>
@@ -123,6 +121,6 @@ let mapStateToProps = st => {
   return { username: st.username };
 };
 
-let ProductCategories = connect(mapStateToProps)(UnconnectedProductCategories);
+let ProductCategory = connect(mapStateToProps)(UnconnectedProductCategory);
 
-export default ProductCategories;
+export default ProductCategory;

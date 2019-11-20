@@ -5,7 +5,6 @@ import ReactDom from "react-dom";
 import "normalize.css";
 import "./style/style.css";
 import "./style/brand.css";
-import "./style/navbar.css";
 
 import React from "react";
 import { Provider } from "react-redux";

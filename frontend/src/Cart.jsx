@@ -23,27 +23,32 @@ class UnconnectedCart extends Component {
     return parsedBody;
   };
   render = () => {
-    let cart = this.getCartItems();
-    let items = this.props.itemIds.map((itemId, index) => {
-      let quantityToBuy = 0;
+    // let cart = this.getCartItems();
+    // let items = this.props.itemIds.map((itemId, index) => {
+    //   let quantityToBuy = 0;
 
-      cart.forEach(item => {
-        if (item.productName === cart[index].productName) {
-          quantityToBuy++;
-        }
-      });
-      return (
-        <div>
-          <div>{cart[index].productName}</div>
-          <div>Quantity: {quantityToBuy}</div>
-          <div>
-            <Link to={"/product/" + itemId}>View item</Link>
-          </div>
-          <div>{cart[index].descriptionBody}</div>
-        </div>
-      );
-    });
-    return items; // TODO: filter items to prevent duplicates from being displayed
+    //   cart.forEach(item => {
+    //     if (item.productName === cart[index].productName) {
+    //       quantityToBuy++;
+    //     }
+    //   });
+    //   return (
+    //     <div>
+    //       <div>{cart[index].productName}</div>
+    //       <div>Quantity: {quantityToBuy}</div>
+    //       <div>
+    //         <Link to={"/product/" + itemId}>View item</Link>
+    //       </div>
+    //       <div>{cart[index].descriptionBody}</div>
+    //     </div>
+    //   );
+    // });
+    // return items; // TODO: filter items to prevent duplicates from being displayed
+    return (
+      <>
+        cart <Link to="/checkout">checkout</Link>
+      </>
+    );
   };
 }
 
