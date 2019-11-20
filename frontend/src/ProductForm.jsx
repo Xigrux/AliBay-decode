@@ -68,11 +68,14 @@ class UnconnectedProductForm extends Component {
     data.append("tags", tags);
     data.append("location", this.state.productLocation);
     data.append("inventory", this.state.inventory);
-
-    for (let i = 0; i < this.state.files.length; i++) {
-      data.append("files", this.state.files[i]);
+    if (this.state.files !== undefined) {
+      console.log("in append");
+      for (let i = 0; i < this.state.files.length; i++) {
+        data.append("files", this.state.files[i]);
+      }
+    } else {
+      data.append("files", this.state.files);
     }
-
     let response = await fetch("/add-product", {
       // fix fetch request path
       method: "POST",

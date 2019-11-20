@@ -71,16 +71,18 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   console.log("-------------------------------------");
   console.log("MEDIA");
   console.log(media);
+
+  //always push default
+  console.log("image is default");
+  let frontendPath = ["/uploads/default.png"];
+  posts.push(frontendPath);
+
   if (media !== undefined) {
     for (let i = 0; i < media.length; i++) {
       console.log("Uploaded file " + media[i]);
       let frontendPath = "/uploads/" + media[i].filename;
       posts.push(frontendPath);
     }
-  } else {
-    console.log("image is default");
-    let frontendPath = ["/uploads/default.png"];
-    posts.push(frontendPath);
   }
   //find sellerID from merchants database
   dbo.collection("merchants").findOne({ username }),
