@@ -20,7 +20,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 // settings for mongo
 let dbo;
 let url =
-  "mongodb+srv://lulul:123@cluster0-jjd2c.mongodb.net/test?retryWrites=true&w=majority";
+  "mongodb+srv://XGD:5qXpWm4DZzeoWN6k@cluster0-xc8we.mongodb.net/test?retryWrites=true&w=majority";
 app.use("/", express.static("build"));
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
@@ -79,9 +79,9 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     }
   }
   //find sellerID from merchants database
-  dbo.collection("merchants").findOne({ username }), (err, user) => {
+  dbo.collection("merchants").findOne({ username }, (err, user) => {
     sellerName = user._id;
-  };
+  });
   dbo.collection("items").insertOne({
     productName,
     username,
@@ -95,6 +95,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     tags,
     category
   });
+  res.send(JSON.stringify({ success: true }));
 });
 
 app.post("/rating", upload.none(), (req, res) => {

@@ -40,7 +40,9 @@ let signup = (req, res, dbo) => {
       region,
       userType,
       cart: [],
-      purchased: []
+      purchased: [],
+      inventory: [],
+      salesHistory: []
     });
     res.send(
       JSON.stringify({
@@ -52,7 +54,9 @@ let signup = (req, res, dbo) => {
           region,
           userType,
           cart: [],
-          purchased: []
+          purchased: [],
+          inventory: [],
+          salesHistory: []
         }
       })
     );
