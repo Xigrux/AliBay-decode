@@ -7,12 +7,14 @@ let signup = (req, res, dbo) => {
   let password = req.body.password;
   let email = req.body.email;
   let region = req.body.region;
+  let userType = req.body.signupType;
 
   if (
     username === undefined ||
     password === undefined ||
     email === undefined ||
-    region === undefined
+    region === undefined ||
+    userType === undefined
   ) {
     return res.send(JSON.stringify({ success: false }));
   }
@@ -36,6 +38,7 @@ let signup = (req, res, dbo) => {
       password,
       email,
       region,
+      userType,
       cart: [],
       purchased: []
     });
@@ -75,6 +78,7 @@ let login = (req, res, dbo) => {
       return res.send(JSON.stringify({ success: true, user }));
     }
     //default: no login
+
     console.log("DEFAULT RESPONSE");
 
     res.send(JSON.stringify({ success: false }));

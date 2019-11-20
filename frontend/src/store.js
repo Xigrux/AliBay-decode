@@ -3,7 +3,7 @@ import { createStore } from "redux";
 
 let reducer = (state, action) => {
   if (action.type === "login-success") {
-    return { ...state, loggedIn: true, username: action.username };
+    return { ...state, loggedIn: true, user: action.user };
   }
   if (action.type === "logout-success") {
     return { ...state, loggedIn: false };
@@ -15,7 +15,7 @@ let reducer = (state, action) => {
 let initialState = {
   test: "Store connected",
   loggedIn: false,
-  username: "" // user object containing all user info
+  user: undefined // user object containing all user info
   // ADD CART IN STATE OF STORE!!!
 };
 

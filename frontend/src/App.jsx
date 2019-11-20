@@ -60,16 +60,17 @@ class UnconnectedApp extends Component {
                   <Login />
                 </>
               )}
-              {this.props.isLoggedIn && this.props.signupType === "users" && (
+              {this.props.isLoggedIn && this.props.user.userType === "users" && (
                 <>
                   <UserDashboard />
                 </>
               )}
-              {this.props.isLoggedIn && this.props.signupType === "merchants" && (
-                <>
-                  <MerchantDashboard />
-                </>
-              )}
+              {this.props.isLoggedIn &&
+                this.props.user.userType === "merchants" && (
+                  <>
+                    <MerchantDashboard />
+                  </>
+                )}
             </Route>
             <Route path="/checkout" exact={true}>
               <Checkout />
@@ -83,9 +84,11 @@ class UnconnectedApp extends Component {
 
 //COMPONENT REDUX
 // states from store being mapped to the component props
-let propList = parentState => {
-  return { test: parentState.test };
+
+let mapStateToProps = st => {
+  return { isLoggedIn: st.loggedIn, user: st.user };
 };
-let App = connect(propList)(UnconnectedApp);
+
+let App = connect(mapStateToProps)(UnconnectedApp);
 
 export default App;

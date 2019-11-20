@@ -9,7 +9,8 @@ class UnconnectedLogin extends Component {
     this.state = {
       username: "",
       password: "",
-      signupType: ""
+      signupType: "",
+      user: undefined
     };
   }
   // UNCOMMENT WHEN ENDPOINT IS ACTIVE
@@ -62,10 +63,11 @@ class UnconnectedLogin extends Component {
       window.alert("Login failed, check your credentials");
       return;
     }
+    this.setState({ user: parsedBody.user });
     window.alert("Login successful");
     this.props.dispatch({
       type: "login-success",
-      username: this.state.username // LULU UPDATE: SEND OBJECT TO STORE REGION ETC
+      user: this.state.user // LULU UPDATE: SEND OBJECT TO STORE REGION ETC
     });
   };
 
