@@ -68,18 +68,20 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   console.log("MEDIA");
   console.log(media);
 
-  //always push default
-  console.log("image is default");
-  let frontendPath = ["/uploads/default.png"];
-  posts.push(frontendPath);
-
-  if (media !== undefined) {
+  if (media.length === 0) {
+    console.log("image is default");
+    let frontendPath = "/uploads/default.png";
+    posts.push(frontendPath);
+  } else if (media.length > 0) {
     for (let i = 0; i < media.length; i++) {
       console.log("Uploaded file " + media[i]);
       let frontendPath = "/uploads/" + media[i].filename;
       posts.push(frontendPath);
     }
   }
+
+  console.log("posts: ", posts);
+  //always push default
   //find sellerID from merchants database
   dbo.collection("merchants").findOne({ username }, (err, user) => {
     sellerName = user._id;
@@ -168,7 +170,7 @@ app.post("/render-category", upload.none(), (req, res) => {
   let sort = {};
   sort[sortParam] = direction;
   dbo
-    .collection("item")
+    .collection("items")
     .find({ category })
     .sort(sort)
     .limit(max)
