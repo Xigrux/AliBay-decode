@@ -123,7 +123,7 @@ class UnconnectedLogin extends Component {
         </form>
 
         <Link to="/signup">
-          <button class="subtle-button"></button>
+          <button class="subtle-button">signup instead</button>
         </Link>
       </section>
     );

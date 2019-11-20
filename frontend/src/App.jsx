@@ -39,9 +39,6 @@ class UnconnectedApp extends Component {
             <Route path="/" exact={true}>
               <Homepage />
             </Route>
-            <Route path="/login" exact={true}>
-              <Login />
-            </Route>
             <Route path="/signup" exact={true}>
               <Signup />
             </Route>
@@ -57,11 +54,22 @@ class UnconnectedApp extends Component {
             <Route path="/merchant/:merchantId" exact={true}>
               <MerchantPage />
             </Route>
-            <Route path="/user-dashboard" exact={true}>
-              <UserDashboard />
-            </Route>
-            <Route path="/merchant-dashboard" exact={true}>
-              <MerchantDashboard />
+            <Route path="/dashboard" exact={true}>
+              {!this.props.isLoggedIn && (
+                <>
+                  <Login />
+                </>
+              )}
+              {this.props.isLoggedIn && this.props.signupType === "users" && (
+                <>
+                  <UserDashboard />
+                </>
+              )}
+              {this.props.isLoggedIn && this.props.signupType === "merchants" && (
+                <>
+                  <MerchantDashboard />
+                </>
+              )}
             </Route>
             <Route path="/checkout" exact={true}>
               <Checkout />

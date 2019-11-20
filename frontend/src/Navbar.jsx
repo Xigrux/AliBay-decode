@@ -31,7 +31,7 @@ class UnconnecterNavbar extends Component {
         {!this.props.isLoggedIn && (
           /*Link to the Login and Signup components */
           <button class="user">
-            <Link to="/login">Login</Link>
+            <Link to="/dashboard">Login</Link>
           </button>
         )}
 
