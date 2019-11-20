@@ -92,6 +92,7 @@ let login = (req, res, dbo) => {
       //password match. login success. generate session ID
       let sid = generateSID();
       dbo.collection("cookies").insertOne({ username, sid });
+      res.cookie("sid", sid);
       return res.send(JSON.stringify({ success: true, user }));
     }
     //default: no login
