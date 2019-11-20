@@ -51,6 +51,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   let media = req.files;
   let productName = req.body.name;
   let username = req.body.sellerName;
+  let price = req.body.price;
   let descriptionHeader = req.body.descriptionHeader;
   let descriptionText = req.body.descriptionText;
   let location = req.body.location;
@@ -60,24 +61,27 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   let ratings = {};
   let posts = [];
   let tags = req.body.tags;
+  tags = tags.split(" ");
   let category = req.body.category;
   console.log(req);
   console.log("-------------------------------------");
   console.log("MEDIA");
   console.log(media);
 
-  //always push default
-  console.log("image is default");
-  let frontendPath = ["/uploads/default.png"];
-  posts.push(frontendPath);
-
-  if (media !== undefined) {
+  if (media.length === 0) {
+    console.log("image is default");
+    let frontendPath = "/uploads/default.png";
+    posts.push(frontendPath);
+  } else if (media.length > 0) {
     for (let i = 0; i < media.length; i++) {
       console.log("Uploaded file " + media[i]);
       let frontendPath = "/uploads/" + media[i].filename;
       posts.push(frontendPath);
     }
   }
+
+  console.log("posts: ", posts);
+  //always push default
   //find sellerID from merchants database
   dbo.collection("merchants").findOne({ username }, (err, user) => {
     sellerName = user._id;
@@ -85,6 +89,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   dbo.collection("items").insertOne({
     productName,
     username,
+    price,
     descriptionHeader,
     descriptionText,
     location,
@@ -150,7 +155,7 @@ app.post("/search", upload.none(), (req, res) => {
     });
 });
 
-app.post("/renderCategory", upload.none(), (req, res) => {
+app.post("/render-category", upload.none(), (req, res) => {
   //name of the category
   let category = req.body.category;
   // //page number of items being displayed
@@ -164,6 +169,7 @@ app.post("/renderCategory", upload.none(), (req, res) => {
   // let currentPage = pageNo * max;
   // let sort = {};
   // sort[sortParam] = direction;
+
   dbo
     .collection("items")
     .find({ category })
@@ -172,7 +178,7 @@ app.post("/renderCategory", upload.none(), (req, res) => {
     // .skip(currentPage)
     .toArray((err, items) => {
       if (err) {
-        console.log("Error getting product list");
+        console.log("Error getting product list", err);
         return res.send(JSON.stringify({ success: false }));
       }
       return res.send(JSON.stringify({ items }));
@@ -181,13 +187,16 @@ app.post("/renderCategory", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
-    if (err) {
-      console.log("Error getting merchant product list");
-      return res.send(JSON.stringify({ success: false }));
-    }
-    return res.send(JSON.stringify({ success: true, items }));
-  });
+  dbo
+    .collections("items")
+    .find({ _id: userId })
+    .toArray((err, items) => {
+      if (err) {
+        console.log("Error getting merchant product list");
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, items }));
+    });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
