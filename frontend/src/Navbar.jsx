@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { FiSearch, FiShoppingBag } from "react-icons/fi";
+import Login from "./Login.jsx";
 
 class UnconnecterNavbar extends Component {
   constructor(props) {
@@ -37,10 +38,12 @@ class UnconnecterNavbar extends Component {
 
         {this.props.isLoggedIn && (
           /*Will display the name of the current user and will link to that user's profile aswell as a log out button if the user is logged in*/
-          <>
-            <h3>{this.props.user.username}</h3>
+          <div>
+            <Link to="/dashboard">
+              <div>{this.props.user.username}</div>
+            </Link>
             <button onClick={this.logOut}>log-out</button>
-          </>
+          </div>
         )}
 
         <form class="seachbar">
@@ -56,16 +59,35 @@ class UnconnecterNavbar extends Component {
           </button>
         </form>
 
-        <div class="cart flex-container flex-center-h flex-center-v">
-          <Link to="/cart">
-            <IconContext.Provider value={{ className: "cart-icon" }}>
-              <FiShoppingBag />
-            </IconContext.Provider>
-          </Link>
-          <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
-            3
+        {this.props.isLoggedIn && this.props.user.userType === "users" && (
+          <div class="cart flex-container flex-center-h flex-center-v">
+            <>
+              <Link to="/cart">
+                <IconContext.Provider value={{ className: "cart-icon" }}>
+                  <FiShoppingBag />
+                </IconContext.Provider>
+              </Link>
+            </>
+            <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
+              3
+            </div>
           </div>
-        </div>
+        )}
+
+        {!this.props.isLoggedIn && (
+          <div class="cart flex-container flex-center-h flex-center-v">
+            <>
+              <Link to="/dashboard">
+                <IconContext.Provider value={{ className: "cart-icon" }}>
+                  <FiShoppingBag />
+                </IconContext.Provider>
+              </Link>
+            </>
+            <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
+              3
+            </div>
+          </div>
+        )}
       </nav>
     );
   };
