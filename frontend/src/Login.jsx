@@ -14,17 +14,6 @@ class UnconnectedLogin extends Component {
       cart: undefined
     };
   }
-  // UNCOMMENT WHEN ENDPOINT IS ACTIVE
-  // componentDidMount = () => {
-  //   let autoLogin = async () => {
-  //     console.log("auto-login hit");
-  //     await fetch("/autologin", {
-  //       method: "POST"
-  //     });
-  //     this.props.dispatch({ type: "login-success" });
-  //   };
-  //   autoLogin();
-  // };
 
   handleUsernameChange = event => {
     console.log("new login username", event.target.value);
