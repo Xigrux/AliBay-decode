@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import AddToCart from "./AddToCart.jsx";
 
 class unconnectedProductPage extends Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class unconnectedProductPage extends Component {
         <div>Category: {this.state.itemDetails.category}</div>
         <div>Tags: {tags}</div>
         <div>Seller: {this.state.itemDetails.username}</div>
+        <AddToCart></AddToCart>
       </div>
     );
   };
