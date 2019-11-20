@@ -63,7 +63,7 @@ class UnconnectedSignup extends Component {
     }
     this.props.dispatch({
       type: "login-success",
-      givenUsername: this.state.username
+      user: parsedBody.user
     });
   };
 

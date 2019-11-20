@@ -9,8 +9,8 @@ class UnconnecterNavbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      search: ""
+      user: undefined,
+      search: undefined
     };
   }
   handleSearchChange = event => {
@@ -38,7 +38,7 @@ class UnconnecterNavbar extends Component {
         {this.props.isLoggedIn && (
           /*Will display the name of the current user and will link to that user's profile aswell as a log out button if the user is logged in*/
           <>
-            <h3>{this.props.user}</h3>
+            <h3>{this.props.user.username}</h3>
             <button onClick={this.logOut}>log-out</button>
           </>
         )}
@@ -72,7 +72,7 @@ class UnconnecterNavbar extends Component {
 }
 
 let mapStateToProps = st => {
-  return { isLoggedIn: st.loggedIn, user: st.username };
+  return { isLoggedIn: st.loggedIn, user: st.user };
 };
 
 let Navbar = connect(mapStateToProps)(UnconnecterNavbar);

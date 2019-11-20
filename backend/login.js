@@ -42,7 +42,20 @@ let signup = (req, res, dbo) => {
       cart: [],
       purchased: []
     });
-    res.send({ success: true });
+    res.send(
+      JSON.stringify({
+        success: true,
+        user: {
+          username,
+          password,
+          email,
+          region,
+          userType,
+          cart: [],
+          purchased: []
+        }
+      })
+    );
   });
 };
 
