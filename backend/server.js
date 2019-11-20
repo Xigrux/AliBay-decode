@@ -41,15 +41,7 @@ app.post("/login", upload.none(), (req, res) => {
 });
 
 app.post("/auto-login", upload.none(), (req, res) => {
-  let sid = req.cookie.sid;
-  dbo.collection("cookies").findOne({ sid }, (err, sid) => {
-    if (err) {
-      return res.send(JSON.stringify({ success: false }));
-    }
-    if (sid !== null) {
-      return res.send(JSON.stringify({ success: true }));
-    }
-  });
+  login.autoLogin(req, res, dbo);
 });
 
 //this endpoint is used to check if a username has been taken
