@@ -28,16 +28,16 @@ class UnconnectedApp extends Component {
   }
 
   // Autologin
-  componentDidMount = () => {
-    let autoLogin = async () => {
-      console.log("auto-login hit");
-      await fetch("/autologin", {
-        method: "POST"
-      });
-      this.props.dispatch({ type: "login-success" });
-    };
-    autoLogin();
-  };
+  // componentDidMount = () => {
+  //   let autoLogin = async () => {
+  //     console.log("auto-login hit");
+  //     await fetch("/autologin", {
+  //       method: "POST"
+  //     });
+  //     this.props.dispatch({ type: "login-success" });
+  //   };
+  //   autoLogin();
+  // };
 
   render() {
     return (
