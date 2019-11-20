@@ -49,7 +49,7 @@ class UnconnecterNavbar extends Component {
             type="text"
             onChange={this.handleSearchChange}
           ></input>
-          <button onClick="submit" class="search-button">
+          <button type="submit" class="search-button">
             <IconContext.Provider value={{ className: "search-icon" }}>
               <FiSearch />
             </IconContext.Provider>
