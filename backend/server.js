@@ -4,6 +4,7 @@ let multer = require("multer");
 let cors = require("cors");
 let MongoClient = require("mongodb").MongoClient;
 let ObjectID = require("mongodb").ObjectID;
+let cookieParser = require("cookie-parser");
 let login = require("./login.js");
 let cart = require("./cart.js");
 
@@ -16,6 +17,7 @@ let upload = multer({
 app.use("/uploads", express.static("uploads"));
 // setting for cors, do not touch, frontend is on localhost3000
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cookieParser());
 
 // settings for mongo
 let dbo;
@@ -252,6 +254,12 @@ app.post("/confirm-payement", upload.none(), (req, res) => {
 
   return res.send(JSON.stringify({ success: true, items }));
 });
+
+// app.post("/update", upload.none(), (req, res) => {
+//   let username = "Xav";
+//   dbo.collection("items").updateMany({}, { $set: { username } });
+//   res.send(JSON.stringify({ success: true }));
+// });
 
 //app.post("/purchase-history")
 
