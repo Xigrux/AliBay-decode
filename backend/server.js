@@ -40,6 +40,18 @@ app.post("/login", upload.none(), (req, res) => {
   login.login(req, res, dbo);
 });
 
+app.post("/auto-login", upload.none(), (req, res) => {
+  let sid = req.cookie.sid;
+  dbo.collection("cookies").findOne({ sid }, (err, sid) => {
+    if (err) {
+      return res.send(JSON.stringify({ success: false }));
+    }
+    if (sid !== null) {
+      return res.send(JSON.stringify({ success: true }));
+    }
+  });
+});
+
 //this endpoint is used to check if a username has been taken
 app.post("/username-taken", upload.none(), (req, res) => {
   login.usernameTaken();
@@ -65,7 +77,6 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   tags = tags.split(" ");
   console.log("tags: ", tags);
   let category = req.body.category;
-  let successToken;
   // console.log(req);
   console.log("-------------------------------------");
   console.log("MEDIA");
@@ -83,35 +94,32 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     }
   }
 
-  console.log("posts: ", posts);
+  // console.log("posts: ", posts);
   //always push default
   //find sellerID from merchants database
+  console.log("seller:", username);
   dbo.collection("merchants").findOne({ username }, (err, user) => {
     if (err || user === null) {
-      return (successToken = false);
+      return res.send(JSON.stringify({ success: false }));
     }
-    sellerName = user._id;
+    console.log("Found user");
+    username = user._id;
+    dbo.collection("items").insertOne({
+      productName,
+      username,
+      price,
+      descriptionHeader,
+      descriptionText,
+      location,
+      inventory,
+      date,
+      ratings,
+      posts,
+      tags,
+      category
+    });
+    return res.send(JSON.stringify({ success: true }));
   });
-
-  if (!successToken) {
-    return res.send(JSON.stringify({ success: false }));
-  }
-
-  dbo.collection("items").insertOne({
-    productName,
-    username,
-    price,
-    descriptionHeader,
-    descriptionText,
-    location,
-    inventory,
-    date,
-    ratings,
-    posts,
-    tags,
-    category
-  });
-  return res.send(JSON.stringify({ success: true }));
 });
 
 app.post("/rating", upload.none(), (req, res) => {
