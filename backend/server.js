@@ -65,15 +65,15 @@ app.post("/add-product", upload.array("media"), (req, res) => {
   let posts;
   let tags = req.body.tags;
   let category = req.body.category;
-  let frontendPath;
   if (media !== undefined) {
     for (let i = 0; i < media.length; i++) {
       console.log("Uploaded file " + media[i]);
-      frontendPath = "/uploads/" + media[i].filename;
+      let frontendPath = "/uploads/" + media[i].filename;
       posts.push(frontendPath);
     }
   } else {
-    frontendPath = ["/uploads/default.png"];
+    let frontendPath = ["/uploads/default.png"];
+    posts.push(frontendPath);
   }
   //find sellerID from merchants database
   dbo.collection("merchants").findOne({ username }),
@@ -89,7 +89,7 @@ app.post("/add-product", upload.array("media"), (req, res) => {
     inventory,
     date,
     ratings,
-    frontendPath,
+    posts,
     tags,
     category
   });

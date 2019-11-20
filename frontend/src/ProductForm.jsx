@@ -27,7 +27,7 @@ class UnconnectedProductForm extends Component {
     console.log("new description: ", event.target.value);
     this.setState({ productDescHeader: event.target.value });
   };
-  handleDescInfoChange = event => {
+  handleDescTextChange = event => {
     console.log("new description: ", event.target.value);
     this.setState({ productDescText: event.target.value });
   };
