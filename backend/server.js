@@ -20,7 +20,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 // settings for mongo
 let dbo;
 let url =
-  "mongodb+srv://lulul:123@cluster0-jjd2c.mongodb.net/test?retryWrites=true&w=majority";
+  "mongodb+srv://XGD:5qXpWm4DZzeoWN6k@cluster0-xc8we.mongodb.net/test?retryWrites=true&w=majority";
 app.use("/", express.static("build"));
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
@@ -79,10 +79,9 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     }
   }
   //find sellerID from merchants database
-  dbo.collection("merchants").findOne({ username }),
-    (err, user) => {
-      sellerName = user._id;
-    };
+  dbo.collection("merchants").findOne({ username }, (err, user) => {
+    sellerName = user._id;
+  });
   dbo.collection("items").insertOne({
     productName,
     username,
@@ -96,6 +95,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     tags,
     category
   });
+  res.send(JSON.stringify({ success: true }));
 });
 
 app.post("/rating", upload.none(), (req, res) => {
@@ -179,6 +179,17 @@ app.post("/renderCategory", upload.none(), (req, res) => {
     });
 });
 
+app.post("/merchant-dashboard", upload.none(), (req, res) => {
+  let userId = req.body.userId;
+  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
+    if (err) {
+      console.log("Error getting merchant product list");
+      return res.send(JSON.stringify({ success: false }));
+    }
+    return res.send(JSON.stringify({ success: true, items }));
+  });
+});
+
 app.post("/product-page", upload.none(), (req, res) => {
   let id = req.body.id;
   console.log("id: ", id);
@@ -199,31 +210,30 @@ app.post("/product-page", upload.none(), (req, res) => {
 
 app.post("/confirm-payement", upload.none(), (req, res) => {
   let id = req.body.id;
-  dbo.collection("users").findOne({ username }, (err, user) => {
-    let cart = [...user.cart];
-    let purchased = [...user.purchased];
-    let ids = cart.map(item => {
-      return ObjectID(item._id);
-    });
-    dbo
-      .collection("items")
-      .updateMany({ _id: { $in: ids } }, { $inc: { inventory: -1 } });
-    // dbo
-    //   .collection("items")
-    //   .find({ _id: { $in: ids } })
-    //   .toArray((err, items) => {
-    //     items = items.map(item => {
-    //       return item.inventory - 1;
-    //     });
-    //   });
-    cart.forEach(item => {
-      purchased.push(item);
-    });
-    cart = [];
-    dbo
-      .collection("users")
-      .updateOne({ _id: ObjectID(user._id) }, { $set: { cart, purchased } });
+  let cart = req.body.cart;
+  let purchased = req.body.purchased;
+  let ids = cart.map(item => {
+    return ObjectID(item._id);
   });
+  dbo
+    .collection("items")
+    .updateMany({ _id: { $in: ids } }, { $inc: { inventory: -1 } });
+  // dbo
+  //   .collection("items")
+  //   .find({ _id: { $in: ids } })
+  //   .toArray((err, items) => {
+  //     items = items.map(item => {
+  //       return item.inventory - 1;
+  //     });
+  //   });
+  cart.forEach(item => {
+    purchased.push(item);
+  });
+  cart = [];
+  dbo
+    .collection("users")
+    .updateOne({ _id: ObjectID(user._id) }, { $set: { cart, purchased } });
+
   return res.send(JSON.stringify({ success: true, items }));
 });
 
