@@ -7,14 +7,18 @@ let signup = (req, res, dbo) => {
   let password = req.body.password;
   let email = req.body.email;
   let region = req.body.region;
+  let userType = req.body.signupType;
+
   if (
     username === undefined ||
-    enteredPassword === undefined ||
+    password === undefined ||
     email === undefined ||
-    region === undefined
+    region === undefined ||
+    userType === undefined
   ) {
     return res.send(JSON.stringify({ success: false }));
   }
+
   //checking against database to see if email already in use
   dbo.collection(signupType).findOne({ email }, (err, user) => {
     if (err) {
@@ -22,22 +26,36 @@ let signup = (req, res, dbo) => {
       console.log("There was an error at signup: ", err);
       return res.send(JSON.stringify({ success: false, err }));
     }
+
     if (user !== null) {
       //if there is not already a user with that name, return err false
+      console.log("duplicated name");
       return res.send(JSON.stringify({ success: false, err }));
     }
     //if all goes well, user, pw and email are added to db
-
     dbo.collection(signupType).insertOne({
       username,
       password,
       email,
       region,
+      userType,
       cart: [],
       purchased: []
     });
-    res.send({ success: true });
-
+    res.send(
+      JSON.stringify({
+        success: true,
+        user: {
+          username,
+          password,
+          email,
+          region,
+          userType,
+          cart: [],
+          purchased: []
+        }
+      })
+    );
   });
 };
 
@@ -48,12 +66,13 @@ let login = (req, res, dbo) => {
   let signupType = req.body.signupType;
   let username = req.body.username;
   let enteredPassword = req.body.password;
+  console.log("credentials", signupType, username, enteredPassword);
 
   if (username === undefined || enteredPassword === undefined) {
     return res.send(JSON.stringify({ success: false }));
   }
-  dbo.collection(signupType).findOne({ username }), (err, user) => {
 
+  dbo.collection(signupType).findOne({ username }, (err, user) => {
     if (err) {
       //if database returns error, login process ends here
       console.log("There was an error at login: ", err);
@@ -72,6 +91,7 @@ let login = (req, res, dbo) => {
       return res.send(JSON.stringify({ success: true, user }));
     }
     //default: no login
+
     console.log("DEFAULT RESPONSE");
 
     res.send(JSON.stringify({ success: false }));

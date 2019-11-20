@@ -20,7 +20,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 // settings for mongo
 let dbo;
 let url =
-  "mongodb+srv://XGD:RF6hIcElSxkoQPrI@cluster0-xc8we.mongodb.net/test?retryWrites=true&w=majority";
+  "mongodb+srv://lulul:123@cluster0-jjd2c.mongodb.net/test?retryWrites=true&w=majority";
 app.use("/", express.static("build"));
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
@@ -28,13 +28,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
 });
 
 //=============================== GET ENDPOINTS ===============================//
-app.get("/test", (req, res) => {
-  res.send("Backend connected");
-});
 
-app.get("/test-image", (req, res) => {
-  res.send("/uploads/test.png");
-});
 //=============================== POST ENDPOINTS ===============================//
 
 app.post("/signup", upload.none(), (req, res) => {
@@ -51,27 +45,38 @@ app.post("/username-taken", upload.none(), (req, res) => {
   login.usernameTaken();
 });
 
-app.post("/add-product", upload.array("media"), (req, res) => {
+app.post("/add-product", upload.array("files"), (req, res) => {
+  console.log("-------------------------------------");
+  console.log("Uploaded PRODUCT");
   let media = req.files;
   let productName = req.body.name;
   let username = req.body.sellerName;
-  let description = req.body.description;
+  let descriptionHeader = req.body.descriptionHeader;
+  let descriptionText = req.body.descriptionText;
   let location = req.body.location;
   let inventory = req.body.inventory;
   let date = new Date();
   date = date.toLocaleDateString;
   let ratings = {};
-  let posts;
+  let posts = [];
   let tags = req.body.tags;
   let category = req.body.category;
+  console.log(req);
+  console.log("-------------------------------------");
+  console.log("MEDIA");
+  console.log(media);
+
+  //always push default
+  console.log("image is default");
+  let frontendPath = ["/uploads/default.png"];
+  posts.push(frontendPath);
+
   if (media !== undefined) {
     for (let i = 0; i < media.length; i++) {
       console.log("Uploaded file " + media[i]);
-      frontendPath = "/uploads/" + media[i].filename;
+      let frontendPath = "/uploads/" + media[i].filename;
       posts.push(frontendPath);
     }
-  } else {
-    frontendPath = ["/uploads/default.png"];
   }
   //find sellerID from merchants database
   dbo.collection("merchants").findOne({ username }), (err, user) => {
@@ -81,12 +86,12 @@ app.post("/add-product", upload.array("media"), (req, res) => {
     productName,
     username,
     descriptionHeader,
-    descriptionBody,
+    descriptionText,
     location,
     inventory,
     date,
     ratings,
-    frontendPath,
+    posts,
     tags,
     category
   });
@@ -144,20 +149,7 @@ app.post("/search", upload.none(), (req, res) => {
     });
 });
 
-app.post("/product-page", upload.none(), (req, res) => {
-  let id = req.body.id;
-  console.log("id: ", id);
-  dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
-    if (err) {
-      console.log("Error returning item from database");
-      return res.send(JSON.stringify({ success: false }));
-    }
-    console.log("Item: ", item);
-    res.send(JSON.stringify({ success: true, item }));
-  });
-});
-
-app.post("/product-list", upload.none(), (req, res) => {
+app.post("/renderCategory", upload.none(), (req, res) => {
   //name of the category
   let category = req.body.category;
   //page number of items being displayed
@@ -196,6 +188,21 @@ app.post("/merchant-dashboard", upload.none(), (req, res) => {
     return res.send(JSON.stringify({ success: true, items }));
   });
 });
+
+app.post("/product-page", upload.none(), (req, res) => {
+  let id = req.body.id;
+  console.log("id: ", id);
+  dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
+    if (err) {
+      console.log("Error returning item from database");
+      return res.send(JSON.stringify({ success: false }));
+    }
+    console.log("Item: ", item);
+    res.send(JSON.stringify({ success: true, item }));
+  });
+});
+
+//app.post("/merchant-invetory");
 
 //see the list of sold things
 //app.post("/sales-record")

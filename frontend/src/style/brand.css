@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,400i,500,800&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+h1 {
+  font-size: 1.5em;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.3em;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.1em;
+  font-weight: 400;
+}
+
+h4 {
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
+h5 {
+  font-size: 0.7em;
+  font-weight: 300;
+}
+
+h6 {
+  font-size: 0.5em;
+  font-weight: 300;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+.circle {
+  border-radius: 50%;
+}
