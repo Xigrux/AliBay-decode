@@ -6,14 +6,13 @@ class UnconnectedProductForm extends Component {
     super(props);
     this.state = {
       productName: "",
-      sellerName: this.props.name,
       productDescHeader: "",
       productDescText: "",
+      sellerName: this.props.username,
+      productLocation: "",
       productCat: "",
       assocTags: [],
-      productLocation: "",
       inventory: 0,
-      dateOfPublication: "",
       files: ""
     };
   }
@@ -50,10 +49,6 @@ class UnconnectedProductForm extends Component {
     console.log("product inventory: ", event.target.value);
     this.setState({ inventory: event.target.value });
   };
-  handleDateChange = event => {
-    console.log("publication date: ", event.target.value);
-    this.setState({ dateOfPublication: event.target.value });
-  };
   handleFileChange = event => {
     console.log("new files: ", event.target.files);
     this.setState({ files: event.target.files });
@@ -67,15 +62,14 @@ class UnconnectedProductForm extends Component {
     let data = new FormData();
     data.append("name", this.state.productName);
     data.append("sellerName", this.state.sellerName);
-    data.append("description-header", this.state.productDescHeader);
-    data.append("description-text", this.state.productDescText);
+    data.append("descriptionHeader", this.state.productDescHeader);
+    data.append("descriptionText", this.state.productDescText);
     data.append("category", this.state.productCat);
     data.append("tags", tags);
     data.append("location", this.state.productLocation);
     data.append("inventory", this.state.inventory);
-    data.append("date", this.state.dateOfPublication);
     data.append("media", this.state.files);
-    let response = await fetch("/post-item", {
+    let response = await fetch("/add-product", {
       // fix fetch request path
       method: "POST",
       body: data
@@ -152,7 +146,7 @@ class UnconnectedProductForm extends Component {
 
 let mapStateToProps = state => {
   return {
-    name: state.username
+    username: state.user.username
   };
 };
 

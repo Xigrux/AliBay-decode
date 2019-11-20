@@ -12,6 +12,7 @@ import ProductPage from "./ProductPage.jsx";
 import MerchantPage from "./MerchantPage.jsx";
 import UserDashboard from "./UserDashboard.jsx";
 import MerchantDashboard from "./MerchantDashboard.jsx";
+import ProductForm from "./ProductForm";
 import Checkout from "./Checkout.jsx";
 
 import "./style/navbar.css";
@@ -74,6 +75,9 @@ class UnconnectedApp extends Component {
             </Route>
             <Route path="/checkout" exact={true}>
               <Checkout />
+            </Route>
+            <Route path="/productform" exact={true}>
+              <ProductForm />
             </Route>
           </div>
         </BrowserRouter>

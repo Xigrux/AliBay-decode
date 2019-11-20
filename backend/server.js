@@ -55,7 +55,8 @@ app.post("/add-product", upload.array("media"), (req, res) => {
   let media = req.files;
   let productName = req.body.name;
   let username = req.body.sellerName;
-  let description = req.body.description;
+  let descriptionHeader = req.body.descriptionHeader;
+  let descriptionText = req.body.descriptionText;
   let location = req.body.location;
   let inventory = req.body.inventory;
   let date = new Date();
@@ -64,6 +65,7 @@ app.post("/add-product", upload.array("media"), (req, res) => {
   let posts;
   let tags = req.body.tags;
   let category = req.body.category;
+  let frontendPath;
   if (media !== undefined) {
     for (let i = 0; i < media.length; i++) {
       console.log("Uploaded file " + media[i]);
@@ -81,7 +83,8 @@ app.post("/add-product", upload.array("media"), (req, res) => {
   dbo.collection("items").insertOne({
     productName,
     username,
-    description,
+    descriptionHeader,
+    descriptionText,
     location,
     inventory,
     date,
