@@ -119,7 +119,7 @@ class UnconnectedLogin extends Component {
           />
           <span class="input-prompt">></span>
 
-          <button class="bump-button" onClick="submit">
+          <button class="bump-button" type="submit">
             Login
           </button>
         </form>

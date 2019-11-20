@@ -11,8 +11,9 @@ class UnconnectedProductForm extends Component {
       sellerName: this.props.username,
       productLocation: "",
       productCat: "",
-      assocTags: [],
+      assocTags: "",
       inventory: 0,
+      prodPrice: 0,
       files: []
     };
   }
@@ -39,7 +40,7 @@ class UnconnectedProductForm extends Component {
     console.log("new tags: ", event.target.value);
     this.setState({
       assocTags: event.target.value
-    }); // push to array
+    });
   };
   handleLocationChange = event => {
     console.log("new location: ", event.target.value);
@@ -49,6 +50,11 @@ class UnconnectedProductForm extends Component {
     console.log("product inventory: ", event.target.value);
     this.setState({ inventory: event.target.value });
   };
+  handlePriceChange = event => {
+    console.log("product price: ", event.target.value);
+    this.setState({ prodPrice: event.target.value });
+  };
+
   handleFilesChange = event => {
     console.log("new files: ", event.target.files);
     this.setState({ files: event.target.files });
@@ -58,16 +64,16 @@ class UnconnectedProductForm extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    let tags = this.state.assocTags.split(",");
     let data = new FormData();
     data.append("name", this.state.productName);
     data.append("sellerName", this.state.sellerName);
     data.append("descriptionHeader", this.state.productDescHeader);
     data.append("descriptionText", this.state.productDescText);
     data.append("category", this.state.productCat);
-    data.append("tags", tags);
+    data.append("tags", this.state.assocTags);
     data.append("location", this.state.productLocation);
     data.append("inventory", this.state.inventory);
+    data.append("price", this.state.prodPrice);
     if (this.state.files !== undefined) {
       console.log("in append");
       for (let i = 0; i < this.state.files.length; i++) {
@@ -76,6 +82,7 @@ class UnconnectedProductForm extends Component {
     } else {
       data.append("files", this.state.files);
     }
+
     let response = await fetch("/add-product", {
       // fix fetch request path
       method: "POST",
@@ -89,7 +96,18 @@ class UnconnectedProductForm extends Component {
       window.alert("Product submission failed");
       return;
     }
-    // NEEDS IMAGES AND SELLER NAME
+    this.setState({
+      productName: "",
+      productDescHeader: "",
+      productDescText: "",
+      productLocation: "",
+      productCat: "",
+      assocTags: "",
+      inventory: 0,
+      prodPrice: 0,
+      files: []
+    });
+    window.alert("Product submitted");
   };
   render = () => {
     return (
@@ -98,43 +116,105 @@ class UnconnectedProductForm extends Component {
         <form onSubmit={this.handleSubmit}>
           {/* NAME */}
           <label htmlFor="prod-name">Name</label>
-          <input id="prod-name" type="text" onChange={this.handleNameChange} />
+          <input
+            id="prod-name"
+            type="text"
+            value={this.state.productName}
+            onChange={this.handleNameChange}
+            required
+          />
           {/* DESC */}
           <label htmlFor="prod-desc-header">Description header</label>
           <input
             id="prod-desc-header"
             type="text"
+            value={this.state.productDescHeader}
             onChange={this.handleDescHeaderChange}
+            required
           />
           <label htmlFor="prod-desc-text">Description text</label>
           <input
             id="prod-desc-text"
             type="text"
+            value={this.state.productDescText}
             onChange={this.handleDescTextChange}
+            required
           />
           {/* CATEGORY */}
           <label htmlFor="prod-category">Category</label>
           <input
             id="prod-category"
             type="text"
+            value={this.state.productCat}
             onChange={this.handleCategoryChange}
+            required
           />
           {/* TAGS */}
           <label htmlFor="prod-tags">Tags</label>
-          <input id="prod-tags" type="text" onChange={this.handleTagChange} />
-          {/* LOCATION */}
-          <label htmlFor="prod-location">Location</label>
           <input
-            id="prod-location"
+            id="prod-tags"
             type="text"
-            onChange={this.handleLocationChange}
+            value={this.state.assocTags}
+            onChange={this.handleTagChange}
+            required
+          />
+          {/* LOCATION */}
+          Select product location: Americas
+          <input
+            type="radio"
+            name="region-select"
+            value="Americas"
+            onClick={this.handleLocationChange}
+            required
+          />
+          Asia
+          <input
+            type="radio"
+            name="region-select"
+            value="Asia"
+            onClick={this.handleLocationChange}
+          />
+          Europe
+          <input
+            type="radio"
+            name="region-select"
+            value="Europe"
+            onClick={this.handleLocationChange}
+          />
+          Africa
+          <input
+            type="radio"
+            name="region-select"
+            value="Africa"
+            onClick={this.handleLocationChange}
+          />
+          Oceania
+          <input
+            type="radio"
+            name="region-select"
+            value="Oceania"
+            onClick={this.handleLocationChange}
           />
           {/* INVENTORY */}
           <label htmlFor="prod-inventory">Inventory</label>
           <input
             id="prod-inventory"
-            type="text"
+            type="number"
+            min="0"
+            value={this.state.inventory}
             onChange={this.handleInventoryChange}
+            required
+          />
+          {/* PRICE */}
+          <label htmlFor="prod-price">Price</label>
+          <input
+            id="prod-price"
+            type="number"
+            min="0.01"
+            step="0.01"
+            value={this.state.prodPrice}
+            onChange={this.handlePriceChange}
+            required
           />
           {/* IMAGES */}
           <label htmlFor="prod-images">Product images</label>
