@@ -10,20 +10,10 @@ class UnconnectedLogin extends Component {
       username: "",
       password: "",
       signupType: "",
-      user: undefined
+      user: undefined,
+      cart: undefined
     };
   }
-  // UNCOMMENT WHEN ENDPOINT IS ACTIVE
-  // componentDidMount = () => {
-  //   let autoLogin = async () => {
-  //     console.log("auto-login hit");
-  //     await fetch("/autologin", {
-  //       method: "POST"
-  //     });
-  //     this.props.dispatch({ type: "login-success" });
-  //   };
-  //   autoLogin();
-  // };
 
   handleUsernameChange = event => {
     console.log("new login username", event.target.value);
@@ -63,11 +53,13 @@ class UnconnectedLogin extends Component {
       window.alert("Login failed, check your credentials");
       return;
     }
-    this.setState({ user: parsedBody.user });
+
+    this.setState({ user: parsedBody.user, cart: parsedBody.user.cart });
     window.alert("Login successful");
     this.props.dispatch({
       type: "login-success",
-      user: this.state.user // LULU UPDATE: SEND OBJECT TO STORE REGION ETC
+      user: this.state.user, // LULU UPDATE: SEND OBJECT TO STORE REGION ETC
+      cart: this.state.cart
     });
   };
 

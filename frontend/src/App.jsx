@@ -26,6 +26,19 @@ class UnconnectedApp extends Component {
       database: ""
     };
   }
+
+  // Autologin
+  // componentDidMount = () => {
+  //   let autoLogin = async () => {
+  //     console.log("auto-login hit");
+  //     await fetch("/autologin", {
+  //       method: "POST"
+  //     });
+  //     this.props.dispatch({ type: "login-success" });
+  //   };
+  //   autoLogin();
+  // };
+
   renderProductCategory = routerData => {
     let categoryRoute = routerData.match.params.productCategory;
     return <ProductCategory category={categoryRoute} />;
@@ -35,6 +48,7 @@ class UnconnectedApp extends Component {
     return <ProductPage id={productId} />;
   };
   componentDidMount = async () => {};
+
   render() {
     return (
       <>

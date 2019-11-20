@@ -92,6 +92,7 @@ let login = (req, res, dbo) => {
       //password match. login success. generate session ID
       let sid = generateSID();
       dbo.collection("cookies").insertOne({ username, sid });
+      res.cookie("sid", sid);
       return res.send(JSON.stringify({ success: true, user }));
     }
     //default: no login
@@ -114,6 +115,22 @@ let usernameTaken = () => {
   });
 };
 
+let autoLogin = (req, res, dbo) => {
+  let sid = req.cookie.sid;
+  dbo.collection("cookies").findOne({ sid }, (err, sid) => {
+    if (err) {
+      return res.send(JSON.stringify({ success: false }));
+    }
+    if (sid !== null) {
+      dbo
+        .collection("users")
+        .findOne({ username: sid.username }, (err, user) => {
+          return res.send(JSON.stringify({ success: true, user }));
+        });
+    }
+  });
+};
+
 let generateSID = () => {
   return Math.floor(Math.random() * 100000000);
 };
@@ -121,3 +138,4 @@ let generateSID = () => {
 module.exports.signup = signup;
 module.exports.login = login;
 module.exports.usernameTaken = usernameTaken;
+module.exports.autoLogin = autoLogin;
