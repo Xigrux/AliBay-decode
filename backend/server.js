@@ -61,9 +61,12 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   let ratings = {};
   let posts = [];
   let tags = req.body.tags;
+  console.log("tags: ", tags);
   tags = tags.split(" ");
+  console.log("tags: ", tags);
   let category = req.body.category;
-  console.log(req);
+  let successToken;
+  // console.log(req);
   console.log("-------------------------------------");
   console.log("MEDIA");
   console.log(media);
@@ -84,8 +87,16 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   //always push default
   //find sellerID from merchants database
   dbo.collection("merchants").findOne({ username }, (err, user) => {
+    if (err || user === null) {
+      return (successToken = false);
+    }
     sellerName = user._id;
   });
+
+  if (!successToken) {
+    return res.send(JSON.stringify({ success: false }));
+  }
+
   dbo.collection("items").insertOne({
     productName,
     username,
@@ -100,7 +111,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     tags,
     category
   });
-  res.send(JSON.stringify({ success: true }));
+  return res.send(JSON.stringify({ success: true }));
 });
 
 app.post("/rating", upload.none(), (req, res) => {
