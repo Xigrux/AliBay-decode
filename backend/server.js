@@ -51,7 +51,9 @@ app.post("/username-taken", upload.none(), (req, res) => {
   login.usernameTaken();
 });
 
-app.post("/add-product", upload.array("media"), (req, res) => {
+app.post("/add-product", upload.array("files"), (req, res) => {
+  console.log("-------------------------------------");
+  console.log("Uploaded PRODUCT");
   let media = req.files;
   let productName = req.body.name;
   let username = req.body.sellerName;
@@ -62,9 +64,13 @@ app.post("/add-product", upload.array("media"), (req, res) => {
   let date = new Date();
   date = date.toLocaleDateString;
   let ratings = {};
-  let posts;
+  let posts = [];
   let tags = req.body.tags;
   let category = req.body.category;
+  console.log(req);
+  console.log("-------------------------------------");
+  console.log("MEDIA");
+  console.log(media);
   if (media !== undefined) {
     for (let i = 0; i < media.length; i++) {
       console.log("Uploaded file " + media[i]);
@@ -72,6 +78,7 @@ app.post("/add-product", upload.array("media"), (req, res) => {
       posts.push(frontendPath);
     }
   } else {
+    console.log("image is default");
     let frontendPath = ["/uploads/default.png"];
     posts.push(frontendPath);
   }

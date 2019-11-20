@@ -49,7 +49,7 @@ class UnconnectedProductForm extends Component {
     console.log("product inventory: ", event.target.value);
     this.setState({ inventory: event.target.value });
   };
-  handleFileChange = event => {
+  handleFilesChange = event => {
     console.log("new files: ", event.target.files);
     this.setState({ files: event.target.files });
   };
@@ -68,7 +68,7 @@ class UnconnectedProductForm extends Component {
     data.append("tags", tags);
     data.append("location", this.state.productLocation);
     data.append("inventory", this.state.inventory);
-    data.append("media", this.state.files);
+    data.append("files", this.state.files);
     let response = await fetch("/add-product", {
       // fix fetch request path
       method: "POST",
@@ -134,7 +134,8 @@ class UnconnectedProductForm extends Component {
           <input
             id="prod-images"
             type="file"
-            onChange={this.handleFileChange}
+            onChange={this.handleFilesChange}
+            name="files"
             multiple
           />
           <input type="submit" value="Submit product" />
