@@ -26,9 +26,11 @@ class UnconnectedApp extends Component {
       database: ""
     };
   }
-
+  renderProductCategory = routerData => {
+    let categoryRoute = routerData.match.params.productCategory;
+    return <ProductCategory category={categoryRoute} />;
+  };
   componentDidMount = async () => {};
-
   render() {
     return (
       <>
@@ -46,9 +48,11 @@ class UnconnectedApp extends Component {
             <Route path="/cart" exact={true}>
               <Cart />
             </Route>
-            <Route path="/category/:productCategory" exact={true}>
-              <ProductCategory category="placeholder" />
-            </Route>
+            <Route
+              path="/category/:productCategory"
+              exact={true}
+              render={this.renderProductCategory}
+            ></Route>
             <Route path="/product/:productId" exact={true}>
               <ProductPage />
             </Route>

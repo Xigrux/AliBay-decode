@@ -54,6 +54,13 @@ class UnconnectedProductCategory extends Component {
       filters: []
     };
   }
+  componentDidMount = () => {
+    console.log("product-category mount:", this.props.category);
+  };
+  //requests all the relevant items upon component mount based on the given category prop
+  getItems = () => {
+    let category = this.props.category;
+  };
   handleTagUpdate = event => {
     //if innactive, set the class to active and add the value to the filters array in the state
     if (event.target.className === "innactive") {
