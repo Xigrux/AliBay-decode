@@ -51,15 +51,27 @@ class UnconnectedProductCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filters: []
+      filters: [],
+      itemsData: []
     };
   }
   componentDidMount = () => {
     console.log("product-category mount:", this.props.category);
+    this.getItems();
   };
   //requests all the relevant items upon component mount based on the given category prop
-  getItems = () => {
+  getItems = async () => {
     let category = this.props.category;
+    let data = new FormData();
+    data.append("category", category);
+    let response = await fetch("/renderCategory", {
+      method: "POST",
+      body: data
+    });
+    let body = await response.text();
+    body = JSON.parse(body);
+    this.setState({ itemsData: body });
+    console.log("fetch response for category:", category, ", items:", body);
   };
   handleTagUpdate = event => {
     //if innactive, set the class to active and add the value to the filters array in the state
@@ -92,29 +104,36 @@ class UnconnectedProductCategory extends Component {
       );
     });
     //Creates a product card component for each of the Items in the items array
-    let itemCards = dummyDataItems.map(item => {
-      return (
-        <ProductCard
-          id={item.id}
-          title={item.title}
-          frontEndPath={item.frontEndPath}
-          tags={item.tags}
-          description={item.description}
-          price={item.price}
-          rating={item.rating}
-        ></ProductCard>
-      );
-    });
-
-    // if there are filters in place, modify the itemCards array
-    if (this.state.filters[0] !== undefined) {
-      console.log("All active filters", this.state.filters);
-      this.state.filters.forEach(tag => {
-        itemCards = itemCards.filter(itemCard => {
-          return itemCard.props.tags.includes(tag);
-        });
+    console.log("state items:", this.state.itemsData);
+    let itemCards = <div>HEllow</div>;
+    if (this.state.itemsData.items !== undefined) {
+      itemCards = this.state.itemsData.items.map(item => {
+        return (
+          <ProductCard
+            id={item.id}
+            title={item.productName}
+            frontEndPath={item.frontEndPath}
+            tags={item.tags}
+            description={item.descriptionHeader}
+            price={item.price}
+            rating={item.rating}
+          ></ProductCard>
+        );
       });
+
+      // if there are filters in place, modify the itemCards array
+      if (this.state.filters[0] !== undefined) {
+        console.log("All active filters", this.state.filters);
+        this.state.filters.forEach(tag => {
+          itemCards = itemCards.filter(itemCard => {
+            return itemCard.props.tags.includes(tag);
+          });
+        });
+      }
+    } else {
+      itemCards = <div>Loading...</div>;
     }
+
     return (
       <div>
         {tagButtons}
