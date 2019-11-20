@@ -51,6 +51,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   let media = req.files;
   let productName = req.body.name;
   let username = req.body.sellerName;
+  let price = req.body.price;
   let descriptionHeader = req.body.descriptionHeader;
   let descriptionText = req.body.descriptionText;
   let location = req.body.location;
@@ -85,6 +86,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   dbo.collection("items").insertOne({
     productName,
     username,
+    price,
     descriptionHeader,
     descriptionText,
     location,
@@ -150,17 +152,17 @@ app.post("/search", upload.none(), (req, res) => {
     });
 });
 
-app.post("/renderCategory", upload.none(), (req, res) => {
+app.post("/render-category", upload.none(), (req, res) => {
   //name of the category
   let category = req.body.category;
   //page number of items being displayed
   let pageNo = req.body.offset;
   //max number of items being displayed
-  let max = req.body.max;
+  let max = parseInt(req.body.max);
   //give the sort parameter (quantity, price, whatever). Has to match the parameter name in the database
   let sortParam = req.body.sortParam;
   //give sort direction. Asc is 1, desc is -1
-  let direction = req.body.direction;
+  let direction = parseInt(req.body.direction);
   let currentPage = pageNo * max;
   let sort = {};
   sort[sortParam] = direction;
@@ -172,7 +174,7 @@ app.post("/renderCategory", upload.none(), (req, res) => {
     .skip(currentPage)
     .toArray((err, items) => {
       if (err) {
-        console.log("Error getting product list");
+        console.log("Error getting product list", err);
         return res.send(JSON.stringify({ success: false }));
       }
       return res.send(JSON.stringify({ items }));
