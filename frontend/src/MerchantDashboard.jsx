@@ -15,7 +15,7 @@ class UnconnectedMerchantDashboard extends Component {
         </div>
         <div>
           Items sold:
-          <SalesRecord />
+          {/* <SalesRecord /> UNCOMMENT WHEN WORKING */}
         </div>
       </div>
     );
