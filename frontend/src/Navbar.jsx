@@ -69,7 +69,7 @@ class UnconnecterNavbar extends Component {
               </Link>
             </>
             <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
-              3
+              {this.props.cart.length}
             </div>
           </div>
         )}
@@ -84,7 +84,7 @@ class UnconnecterNavbar extends Component {
               </Link>
             </>
             <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
-              3
+              0
             </div>
           </div>
         )}
@@ -94,7 +94,7 @@ class UnconnecterNavbar extends Component {
 }
 
 let mapStateToProps = st => {
-  return { isLoggedIn: st.loggedIn, user: st.user };
+  return { isLoggedIn: st.loggedIn, user: st.user, cart: st.cart };
 };
 
 let Navbar = connect(mapStateToProps)(UnconnecterNavbar);
