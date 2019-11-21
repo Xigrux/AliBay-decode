@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import ProductCard from "./ProductCard.jsx";
+
 class UnconnectedCart extends Component {
   constructor(props) {
     super(props);
@@ -89,7 +91,7 @@ class UnconnectedCart extends Component {
     if (this.state.displayItems) {
       console.log(this.state.displayItems);
       return this.state.displayItems.map(o => {
-        return <div>{o.productName}</div>;
+        return <ProductCard itemContents={o}></ProductCard>;
       });
     }
 
