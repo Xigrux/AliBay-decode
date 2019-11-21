@@ -10,7 +10,7 @@ class UnconnectedAddToCart extends Component {
     //will make a call to the 'add-to-cart' endpoint
     let data = new FormData();
     data.append("productId", this.props.item);
-    data.append("userId", this.props.user);
+    data.append("userId", this.props.user._id);
     data.append("cart", this.props.user.cart);
 
     let response = await fetch("/add-to-cart", {
@@ -24,7 +24,9 @@ class UnconnectedAddToCart extends Component {
     console.log("parsed body: ", parsedBody);
     if (!parsedBody.success) {
       window.alert("Product submission failed");
-      return;
+    } else {
+      console.log("dispatching add cart", parsedBody.cart);
+      this.props.dispatch({ type: "add-cart", cart: parsedBody.cart });
     }
   };
   render() {
@@ -42,7 +44,8 @@ class UnconnectedAddToCart extends Component {
 
         {this.props.isLoggedIn && (
           <button onClick={this.handleAddToCart}>
-            <Link to="/cart">
+            <Link>
+              {/* <Link to="/cart"> */}
               <i>Add to cart!</i>
             </Link>
           </button>

@@ -8,6 +8,10 @@ let reducer = (state, action) => {
   if (action.type === "logout-success") {
     return { ...state, loggedIn: false };
   }
+
+  if (action.type === "add-cart") {
+    return { ...state, cart: action.cart };
+  }
   return state;
 };
 
@@ -15,12 +19,14 @@ let reducer = (state, action) => {
 let initialState = {
   test: "Store connected",
   loggedIn: false,
-  user: undefined // user object containing all user info
+  user: undefined, // user object containing all user info
+  cart: undefined
 };
 
 let store = createStore(
   reducer,
   initialState,
+
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

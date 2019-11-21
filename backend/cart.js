@@ -1,8 +1,13 @@
+let ObjectID = require("mongodb").ObjectID;
 let addToCart = (req, res, dbo) => {
+  console.log("in add cart");
   let itemId = req.body.productId;
   let userId = req.body.userId;
-  let cart = req.body.cart;
+  console.log("user id:", userId);
+  let quantity = req.body.quantity;
+  let cart = req.body.cart.split(","); //this returns as string
   cart.push(itemId);
+  console.log("updated cart: ", cart);
   dbo
     .collection("users")
     .updateOne({ _id: ObjectID(userId) }, { $set: { cart } });
@@ -22,7 +27,7 @@ let removeFromCart = (req, res, dbo) => {
 };
 
 let cart = (req, res, dbo) => {
-  let cart = req.body.cart;
+  let userId = req.body.userId;
   console.log("cart before split:", cart);
   cart = cart.split(",");
   console.log("cart after split:", cart);
@@ -31,7 +36,7 @@ let cart = (req, res, dbo) => {
   });
   dbo
     .collection("items")
-    .find({ _id: { $in: ids } })
+    .find({ _id: ObjectID(userId) })
     .toArray((err, items) => {
       if (err) {
         return res.send(JSON.stringify({ success: false }));

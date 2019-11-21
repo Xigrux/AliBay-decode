@@ -11,17 +11,23 @@ import { Link } from "react-router-dom";
 // ];
 
 class UnconnectedCart extends Component {
-  getCartItems = async () => {
-    let data = new FormData();
-    data.append("cart", this.props.itemIds);
-    let response = await fetch("/cart", {
-      method: "POST",
-      body: data
-    });
-    let responseBody = await response.text();
-    let parsedBody = JSON.parse(responseBody);
-    return parsedBody;
+  constructor(props) {
+    super(props);
+    this.state = {
+      cart: []
+    };
+  }
+
+  componentDidMount = () => {
+    let cart = [];
+    if (this.props.cart) {
+      cart = this.props.cart;
+    } else if (this.props.user) {
+      cart = this.props.user.cart;
+    }
+    this.setState({ cart });
   };
+
   removeDupes = arr => {
     let seen = {};
     let ret = [];
@@ -36,40 +42,42 @@ class UnconnectedCart extends Component {
     return ret;
   };
   render = () => {
-    let cart = this.getCartItems();
-    let items = this.props.itemIds.map((itemId, index) => {
-      let quantityToBuy = 0;
+    // let items = this.props.itemIds.map((itemId, index) => {
+    //   let quantityToBuy = 0;
 
-      cart.forEach(item => {
-        if (item.productName === cart[index].productName) {
-          quantityToBuy++;
-        }
-      });
-      return (
-        <div>
-          <div>{cart[index].productName}</div>
-          <div>Quantity: {quantityToBuy}</div>
-          <div>
-            <Link to={"/product/" + itemId}>View item</Link>
-          </div>
-          <div>{cart[index].descriptionBody}</div>
-        </div>
-      );
+    //   cart.forEach(item => {
+    //     if (item.productName === cart[index].productName) {
+    //       quantityToBuy++;
+    //     }
+    //   });
+    //   return (
+    //     <div>
+    //       <div>{cart[index].productName}</div>
+    //       <div>Quantity: {quantityToBuy}</div>
+    //       <div>
+    //         <Link to={"/product/" + itemId}>View item</Link>
+    //       </div>
+    //       <div>{cart[index].descriptionBody}</div>
+    //     </div>
+    //   );
+    // });
+
+    // return (
+    //   <div>
+    //     {items}
+    //     <div>
+    //       cart <Link to="/checkout">checkout</Link>
+    //     </div>
+    //   </div>
+    // ); // TODO: filter items to prevent duplicates from being displayed
+    return this.state.cart.map(o => {
+      return <div>{o}</div>;
     });
-    return (
-      <div>
-        {items}
-        <div>
-          cart <Link to="/checkout">checkout</Link>
-        </div>
-      </div>
-    ); // TODO: filter items to prevent duplicates from being displayed
-    return <></>;
   };
 }
 
 let mapStateToProps = state => {
-  return { itemIds: state.cart };
+  return { user: state.user, cart: state.cart };
 };
 
 let Cart = connect(mapStateToProps)(UnconnectedCart);
