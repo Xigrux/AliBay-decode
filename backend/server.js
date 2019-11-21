@@ -153,7 +153,9 @@ app.post("/cart", upload.none(), (req, res) => {
 });
 
 app.post("/search", upload.none(), (req, res) => {
+  console.log("before split", tags);
   let tags = req.body.tags;
+  console.log("after split", tags);
   tags = tags.split(" ");
   tags = tags.map(tag => {
     return new RegExp(tag);
