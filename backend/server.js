@@ -22,7 +22,7 @@ app.use(cookieParser());
 // settings for mongo
 let dbo;
 let url =
-  "mongodb+srv://XGD:5qXpWm4DZzeoWN6k@cluster0-xc8we.mongodb.net/test?retryWrites=true&w=majority";
+  "mongodb+srv://lulul:123@cluster0-jjd2c.mongodb.net/test?retryWrites=true&w=majority";
 app.use("/", express.static("build"));
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {

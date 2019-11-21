@@ -1,5 +1,5 @@
 let addToCart = (req, res, dbo) => {
-  let itemId = req.body.itemNo;
+  let itemId = req.body.productId;
   let userId = req.body.userId;
   let cart = req.body.cart;
   cart.push(itemId);
@@ -29,12 +29,15 @@ let cart = (req, res, dbo) => {
   ids = cart.map(item => {
     return ObjectID(cart);
   });
-  dbo.collection("items").find({ _id: { $in: ids } }).toArray((err, items) => {
-    if (err) {
-      return res.send(JSON.stringify({ success: false }));
-    }
-    return res.send(JSON.stringify({ success: true, items }));
-  });
+  dbo
+    .collection("items")
+    .find({ _id: { $in: ids } })
+    .toArray((err, items) => {
+      if (err) {
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, items }));
+    });
 };
 
 module.exports.cart = cart;

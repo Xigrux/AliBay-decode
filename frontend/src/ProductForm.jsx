@@ -142,13 +142,36 @@ class UnconnectedProductForm extends Component {
           />
           {/* CATEGORY */}
           <label htmlFor="prod-category">Category</label>
-          <input
-            id="prod-category"
-            type="text"
-            value={this.state.productCat}
-            onChange={this.handleCategoryChange}
-            required
-          />
+          Electronics
+          <form reqired>
+            <input
+              type="radio"
+              name="category-select"
+              value="electronic"
+              onClick={this.handleCategoryChange}
+            />
+            Food
+            <input
+              type="radio"
+              name="category-select"
+              value="food"
+              onClick={this.handleCategoryChange}
+            />
+            Home
+            <input
+              type="radio"
+              name="category-select"
+              value="home"
+              onClick={this.handleCategoryChange}
+            />
+            Office
+            <input
+              type="radio"
+              name="category-select"
+              value="office"
+              onClick={this.handleCategoryChange}
+            />
+          </form>
           {/* TAGS */}
           <label htmlFor="prod-tags">Tags</label>
           <input
@@ -156,7 +179,6 @@ class UnconnectedProductForm extends Component {
             type="text"
             value={this.state.assocTags}
             onChange={this.handleTagChange}
-            required
           />
           {/* LOCATION */}
           Select product location: Americas
@@ -165,7 +187,6 @@ class UnconnectedProductForm extends Component {
             name="region-select"
             value="Americas"
             onClick={this.handleLocationChange}
-            checked
             required
           />
           Asia

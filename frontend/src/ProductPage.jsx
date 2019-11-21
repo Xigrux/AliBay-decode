@@ -48,6 +48,7 @@ class unconnectedProductPage extends Component {
         <div>Category: {this.state.itemDetails.category}</div>
         <div>Tags: {tags}</div>
         <div>Seller: {this.state.itemDetails.username}</div>
+
         <AddToCart></AddToCart>
       </div>
     );

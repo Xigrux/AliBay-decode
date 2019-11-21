@@ -15,9 +15,7 @@ let reducer = (state, action) => {
 let initialState = {
   test: "Store connected",
   loggedIn: false,
-  user: undefined, // user object containing all user info
-  cart: undefined
-  // ADD CART IN STATE OF STORE!!!
+  user: undefined // user object containing all user info
 };
 
 let store = createStore(
