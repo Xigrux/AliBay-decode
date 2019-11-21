@@ -230,36 +230,42 @@ app.post("/product-page", upload.none(), (req, res) => {
 //see the list of sold things
 //app.post("/sales-record")
 
-app.post("/confirm-payement", upload.none(), (req, res) => {
+app.post("/confirm-payement", upload.none(), async (req, res) => {
   let id = req.body.id;
   let cart = req.body.cart;
-
   cart = cart.map(item => {
-    console.log("item: ", item);
     return JSON.parse(item);
   });
   console.log("id: ", id);
   console.log("cart: ", cart);
   let purchaseOrder = {};
-  let ids = cart.map(item => {
+  let ids = cart.map((item, i) => {
     let key = Object.keys(item);
+    purchaseOrder[key] = cart[i][key];
     return ObjectID(key[0]);
   });
   console.log("ids: ", ids);
-  dbo
-    .collection("items")
-    .updateMany({ _id: { $in: ids } }, { $inc: { inventory: -1 } });
-  cart.forEach(item => {
-    purchaseOrder[item] = cart.item;
+  console.log("purchaseOrder: ", purchaseOrder);
+
+  ids.forEach(id => {
+    console.log("inventory:", purchaseOrder[id]);
+    dbo
+      .collection("items")
+      .updateMany(
+        { _id: ObjectID(id) },
+        { $inc: { inventory: purchaseOrder[id] * -1 } }
+      );
   });
-  dbo.collection("purchase-orders").insertOne({ purchaseOrder });
-  dbo
-    .collection("users")
-    .updateOne(
+
+  dbo.collection("purchase-orders").insertOne({ purchaseOrder }, (err, PO) => {
+    dbo.collection("users").updateOne(
       { _id: ObjectID(id) },
-      { $set: { cart: [] } },
-      { $push: { purchased: purchaseOrder } }
+      {
+        $set: { cart: [] },
+        $push: { purchased: PO.insertedId }
+      }
     );
+  });
 
   return res.send(JSON.stringify({ success: true }));
 });

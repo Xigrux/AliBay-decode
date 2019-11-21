@@ -1,4 +1,5 @@
 let ObjectID = require("mongodb").ObjectID;
+
 let addToCart = (req, res, dbo) => {
   let update = JSON.parse(req.body.update);
   console.log("what is update??? ", update);
@@ -53,15 +54,12 @@ let cart = (req, res, dbo) => {
     console.log("item in map: ", item);
     return ObjectID(item);
   });
-  dbo
-    .collection("items")
-    .find({ _id: { $in: ids } })
-    .toArray((err, items) => {
-      if (err) {
-        return res.send(JSON.stringify({ success: false }));
-      }
-      return res.send(JSON.stringify({ success: true, items }));
-    });
+  dbo.collection("items").find({ _id: { $in: ids } }).toArray((err, items) => {
+    if (err) {
+      return res.send(JSON.stringify({ success: false }));
+    }
+    return res.send(JSON.stringify({ success: true, items }));
+  });
 };
 
 module.exports.cart = cart;
