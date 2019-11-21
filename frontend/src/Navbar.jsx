@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { FiSearch, FiShoppingBag } from "react-icons/fi";
@@ -25,7 +25,8 @@ class UnconnecterNavbar extends Component {
     let response = await fetch("/search", { method: "POST", body: data });
     let body = await response.text();
     body = JSON.parse(body);
-    console.log("search response body:", body);
+    this.props.dispatch({ type: "search-query", searchResult: body });
+    this.props.history.push("/search");
   };
   logOut = () => {
     this.props.dispatch({ type: "logout-success" });
@@ -106,6 +107,6 @@ let mapStateToProps = st => {
   return { isLoggedIn: st.loggedIn, user: st.user, cart: st.cart };
 };
 
-let Navbar = connect(mapStateToProps)(UnconnecterNavbar);
+let Navbar = connect(mapStateToProps)(withRouter(UnconnecterNavbar));
 
 export default Navbar;

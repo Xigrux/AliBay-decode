@@ -12,6 +12,9 @@ let reducer = (state, action) => {
       cart: undefined
     };
   }
+  if (action.type === "search-query") {
+    return { ...state, searchResult: action.searchResult };
+  }
 
   if (action.type === "add-cart") {
     return { ...state, cart: action.cart };
@@ -23,7 +26,8 @@ let reducer = (state, action) => {
 let initialState = {
   loggedIn: false,
   user: undefined, // user object containing all user info
-  cart: undefined
+  cart: undefined,
+  searchResult: []
 };
 
 let store = createStore(
