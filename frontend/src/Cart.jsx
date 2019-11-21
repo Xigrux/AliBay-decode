@@ -88,19 +88,19 @@ class UnconnectedCart extends Component {
     //     </div>
     //   </div>
     // ); // TODO: filter items to prevent duplicates from being displayed
-    if (this.state.displayItems) {
+    if (this.state.displayItems && this.props.isLoggedIn) {
       console.log(this.state.displayItems);
       return this.state.displayItems.map(o => {
         return <ProductCard itemContents={o}></ProductCard>;
       });
     }
 
-    return <>loading</>;
+    return <>your cart is empty</>;
   };
 }
 
 let mapStateToProps = state => {
-  return { user: state.user, cart: state.cart };
+  return { user: state.user, cart: state.cart, isLoggedIn: state.loggedIn };
 };
 
 let Cart = connect(mapStateToProps)(UnconnectedCart);

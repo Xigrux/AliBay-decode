@@ -6,7 +6,11 @@ let reducer = (state, action) => {
     return { ...state, loggedIn: true, user: action.user, cart: action.cart };
   }
   if (action.type === "logout-success") {
-    return { ...state, loggedIn: false };
+    return {
+      loggedIn: false,
+      user: undefined,
+      cart: undefined
+    };
   }
 
   if (action.type === "add-cart") {
@@ -17,7 +21,6 @@ let reducer = (state, action) => {
 
 // PLEASE POPULATE THE INITIAL STORE STATE SEPERATLY
 let initialState = {
-  test: "Store connected",
   loggedIn: false,
   user: undefined, // user object containing all user info
   cart: undefined
