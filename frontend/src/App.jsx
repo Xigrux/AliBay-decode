@@ -53,57 +53,54 @@ class UnconnectedApp extends Component {
     return (
       <>
         <BrowserRouter>
-          <div>
-            {/* auto attaching navbar to every page */}
-            <Navbar />
+          {/* auto attaching navbar to every page */}
+          <Navbar />
 
-            <Route path="/" exact={true}>
-              <Homepage />
-            </Route>
-            <Route path="/signup" exact={true}>
-              <Signup />
-            </Route>
-            <Route path="/cart" exact={true}>
-              <Cart />
-            </Route>
-            <Route
-              path="/category/:productCategory"
-              exact={true}
-              render={this.renderProductCategory}
-            ></Route>
-            <Route
-              path="/product/:productId"
-              exact={true}
-              render={this.renderProductPage}
-            ></Route>
-            <Route path="/merchant/:merchantId" exact={true}>
-              <MerchantPage />
-            </Route>
-            <Route path="/dashboard" exact={true}>
-              {!this.props.isLoggedIn && (
-                <>
-                  <Login />
-                </>
-              )}
-              {this.props.isLoggedIn && this.props.user.userType === "users" && (
-                <>
-                  <UserDashboard />
-                </>
-              )}
-              {this.props.isLoggedIn &&
-                this.props.user.userType === "merchants" && (
-                  <>
-                    <MerchantDashboard />
-                  </>
-                )}
-            </Route>
-            <Route path="/checkout" exact={true}>
-              <Checkout />
-            </Route>
-            <Route path="/productform" exact={true}>
-              <ProductForm />
-            </Route>
-          </div>
+          <Route path="/" exact={true}>
+            <Homepage />
+          </Route>
+          <Route path="/signup" exact={true}>
+            <Signup />
+          </Route>
+          <Route path="/cart" exact={true}>
+            <Cart />
+          </Route>
+          <Route
+            path="/category/:productCategory"
+            exact={true}
+            render={this.renderProductCategory}
+          ></Route>
+          <Route
+            path="/product/:productId"
+            exact={true}
+            render={this.renderProductPage}
+          ></Route>
+          <Route path="/merchant/:merchantId" exact={true}>
+            <MerchantPage />
+          </Route>
+          <Route path="/dashboard" exact={true}>
+            {!this.props.isLoggedIn && (
+              <>
+                <Login />
+              </>
+            )}
+            {this.props.isLoggedIn && this.props.user.userType === "users" && (
+              <>
+                <UserDashboard />
+              </>
+            )}
+            {this.props.isLoggedIn && this.props.user.userType === "merchants" && (
+              <>
+                <MerchantDashboard />
+              </>
+            )}
+          </Route>
+          <Route path="/checkout" exact={true}>
+            <Checkout />
+          </Route>
+          <Route path="/productform" exact={true}>
+            <ProductForm />
+          </Route>
         </BrowserRouter>
       </>
     );
