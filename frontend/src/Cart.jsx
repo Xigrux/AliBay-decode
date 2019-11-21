@@ -27,7 +27,9 @@ class UnconnectedCart extends Component {
       });
     }
     this.setState({ cart });
-    this.setState({ displayItems: await this.getCartItems(cart) });
+    if (cart.length > 0) {
+      this.setState({ displayItems: await this.getCartItems(cart) });
+    }
     console.log(this.state.displayItems);
   };
 
@@ -88,7 +90,11 @@ class UnconnectedCart extends Component {
     //     </div>
     //   </div>
     // ); // TODO: filter items to prevent duplicates from being displayed
-    if (this.state.displayItems && this.props.isLoggedIn) {
+    if (
+      this.state.displayItems &&
+      this.props.isLoggedIn &&
+      this.props.cart.length > 0
+    ) {
       console.log(this.state.displayItems);
       return this.state.displayItems.map(o => {
         return <ProductCard itemContents={o}></ProductCard>;
