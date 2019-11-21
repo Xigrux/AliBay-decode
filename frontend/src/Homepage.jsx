@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import "./style/homepage.css";
+import FeaturedProd from "./FeaturedProd";
 
 class UnconnecterHomepage extends Component {
   constructor(props) {
@@ -29,7 +30,9 @@ class UnconnecterHomepage extends Component {
             <Link to="/category/office">office</Link>
           </div>
         </div>
-        <div>featured prod</div>
+        <div>
+          <FeaturedProd />
+        </div>
       </div>
     );
   };
