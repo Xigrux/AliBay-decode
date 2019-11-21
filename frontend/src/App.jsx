@@ -32,7 +32,7 @@ class UnconnectedApp extends Component {
   componentDidMount = () => {
     let autoLogin = async () => {
       console.log("auto-login hit");
-      await fetch("/autologin", {
+      await fetch("/auto-login", {
         method: "POST"
       });
       this.props.dispatch({ type: "login-success" });

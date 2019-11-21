@@ -117,6 +117,7 @@ let usernameTaken = () => {
 
 let autoLogin = (req, res, dbo) => {
   let sid = req.cookie.sid;
+  console.log("sid", sid);
   dbo.collection("cookies").findOne({ sid }, (err, sid) => {
     if (err) {
       return res.send(JSON.stringify({ success: false }));
