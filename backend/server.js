@@ -151,14 +151,14 @@ app.post("/cart", upload.none(), (req, res) => {
 });
 
 app.post("/search", upload.none(), (req, res) => {
-  let productName = req.body.productName;
   let tags = req.body.tags;
+  tags = tags.split(" ");
   tags = tags.map(tag => {
     return new RegExp(tag);
   });
   dbo
     .collection("items")
-    .find({ productName: new RegExp(productName), tags: { $in: tags } })
+    .find({ productName: { $in: tags }, tags: { $in: tags } })
     .toArray((err, array) => {
       if (err) {
         return res.send(JSON.stringify({ success: false }));
