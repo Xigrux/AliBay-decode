@@ -85,7 +85,7 @@ class UnconnectedProductCategory extends Component {
     });
     //Creates a product card component for each of the Items in the items array
     console.log("state items:", this.state.itemsData);
-    let itemCards = <div>HEllow</div>;
+    let itemCards = <div>-</div>;
     if (this.state.itemsData.items !== undefined) {
       itemCards = this.state.itemsData.items.map(item => {
         return <ProductCard itemContents={item}></ProductCard>;
