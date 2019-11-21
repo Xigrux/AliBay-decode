@@ -42,7 +42,7 @@ class UnconnectedAddToCart extends Component {
           </>
         )}
 
-        {this.props.isLoggedIn && (
+        {this.props.isLoggedIn && this.props.user.userType === "users" && (
           <button onClick={this.handleAddToCart}>
             <Link>
               {/* <Link to="/cart"> */}

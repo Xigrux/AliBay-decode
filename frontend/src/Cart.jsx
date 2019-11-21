@@ -2,23 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-// let globalCart = [
-//   { productName: "shoe", descriptionBody: "test1234444545645" },
-//   { productName: "shoe", descriptionBody: "test1234444545645" },
-//   { productName: "mat", descriptionBody: "test1234444545645" },
-//   { productName: "hat", descriptionBody: "test1234444545645" },
-//   { productName: "gnat", descriptionBody: "test1234444545645" }
-// ];
-
 class UnconnectedCart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cart: []
+      cart: [],
+      displayItems: []
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     let cart = [];
     if (this.props.cart) {
       cart = this.props.cart;
@@ -26,6 +19,22 @@ class UnconnectedCart extends Component {
       cart = this.props.user.cart;
     }
     this.setState({ cart });
+    this.setState({ displayItems: await this.getCartItems(cart) });
+    console.log(this.state.displayItems);
+  };
+
+  getCartItems = async cart => {
+    console.log(cart);
+    let data = new FormData();
+    data.append("cart", cart);
+    let response = await fetch("/cart", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsedBody = JSON.parse(responseBody);
+    console.log(parsedBody);
+    return parsedBody.items;
   };
 
   removeDupes = arr => {
@@ -70,9 +79,14 @@ class UnconnectedCart extends Component {
     //     </div>
     //   </div>
     // ); // TODO: filter items to prevent duplicates from being displayed
-    return this.state.cart.map(o => {
-      return <div>{o}</div>;
-    });
+    if (this.state.displayItems) {
+      console.log(this.state.displayItems);
+      return this.state.displayItems.map(o => {
+        return <div>{o.productName}</div>;
+      });
+    }
+
+    return <>loading</>;
   };
 }
 

@@ -27,16 +27,18 @@ let removeFromCart = (req, res, dbo) => {
 };
 
 let cart = (req, res, dbo) => {
-  let userId = req.body.userId;
+  console.log("in cart");
+  let cart = req.body.cart;
   console.log("cart before split:", cart);
   cart = cart.split(",");
   console.log("cart after split:", cart);
   ids = cart.map(item => {
-    return ObjectID(cart);
+    console.log("item in map: ", item);
+    return ObjectID(item);
   });
   dbo
     .collection("items")
-    .find({ _id: ObjectID(userId) })
+    .find({ _id: { $in: ids } })
     .toArray((err, items) => {
       if (err) {
         return res.send(JSON.stringify({ success: false }));
