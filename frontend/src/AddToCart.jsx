@@ -9,8 +9,21 @@ class UnconnectedAddToCart extends Component {
     //does not do anything yet...
     //will make a call to the 'add-to-cart' endpoint
     let data = new FormData();
+
+    let isInCart = false;
+    console.log("this is the props cart", this.props.cart);
+    this.props.cart.forEach(i => {
+      if (i.itemId === this.props.item) {
+        isInCart = true;
+        return;
+      }
+    });
+    console.log("state of incarts", isInCart);
+
     data.append("productId", this.props.item);
     data.append("userId", this.props.user._id);
+    data.append("update", isInCart);
+    let quantity = 1;
 
     let response = await fetch("/add-to-cart", {
       // fix fetch request path
@@ -24,20 +37,33 @@ class UnconnectedAddToCart extends Component {
     if (!parsedBody.success) {
       window.alert("Product submission failed");
     } else {
-      console.log(
-        "dispatching add cart",
-        this.props.cart.concat(parsedBody.item)
-      );
+      console.log("this is the cart ", this.props.cart);
+      // console.log(
+      //   "dispatching add cart",
+      //   this.props.cart.concat(parsedBody.item)
+      // );
+
+      this.props.cart.forEach(i => {
+        if (i.itemId === parsedBody.item.itemId) {
+          console.log("matching", i.itemId, "and ", parsedBody.item.itemId);
+          i.quantity = i.quantity + quantity;
+        }
+      });
+
       this.props.dispatch({
         type: "add-cart",
-        cart: this.props.cart.concat(parsedBody.item)
+        cart: this.props.cart.splice(
+          0,
+          this.props.cart.length,
+          ...this.props.cart
+        )
       });
     }
   };
 
   handleQuantity = e => {
     e.preventDefault();
-    console.log(e.target.value);
+    // this.state.quantity
   };
   render() {
     return (

@@ -1,5 +1,8 @@
 let ObjectID = require("mongodb").ObjectID;
 let addToCart = (req, res, dbo) => {
+  let update = JSON.parse(req.body.update);
+  console.log("what is update??? ", update);
+  console.log("what TYPE is update??? ", typeof update);
   console.log("in add cart");
   let itemId = req.body.productId;
   console.log("item id:", itemId);
@@ -8,12 +11,24 @@ let addToCart = (req, res, dbo) => {
   let quantity = 1;
   let item = { itemId, quantity };
   console.log("updated cart: ", item);
+  if (update) {
+    dbo
+      .collection("users")
+      .updateOne(
+        { _id: ObjectID(userId), "cart.itemId": itemId },
+        { $inc: { "cart.$.quantity": quantity } }
+      );
 
-  dbo
-    .collection("users")
-    .updateOne({ _id: ObjectID(userId) }, { $push: { cart: item } });
+    return res.send(JSON.stringify({ success: true, item }));
+  } else {
+    dbo
+      .collection("users")
+      .updateOne({ _id: ObjectID(userId) }, { $push: { cart: item } });
+
+    return res.send(JSON.stringify({ success: true, item }));
+  }
+
   console.log("in add item before return");
-  return res.send(JSON.stringify({ success: true, item }));
 };
 
 let removeFromCart = (req, res, dbo) => {

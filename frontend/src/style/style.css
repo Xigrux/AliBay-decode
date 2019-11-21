@@ -51,6 +51,32 @@ a {
   align-items: center;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.prod-name {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.prod-desc {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.prod-info {
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 6px;
+}
+
 button {
   padding: 0;
   -webkit-appearance: none;

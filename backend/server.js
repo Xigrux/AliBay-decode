@@ -103,11 +103,11 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     dbo.collection("items").insertOne({
       productName,
       sellerId,
-      price,
+      price: parseInt(price),
       descriptionHeader,
       descriptionText,
       location,
-      inventory,
+      inventory: parseInt(inventory),
       date,
       ratings,
       posts,
@@ -154,7 +154,6 @@ app.post("/cart", upload.none(), (req, res) => {
 
 app.post("/search", upload.none(), (req, res) => {
   let tags = req.body.tags;
-  console.log("tags before split:", tags);
   tags = tags.split(" ");
   console.log("tags after split:", tags);
   tags = tags.map(tag => {
@@ -204,16 +203,13 @@ app.post("/render-category", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo
-    .collections("items")
-    .find({ _id: userId })
-    .toArray((err, items) => {
-      if (err) {
-        console.log("Error getting merchant product list");
-        return res.send(JSON.stringify({ success: false }));
-      }
-      return res.send(JSON.stringify({ success: true, items }));
-    });
+  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
+    if (err) {
+      console.log("Error getting merchant product list");
+      return res.send(JSON.stringify({ success: false }));
+    }
+    return res.send(JSON.stringify({ success: true, items }));
+  });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
@@ -237,30 +233,35 @@ app.post("/product-page", upload.none(), (req, res) => {
 app.post("/confirm-payement", upload.none(), (req, res) => {
   let id = req.body.id;
   let cart = req.body.cart;
-  let purchased = req.body.purchased;
-  let ids = cart.map(item => {
-    return ObjectID(item._id);
+
+  cart = cart.map(item => {
+    console.log("item: ", item);
+    return JSON.parse(item);
   });
+  console.log("id: ", id);
+  console.log("cart: ", cart);
+  let purchaseOrder = {};
+  let ids = cart.map(item => {
+    let key = Object.keys(item);
+    return ObjectID(key[0]);
+  });
+  console.log("ids: ", ids);
   dbo
     .collection("items")
     .updateMany({ _id: { $in: ids } }, { $inc: { inventory: -1 } });
-  // dbo
-  //   .collection("items")
-  //   .find({ _id: { $in: ids } })
-  //   .toArray((err, items) => {
-  //     items = items.map(item => {
-  //       return item.inventory - 1;
-  //     });
-  //   });
   cart.forEach(item => {
-    purchased.push(item);
+    purchaseOrder[item] = cart.item;
   });
-  cart = [];
+  dbo.collection("purchase-orders").insertOne({ purchaseOrder });
   dbo
     .collection("users")
-    .updateOne({ _id: ObjectID(user._id) }, { $set: { cart, purchased } });
+    .updateOne(
+      { _id: ObjectID(id) },
+      { $set: { cart: [] } },
+      { $push: { purchased: purchaseOrder } }
+    );
 
-  return res.send(JSON.stringify({ success: true, items }));
+  return res.send(JSON.stringify({ success: true }));
 });
 
 // app.post("/update", upload.none(), (req, res) => {

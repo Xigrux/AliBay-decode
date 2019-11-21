@@ -82,6 +82,9 @@ class UnconnectedApp extends Component {
           <Route path="/merchant/:merchantId" exact={true}>
             <MerchantPage />
           </Route>
+          <Route>
+            <MerchantPage path="/seller/:sellerId" exact={true} />
+          </Route>
           <Route path="/dashboard" exact={true}>
             {!this.props.isLoggedIn && (
               <>
