@@ -31,7 +31,9 @@ class UnconnecterHomepage extends Component {
           </div>
         </div>
         <div>
-          <div className="center-text">Featured Products</div>
+          <div className="center-text">
+            <h3>Featured Products</h3>
+          </div>
           <FeaturedProd />
         </div>
       </div>
