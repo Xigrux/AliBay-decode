@@ -18,6 +18,15 @@ class UnconnecterNavbar extends Component {
     console.log(event.target.value);
     this.setState({ search: event.target.value });
   };
+  handleSearchSubmit = async event => {
+    event.preventDefault();
+    let data = new FormData();
+    data.append("tags", this.state.search);
+    let response = await fetch("/search", { method: "POST", body: data });
+    let body = await response.text();
+    body = JSON.parse(body);
+    console.log("search response body:", body);
+  };
   logOut = () => {
     this.props.dispatch({ type: "logout-success" });
   };
@@ -46,7 +55,7 @@ class UnconnecterNavbar extends Component {
           </div>
         )}
 
-        <form class="seachbar">
+        <form class="seachbar" onSubmit={this.handleSearchSubmit}>
           <input
             class="search-input"
             type="text"
