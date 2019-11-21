@@ -155,14 +155,15 @@ app.post("/cart", upload.none(), (req, res) => {
 app.post("/search", upload.none(), (req, res) => {
   console.log("before split", tags);
   let tags = req.body.tags;
-  console.log("after split", tags);
   tags = tags.split(" ");
+  console.log("tags after split:", tags);
   tags = tags.map(tag => {
-    return new RegExp(tag);
+    return new RegExp(tag, "i");
   });
+  console.log("tags after map:", tags);
   dbo
     .collection("items")
-    .find({ productName: { $in: tags }, tags: { $in: tags } })
+    .find({ $or: [{ productName: { $in: tags } }, { tags: { $in: tags } }] })
     .toArray((err, array) => {
       if (err) {
         return res.send(JSON.stringify({ success: false }));
