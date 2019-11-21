@@ -154,13 +154,16 @@ app.post("/cart", upload.none(), (req, res) => {
 
 app.post("/search", upload.none(), (req, res) => {
   let tags = req.body.tags;
+  console.log("tags before split:", tags);
   tags = tags.split(" ");
+  console.log("tags after split:", tags);
   tags = tags.map(tag => {
-    return new RegExp(tag);
+    return new RegExp(tag, "i");
   });
+  console.log("tags after map:", tags);
   dbo
     .collection("items")
-    .find({ productName: { $in: tags }, tags: { $in: tags } })
+    .find({ $or: [{ productName: { $in: tags } }, { tags: { $in: tags } }] })
     .toArray((err, array) => {
       if (err) {
         return res.send(JSON.stringify({ success: false }));
@@ -201,13 +204,16 @@ app.post("/render-category", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
-    if (err) {
-      console.log("Error getting merchant product list");
-      return res.send(JSON.stringify({ success: false }));
-    }
-    return res.send(JSON.stringify({ success: true, items }));
-  });
+  dbo
+    .collections("items")
+    .find({ _id: userId })
+    .toArray((err, items) => {
+      if (err) {
+        console.log("Error getting merchant product list");
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, items }));
+    });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
