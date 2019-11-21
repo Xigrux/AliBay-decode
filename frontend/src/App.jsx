@@ -7,6 +7,7 @@ import Homepage from "./Homepage.jsx";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import Cart from "./Cart.jsx";
+import SearchResults from "./SearchResults.jsx";
 import ProductCategory from "./ProductCategory.jsx";
 import ProductPage from "./ProductPage.jsx";
 import MerchantPage from "./MerchantPage.jsx";
@@ -65,6 +66,9 @@ class UnconnectedApp extends Component {
           <Route path="/cart" exact={true}>
             <Cart />
           </Route>
+          <Route path="/search" exact={true}>
+            <SearchResults></SearchResults>
+          </Route>
           <Route
             path="/category/:productCategory"
             exact={true}
@@ -111,7 +115,10 @@ class UnconnectedApp extends Component {
 // states from store being mapped to the component props
 
 let mapStateToProps = st => {
-  return { isLoggedIn: st.loggedIn, user: st.user };
+  return {
+    isLoggedIn: st.loggedIn,
+    user: st.user
+  };
 };
 
 let App = connect(mapStateToProps)(UnconnectedApp);
