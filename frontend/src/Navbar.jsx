@@ -70,15 +70,17 @@ class UnconnecterNavbar extends Component {
         </form>
 
         {this.props.isLoggedIn && this.props.user.userType === "users" && (
-          <div class="cart flex-container flex-center-h flex-center-v">
-            <Link to="/cart">
-              <IconContext.Provider value={{ className: "cart-icon" }}>
-                <FiShoppingBag />
-              </IconContext.Provider>
-            </Link>
+          <div class="cart-container flex-container flex-center-h flex-center-v">
+            <div class="cart">
+              <Link to="/cart">
+                <IconContext.Provider value={{ className: "cart-icon" }}>
+                  <FiShoppingBag />
+                </IconContext.Provider>
+              </Link>
 
-            <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
-              {this.props.cart.length}
+              <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
+                {this.props.cart.length}
+              </div>
             </div>
           </div>
         )}
