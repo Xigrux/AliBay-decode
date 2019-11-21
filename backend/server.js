@@ -92,8 +92,10 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   //always push default
   //find sellerID from merchants database
   console.log("seller:", sellerId);
-  dbo.collection("merchants").findOne({ sellerId }, (err, user) => {
+  dbo.collection("merchants").findOne({ username: sellerId }, (err, user) => {
     if (err || user === null) {
+      console.log("error", err);
+      console.log("user ", user);
       return res.send(JSON.stringify({ success: false }));
     }
     console.log("Found user");
@@ -185,8 +187,7 @@ app.post("/render-category", upload.none(), (req, res) => {
 
   dbo
     .collection("items")
-    .find({ category })
-    // .sort(sort)
+    .find({ category }) // .sort(sort)
     // .limit(max)
     // .skip(currentPage)
     .toArray((err, items) => {
@@ -200,16 +201,13 @@ app.post("/render-category", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo
-    .collections("items")
-    .find({ _id: userId })
-    .toArray((err, items) => {
-      if (err) {
-        console.log("Error getting merchant product list");
-        return res.send(JSON.stringify({ success: false }));
-      }
-      return res.send(JSON.stringify({ success: true, items }));
-    });
+  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
+    if (err) {
+      console.log("Error getting merchant product list");
+      return res.send(JSON.stringify({ success: false }));
+    }
+    return res.send(JSON.stringify({ success: true, items }));
+  });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
@@ -225,7 +223,7 @@ app.post("/product-page", upload.none(), (req, res) => {
   });
 });
 
-//app.post("/merchant-invetory");
+//app.post("/merchant-inventory");
 
 //see the list of sold things
 //app.post("/sales-record")
