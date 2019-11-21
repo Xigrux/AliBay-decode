@@ -29,15 +29,22 @@ class UnconnectedApp extends Component {
   }
 
   // Autologin
-  componentDidMount = () => {
-    let autoLogin = async () => {
-      console.log("auto-login hit");
-      await fetch("/auto-login", {
-        method: "POST"
+  componentDidMount = async () => {
+    console.log("auto-login hit");
+    let response = await fetch("/auto-login", {
+      method: "POST"
+    });
+    let responseBody = await response.text();
+    console.log("AUTOLOGIN RESBODY********", responseBody);
+
+    let parsed = JSON.parse(responseBody);
+    if (parsed.success) {
+      this.props.dispatch({
+        type: "login-success",
+        user: parsed.user,
+        cart: parsed.user.cart
       });
-      this.props.dispatch({ type: "login-success" });
-    };
-    autoLogin();
+    }
   };
 
   renderProductCategory = routerData => {
@@ -48,7 +55,6 @@ class UnconnectedApp extends Component {
     let productId = routerData.match.params.productId;
     return <ProductPage id={productId} />;
   };
-  componentDidMount = async () => {};
 
   render() {
     return (
