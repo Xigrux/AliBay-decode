@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { FiSearch, FiShoppingBag } from "react-icons/fi";
@@ -17,6 +17,16 @@ class UnconnecterNavbar extends Component {
   handleSearchChange = event => {
     console.log(event.target.value);
     this.setState({ search: event.target.value });
+  };
+  handleSearchSubmit = async event => {
+    event.preventDefault();
+    let data = new FormData();
+    data.append("tags", this.state.search);
+    let response = await fetch("/search", { method: "POST", body: data });
+    let body = await response.text();
+    body = JSON.parse(body);
+    this.props.dispatch({ type: "search-query", searchResult: body });
+    this.props.history.push("/search");
   };
   logOut = () => {
     this.props.dispatch({ type: "logout-success" });
@@ -46,7 +56,7 @@ class UnconnecterNavbar extends Component {
           </div>
         )}
 
-        <form class="seachbar">
+        <form class="seachbar" onSubmit={this.handleSearchSubmit}>
           <input
             class="search-input"
             type="text"
@@ -103,6 +113,6 @@ let mapStateToProps = st => {
   return { isLoggedIn: st.loggedIn, user: st.user, cart: st.cart };
 };
 
-let Navbar = connect(mapStateToProps)(UnconnecterNavbar);
+let Navbar = connect(mapStateToProps)(withRouter(UnconnecterNavbar));
 
 export default Navbar;

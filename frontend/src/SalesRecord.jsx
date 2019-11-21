@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ProductCard from "./ProductCard";
+import ProductCard from "./ProductCard.jsx";
 
 class UnconnectedSalesRecord extends Component {
   render = () => {
