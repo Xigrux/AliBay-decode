@@ -69,7 +69,11 @@ class UnconnecterNavbar extends Component {
               </Link>
 
               <div class="cart-quantity circle flex-container flex-center-h flex-center-v">
-                {this.props.cart.length}
+                {this.props.cart
+                  .map(item => {
+                    return item.quantity;
+                  })
+                  .reduce((a, b) => a + b, 0)}
               </div>
             </div>
           </div>
