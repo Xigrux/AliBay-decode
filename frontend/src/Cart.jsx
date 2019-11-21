@@ -15,8 +15,14 @@ class UnconnectedCart extends Component {
     let cart = [];
     if (this.props.cart) {
       cart = this.props.cart;
+      cart = cart.map(i => {
+        return i.itemId;
+      });
     } else if (this.props.user) {
       cart = this.props.user.cart;
+      cart = cart.map(i => {
+        return i.itemId;
+      });
     }
     this.setState({ cart });
     this.setState({ displayItems: await this.getCartItems(cart) });
@@ -24,7 +30,8 @@ class UnconnectedCart extends Component {
   };
 
   getCartItems = async cart => {
-    console.log(cart);
+    cart = cart.join(",");
+    console.log("cart before fetch", cart);
     let data = new FormData();
     data.append("cart", cart);
     let response = await fetch("/cart", {
@@ -33,7 +40,7 @@ class UnconnectedCart extends Component {
     });
     let responseBody = await response.text();
     let parsedBody = JSON.parse(responseBody);
-    console.log(parsedBody);
+    console.log("cart after fetch", parsedBody);
     return parsedBody.items;
   };
 

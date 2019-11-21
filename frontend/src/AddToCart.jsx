@@ -11,7 +11,6 @@ class UnconnectedAddToCart extends Component {
     let data = new FormData();
     data.append("productId", this.props.item);
     data.append("userId", this.props.user._id);
-    data.append("cart", this.props.user.cart);
 
     let response = await fetch("/add-to-cart", {
       // fix fetch request path
@@ -25,8 +24,14 @@ class UnconnectedAddToCart extends Component {
     if (!parsedBody.success) {
       window.alert("Product submission failed");
     } else {
-      console.log("dispatching add cart", parsedBody.cart);
-      this.props.dispatch({ type: "add-cart", cart: parsedBody.cart });
+      console.log(
+        "dispatching add cart",
+        this.props.cart.concat(parsedBody.item)
+      );
+      this.props.dispatch({
+        type: "add-cart",
+        cart: this.props.cart.concat(parsedBody.item)
+      });
     }
   };
 
@@ -72,7 +77,8 @@ class UnconnectedAddToCart extends Component {
 let mapStateToProps = st => {
   return {
     isLoggedIn: st.loggedIn,
-    user: st.user
+    user: st.user,
+    cart: st.cart
   };
 };
 

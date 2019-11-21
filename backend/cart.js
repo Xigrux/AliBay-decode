@@ -2,16 +2,18 @@ let ObjectID = require("mongodb").ObjectID;
 let addToCart = (req, res, dbo) => {
   console.log("in add cart");
   let itemId = req.body.productId;
+  console.log("item id:", itemId);
   let userId = req.body.userId;
   console.log("user id:", userId);
   let quantity = 1;
-  let cart = req.body.cart.split(","); //this returns as string
-  cart.push({ item: itemId, quantity });
-  console.log("updated cart: ", cart);
+  let item = { itemId, quantity };
+  console.log("updated cart: ", item);
+
   dbo
     .collection("users")
-    .updateOne({ _id: ObjectID(userId) }, { $set: { cart } });
-  return res.send(JSON.stringify({ success: true, cart }));
+    .updateOne({ _id: ObjectID(userId) }, { $push: { cart: item } });
+  console.log("in add item before return");
+  return res.send(JSON.stringify({ success: true, item }));
 };
 
 let removeFromCart = (req, res, dbo) => {
