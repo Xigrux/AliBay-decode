@@ -8,12 +8,15 @@ let addToCart = (req, res, dbo) => {
   let quantity = 1;
   let item = { itemId, quantity };
   console.log("updated cart: ", item);
-
   dbo
     .collection("users")
-    .updateOne({ _id: ObjectID(userId) }, { $push: { cart: item } });
+    .updateOne(
+      { _id: ObjectID(userId), "cart.itemId": itemId },
+      { $set: { "cart.$.quantity": quantity } }
+    );
+
   console.log("in add item before return");
-  return res.send(JSON.stringify({ success: true, item }));
+  return res.send(JSON.stringify({ success: true }));
 };
 
 let removeFromCart = (req, res, dbo) => {

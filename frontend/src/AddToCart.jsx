@@ -12,6 +12,8 @@ class UnconnectedAddToCart extends Component {
     data.append("productId", this.props.item);
     data.append("userId", this.props.user._id);
 
+    this.props.cart.itemId === this.props.item;
+
     let response = await fetch("/add-to-cart", {
       // fix fetch request path
       method: "POST",
