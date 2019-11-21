@@ -23,6 +23,9 @@ let removeFromCart = (req, res, dbo) => {
 
 let cart = (req, res, dbo) => {
   let cart = req.body.cart;
+  console.log("cart before split:", cart);
+  cart = cart.split(",");
+  console.log("cart after split:", cart);
   ids = cart.map(item => {
     return ObjectID(cart);
   });
