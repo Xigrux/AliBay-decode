@@ -47,7 +47,7 @@ class unconnectedProductPage extends Component {
         {/* Ratings to be added ==----== */}
         <div>Category: {this.state.itemDetails.category}</div>
         <div>Tags: {tags}</div>
-        <div>Seller: {this.state.itemDetails.username}</div>
+        <div>Seller: {this.state.itemDetails.sellerId}</div>
 
         <AddToCart
           item={this.props.id}

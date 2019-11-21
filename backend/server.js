@@ -56,7 +56,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   console.log("Uploaded PRODUCT");
   let media = req.files;
   let productName = req.body.name;
-  let username = req.body.sellerName;
+  let sellerId = req.body.sellerName;
   let price = req.body.price;
   let descriptionHeader = req.body.descriptionHeader;
   let descriptionText = req.body.descriptionText;
@@ -91,16 +91,16 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   // console.log("posts: ", posts);
   //always push default
   //find sellerID from merchants database
-  console.log("seller:", username);
-  dbo.collection("merchants").findOne({ username }, (err, user) => {
+  console.log("seller:", sellerId);
+  dbo.collection("merchants").findOne({ sellerId }, (err, user) => {
     if (err || user === null) {
       return res.send(JSON.stringify({ success: false }));
     }
     console.log("Found user");
-    username = user._id;
+    sellerId = user._id;
     dbo.collection("items").insertOne({
       productName,
-      username,
+      sellerId,
       price,
       descriptionHeader,
       descriptionText,
@@ -151,14 +151,14 @@ app.post("/cart", upload.none(), (req, res) => {
 });
 
 app.post("/search", upload.none(), (req, res) => {
-  let productName = req.body.productName;
   let tags = req.body.tags;
+  tags = tags.split(" ");
   tags = tags.map(tag => {
     return new RegExp(tag);
   });
   dbo
     .collection("items")
-    .find({ productName: new RegExp(productName), tags: { $in: tags } })
+    .find({ productName: { $in: tags }, tags: { $in: tags } })
     .toArray((err, array) => {
       if (err) {
         return res.send(JSON.stringify({ success: false }));
