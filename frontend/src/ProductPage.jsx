@@ -49,7 +49,10 @@ class unconnectedProductPage extends Component {
         <div>Tags: {tags}</div>
         <div>Seller: {this.state.itemDetails.username}</div>
 
-        <AddToCart></AddToCart>
+        <AddToCart
+          item={this.props.id}
+          inventory={this.state.itemDetails.inventory}
+        ></AddToCart>
       </div>
     );
   };

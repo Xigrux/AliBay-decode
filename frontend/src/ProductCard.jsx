@@ -20,7 +20,10 @@ class ProductCard extends Component {
         {/* will need to get the average from all of the ratings in the ratings object */}
         <div>rating:{this.props.itemContents.ratings[0]}</div>
 
-        <AddToCart item={this.props.itemContents._id} />
+        <AddToCart
+          item={this.props.itemContents._id}
+          inventory={this.props.itemContents.inventory}
+        />
       </Link>
     );
   };

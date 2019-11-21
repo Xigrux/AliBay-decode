@@ -4,9 +4,9 @@ let addToCart = (req, res, dbo) => {
   let itemId = req.body.productId;
   let userId = req.body.userId;
   console.log("user id:", userId);
-  let quantity = req.body.quantity;
+  let quantity = 1;
   let cart = req.body.cart.split(","); //this returns as string
-  cart.push(itemId);
+  cart.push({ item: itemId, quantity });
   console.log("updated cart: ", cart);
   dbo
     .collection("users")

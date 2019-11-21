@@ -29,6 +29,11 @@ class UnconnectedAddToCart extends Component {
       this.props.dispatch({ type: "add-cart", cart: parsedBody.cart });
     }
   };
+
+  handleQuantity = e => {
+    e.preventDefault();
+    console.log(e.target.value);
+  };
   render() {
     return (
       <>
@@ -43,12 +48,21 @@ class UnconnectedAddToCart extends Component {
         )}
 
         {this.props.isLoggedIn && this.props.user.userType === "users" && (
-          <button onClick={this.handleAddToCart}>
-            <Link>
-              {/* <Link to="/cart"> */}
-              <i>Add to cart!</i>
-            </Link>
-          </button>
+          <>
+            <input
+              type="number"
+              placeholder="1"
+              min="0"
+              max={this.props.inventory}
+              onChange={this.handleQuantity}
+            />
+            <button onClick={this.handleAddToCart}>
+              <Link>
+                {/* <Link to="/cart"> */}
+                <i>Add to cart!</i>
+              </Link>
+            </button>
+          </>
         )}
       </>
     );

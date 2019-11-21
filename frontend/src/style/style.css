@@ -82,6 +82,11 @@ input {
   border-bottom: 2px #333333 solid;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
 section {
   padding: 10vw;
 }
