@@ -1,8 +1,10 @@
 nav {
+  position: relative;
   width: 100%;
   height: 60px;
   padding: 10px 20px;
   top: 0;
+  z-index: 1;
 }
 
 .logo {
@@ -10,6 +12,7 @@ nav {
   top: 17px;
   left: 50%;
   transform: translateX(-50%);
+  opacity: 0.9;
 }
 
 .user {
@@ -26,8 +29,8 @@ nav {
 
 .cart {
   position: absolute;
-  left: 90vw;
-  top: 85vh;
+  left: 80vw;
+  top: 75vh;
   height: 50px;
   width: 50px;
   border-radius: 50%;

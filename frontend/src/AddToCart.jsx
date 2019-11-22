@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import "./style/addtocart.css";
 
 class UnconnectedAddToCart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      quantitySelected: 1
+    };
+  }
   handleAddToCart = async event => {
     event.preventDefault();
-    console.log(this.props.user);
-    //does not do anything yet...
-    //will make a call to the 'add-to-cart' endpoint
-    let data = new FormData();
-
     let isInCart = false;
-    console.log("this is the props cart", this.props.cart);
     this.props.cart.forEach(i => {
       if (i.itemId === this.props.item) {
         isInCart = true;
@@ -20,10 +21,11 @@ class UnconnectedAddToCart extends Component {
     });
     console.log("state of incarts", isInCart);
 
+    let data = new FormData();
     data.append("productId", this.props.item);
     data.append("userId", this.props.user._id);
     data.append("update", isInCart);
-    let quantity = 1;
+    data.append("quantity", this.state.quantitySelected);
 
     let response = await fetch("/add-to-cart", {
       // fix fetch request path
@@ -31,24 +33,29 @@ class UnconnectedAddToCart extends Component {
       body: data
     });
     let responseBody = await response.text();
-    console.log("response body: ", responseBody);
     let parsedBody = JSON.parse(responseBody);
-    console.log("parsed body: ", parsedBody);
+
     if (!parsedBody.success) {
       window.alert("Product submission failed");
     } else {
-      console.log("this is the cart ", this.props.cart);
-      // console.log(
-      //   "dispatching add cart",
-      //   this.props.cart.concat(parsedBody.item)
-      // );
-
+      let isMatching = false;
       this.props.cart.forEach(i => {
         if (i.itemId === parsedBody.item.itemId) {
           console.log("matching", i.itemId, "and ", parsedBody.item.itemId);
-          i.quantity = i.quantity + quantity;
+          console.log(typeof this.state.quantitySelected);
+          i.quantity = i.quantity + parseInt(this.state.quantitySelected);
+          isMatching = true;
+          return;
         }
       });
+      if (!isMatching) {
+        console.log("did not match so pushing");
+        this.props.cart.push(parsedBody.item);
+      }
+
+      console.log("this is the Response item", parsedBody.item);
+
+      console.log("this is the new cart obj", this.props.cart);
 
       this.props.dispatch({
         type: "add-cart",
@@ -63,7 +70,8 @@ class UnconnectedAddToCart extends Component {
 
   handleQuantity = e => {
     e.preventDefault();
-    // this.state.quantity
+    console.log(e.target.value);
+    this.setState({ quantitySelected: e.target.value });
   };
   render() {
     return (
@@ -72,28 +80,29 @@ class UnconnectedAddToCart extends Component {
           <>
             <button>
               <Link to="/dashboard">
-                <i>Add to cart!</i>
+                <i>ADD</i>
               </Link>
             </button>
           </>
         )}
 
         {this.props.isLoggedIn && this.props.user.userType === "users" && (
-          <>
+          <div class="addtocart-container">
+            <button onClick={this.handleAddToCart}>
+              <Link>
+                {/* <Link to="/cart"> */}
+                <i>ADD</i>
+              </Link>
+            </button>
             <input
               type="number"
               placeholder="1"
               min="0"
               max={this.props.inventory}
               onChange={this.handleQuantity}
+              class="addtocart-input"
             />
-            <button onClick={this.handleAddToCart}>
-              <Link>
-                {/* <Link to="/cart"> */}
-                <i>Add to cart!</i>
-              </Link>
-            </button>
-          </>
+          </div>
         )}
       </>
     );

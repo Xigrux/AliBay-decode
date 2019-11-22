@@ -120,6 +120,8 @@ let autoLogin = (req, res, dbo) => {
   let signupType = req.body.signupType;
   console.log("sid", sid);
   dbo.collection("cookies").findOne({ sid }, (err, sid) => {
+    console.log("sid: ********", sid);
+
     if (err || sid === null) {
       return res.send(JSON.stringify({ success: false }));
     }
@@ -127,6 +129,8 @@ let autoLogin = (req, res, dbo) => {
       dbo
         .collection(signupType)
         .findOne({ username: sid.username }, (err, user) => {
+          console.log("user: ", user);
+
           return res.send(JSON.stringify({ success: true, user }));
         });
     }

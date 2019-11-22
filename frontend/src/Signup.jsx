@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import UserDashboard from "./UserDashboard.jsx";
 import MerchantDashboard from "./MerchantDashboard.jsx";
+import "./style/signup.css";
 
 class UnconnectedSignup extends Component {
   constructor(props) {
@@ -74,66 +75,80 @@ class UnconnectedSignup extends Component {
       <>
         {!this.props.isLoggedIn && (
           <form onSubmit={this.handleSubmit}>
-            Username
-            <input type="text" onChange={this.handleUsernameChange} required />
-            Email
-            <input type="email" onChange={this.handleEmailChange} required />
-            Password
-            <input type="text" onChange={this.handlePasswordChange} required />
-            {/* ========================SIGNUP TYPES======================= */}
-            User account
-            <input
-              type="radio"
-              onChange={this.handleSignupType}
-              value="users"
-              name="account-type"
-              required
-            />
-            Merchant account
-            <input
-              type="radio"
-              onChange={this.handleSignupType}
-              value="merchants"
-              name="account-type"
-            />
-            {/* ===============================REGION SELECTION============================= */}
-            Select Region: Americas
-            <input
-              type="radio"
-              name="region-select"
-              value="Americas"
-              onClick={this.handleRegionSelect}
-              required
-            />
-            Asia
-            <input
-              type="radio"
-              name="region-select"
-              value="Asia"
-              onClick={this.handleRegionSelect}
-            />
-            Europe
-            <input
-              type="radio"
-              name="region-select"
-              value="Europe"
-              onClick={this.handleRegionSelect}
-            />
-            Africa
-            <input
-              type="radio"
-              name="region-select"
-              value="Africa"
-              onClick={this.handleRegionSelect}
-            />
-            Oceania
-            <input
-              type="radio"
-              name="region-select"
-              value="Oceania"
-              onClick={this.handleRegionSelect}
-            />
-            <input type="submit" />
+            <div class="signup-container">
+              Username
+              <input
+                type="text"
+                onChange={this.handleUsernameChange}
+                required
+              />
+              Email
+              <input type="email" onChange={this.handleEmailChange} required />
+              Password
+              <input
+                type="text"
+                onChange={this.handlePasswordChange}
+                required
+              />
+              {/* ========================SIGNUP TYPES======================= */}
+              <div>
+                User account
+                <input
+                  type="radio"
+                  onChange={this.handleSignupType}
+                  value="users"
+                  name="account-type"
+                  required
+                />
+                Merchant account
+                <input
+                  type="radio"
+                  onChange={this.handleSignupType}
+                  value="merchants"
+                  name="account-type"
+                />
+              </div>
+              {/* ===============================REGION SELECTION============================= */}
+              <div>
+                Select Region: Americas
+                <input
+                  type="radio"
+                  name="region-select"
+                  value="Americas"
+                  onClick={this.handleRegionSelect}
+                  required
+                />
+                Asia
+                <input
+                  type="radio"
+                  name="region-select"
+                  value="Asia"
+                  onClick={this.handleRegionSelect}
+                />
+                Europe
+                <input
+                  type="radio"
+                  name="region-select"
+                  value="Europe"
+                  onClick={this.handleRegionSelect}
+                />
+                Africa
+                <input
+                  type="radio"
+                  name="region-select"
+                  value="Africa"
+                  onClick={this.handleRegionSelect}
+                />
+                Oceania
+                <input
+                  type="radio"
+                  name="region-select"
+                  value="Oceania"
+                  onClick={this.handleRegionSelect}
+                />
+              </div>
+              <input type="submit" />
+            </div>
           </form>
         )}
         {this.props.isLoggedIn && this.props.user.userType === "users" && (

@@ -27,11 +27,11 @@ class FeaturedProd extends Component {
   };
   render = () => {
     return (
-      <div className="flex-container flex-dir-h flex-evenly-h flex-wrap">
+      <>
         {this.state.items.map(item => {
           return <ProductCard itemContents={item} />;
         })}
-      </div>
+      </>
     );
   };
 }
