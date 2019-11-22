@@ -113,7 +113,15 @@ app.post("/add-product", upload.array("files"), (req, res) => {
       posts,
       tags,
       category
+    }, (err, item) => {
+      dbo
+        .collection("merchants")
+        .updateOne(
+          { _id: ObjectID(sellerId) },
+          { $push: { inventory: item.insertedId } }
+        );
     });
+
     return res.send(JSON.stringify({ success: true }));
   });
 });
@@ -247,13 +255,22 @@ app.post("/confirm-payement", upload.none(), async (req, res) => {
   console.log("ids: ", ids);
   console.log("purchaseOrder: ", purchaseOrder);
 
-  ids.forEach(id => {
+  ids.forEach((id, i) => {
     console.log("inventory:", purchaseOrder[id]);
     dbo
       .collection("items")
       .updateMany(
         { _id: ObjectID(id) },
-        { $inc: { inventory: purchaseOrder[id] * -1 } }
+        { $inc: { inventory: purchaseOrder[id] * -1 } },
+        (err, item) => {
+          console.log("inside of forEach", item.sellerId);
+          dbo
+            .collection("merchants")
+            .updateOne(
+              { _id: ObjectID(item.sellerId) },
+              { $push: { salesHistory: cart[i] } }
+            );
+        }
       );
   });
 
