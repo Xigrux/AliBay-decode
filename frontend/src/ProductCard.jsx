@@ -22,10 +22,10 @@ class ProductCard extends Component {
             <div class="productcard-product">
               {/* Title:*/}
               {this.props.itemContents.productName}{" "}
-              <span class="productcard-desc">
+              <div class="productcard-desc">
                 {/* smol desc:*/}
                 {this.props.itemContents.descriptionHeader}
-              </span>
+              </div>
             </div>
 
             <div class="productcard-price">

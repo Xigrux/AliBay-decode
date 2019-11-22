@@ -130,14 +130,14 @@ app.post("/rating", upload.none(), (req, res) => {
   console.log("RATING HIT------------------");
   let rating = req.body.rating;
   let id = req.body.id;
-  let username = req.body.username;
+  let userId = req.body.username;
   if (rating > 5 || rating < 1) {
     return res.send(JSON.stringify({ succes: false }));
   }
   dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
     console.log("item: ", item);
     let ratings = { ...item.ratings };
-    ratings[username] = parseInt(rating);
+    ratings[userId] = parseInt(rating);
     dbo
       .collection("items")
       .findOneAndUpdate(

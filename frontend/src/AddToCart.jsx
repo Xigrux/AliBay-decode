@@ -91,7 +91,7 @@ class UnconnectedAddToCart extends Component {
             <button onClick={this.handleAddToCart}>
               <Link>
                 {/* <Link to="/cart"> */}
-                <i>ADD</i>
+                ADD
               </Link>
             </button>
             <input
