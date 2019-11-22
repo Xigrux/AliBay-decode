@@ -6,12 +6,18 @@ class UnconnectedSalesRecord extends Component {
   render = () => {
     return (
       <div>
-        Items sold:
-        <div>
-          {this.props.merchant.salesHistory.map(sale => {
-            return <ProductCard itemContents={sale} />;
-          })}
-        </div>
+        {console.log(
+          "MERCHANT SHISTORY ON SERECORD",
+          this.props.merchant.salesHistory
+        )}
+
+        {this.props.merchant.salesHistory.map(sale => {
+          return (
+            <div>
+              {Object.keys(sale)}, quantity sold: {Object.values(sale)}
+            </div>
+          );
+        })}
       </div>
     );
   };

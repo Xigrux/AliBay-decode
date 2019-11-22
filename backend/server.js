@@ -331,6 +331,9 @@ app.post("/purchase-history", upload.none(), (req, res) => {
 
 app.post("/inventory", upload.none(), (req, res) => {
   let items = req.body.items;
+  items = items.split(",");
+  console.log("ITEMS IS: *******", items);
+
   items = items.map(item => {
     return ObjectID(item);
   });

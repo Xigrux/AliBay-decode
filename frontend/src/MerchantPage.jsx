@@ -20,20 +20,22 @@ class UnconnectedMerchantPage extends Component {
     console.log("MERCHANT-PAGE RESP****", responseBody);
     let parsed = JSON.parse(responseBody);
     console.log("Parsed RESP****", parsed);
-    this.setState({ merchant: parsed });
+    this.setState({ merchant: parsed.merchant });
   };
 
   render = () => {
     console.log("SELLER:::::", this.props.id);
-    return <div>hello: {this.props.id}</div>;
-    // return (
-    //   <>
-    //     <div>{this.props.id.username}</div>
-    //     <div>{this.props.id.region}</div>
-    //     <div>{this.props.id.email}</div>
-    //     <div>{this.props.id.inventory}</div>
-    //   </>
-    // );
+    // return <div>hello: {this.props.id}</div>;
+    console.log("MERCHANT:::::", this.state.merchant);
+
+    return (
+      <>
+        <div>{this.state.merchant.username}</div>
+        <div>{this.state.merchant.region}</div>
+        <div>{this.state.merchant.email}</div>
+        <div>{this.state.merchant.inventory}</div>
+      </>
+    );
   };
 }
 
