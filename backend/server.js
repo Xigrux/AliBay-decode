@@ -258,6 +258,7 @@ app.post("/confirm-payement", upload.none(), async (req, res) => {
   });
 
   dbo.collection("purchase-orders").insertOne({ purchaseOrder }, (err, PO) => {
+    purchaseOrder[id] = PO.insertedId;
     dbo.collection("users").updateOne(
       { _id: ObjectID(id) },
       {
@@ -267,7 +268,7 @@ app.post("/confirm-payement", upload.none(), async (req, res) => {
     );
   });
 
-  return res.send(JSON.stringify({ success: true }));
+  return res.send(JSON.stringify({ success: true, cart: [], purchaseOrder }));
 });
 
 // app.post("/update", upload.none(), (req, res) => {

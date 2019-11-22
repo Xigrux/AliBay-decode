@@ -117,6 +117,7 @@ let usernameTaken = () => {
 
 let autoLogin = (req, res, dbo) => {
   let sid = req.cookie.sid;
+  let signupType = req.body.signupType;
   console.log("sid", sid);
   dbo.collection("cookies").findOne({ sid }, (err, sid) => {
     if (err || sid === null) {
@@ -124,7 +125,7 @@ let autoLogin = (req, res, dbo) => {
     }
     if (sid !== null) {
       dbo
-        .collection("users")
+        .collection(signupType)
         .findOne({ username: sid.username }, (err, user) => {
           return res.send(JSON.stringify({ success: true, user }));
         });
