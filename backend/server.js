@@ -339,6 +339,10 @@ app.post("/purchase-history", upload.none(), (req, res) => {
 });
 
 app.post("/inventory", upload.none(), (req, res) => {
+  if (req.body.items === undefined) {
+    res.send(JSON.stringify({ success: false }));
+    return;
+  }
   let items = req.body.items;
   items = items.split(",");
   console.log("ITEMS IS: *******", items);
