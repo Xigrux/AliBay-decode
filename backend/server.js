@@ -57,6 +57,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
   let media = req.files;
   let productName = req.body.name;
   let sellerId = req.body.sellerName;
+  let sellerName = req.body.sellerName;
   let price = req.body.price;
   let descriptionHeader = req.body.descriptionHeader;
   let descriptionText = req.body.descriptionText;
@@ -103,6 +104,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     dbo.collection("items").insertOne({
       productName,
       sellerId,
+      sellerName,
       price: parseInt(price),
       descriptionHeader,
       descriptionText,
@@ -300,20 +302,59 @@ app.post("/merchant-page", upload.none(), (req, res) => {
   let id = req.body.sellerId;
   dbo
     .collection("merchants")
-    .fineOne({ _id: ObjectID(id) }, (err, merchant) => {
-      if (err) {
+    .findOne({ _id: ObjectID(id) }, (err, merchant) => {
+      if (err || merchant === null) {
         return res.send(JSON.stringify({ success: false }));
       }
       return res.send(JSON.stringify({ success: true, merchant }));
     });
 });
-// app.post("/update", upload.none(), (req, res) => {
-//   let username = "Xav";
-//   dbo.collection("items").updateMany({}, { $set: { username } });
-//   res.send(JSON.stringify({ success: true }));
-// });
 
-//app.post("/purchase-history")
+app.post("/purchase-history", upload.none(), (req, res) => {
+  let purchaseOrders = req.body.POs;
+  purchaseOrders = purchaseOrders.map(order => {
+    return ObjectID(order);
+  });
+  // console.log(purchaseOrders);
+  let history = [];
+  dbo
+    .collection("purchase-orders")
+    .find({ _id: { $in: purchaseOrders } })
+    .toArray((err, POs) => {
+      POs.forEach(PO => {
+        console.log("PO: ", PO);
+        let keys = Object.keys(PO.purchaseOrder);
+        keys.forEach(key => {
+          dbo
+            .collection("items")
+            .findOne({ _id: ObjectID(key) }, (err, item) => {
+              let quantity = PO.purchaseOrder[key];
+              history.push({ item, quantity });
+              // console.log("quantity:", quantity);
+              // console.log("item: ", item);
+            });
+        });
+      });
+    });
+  res.send(JSON.stringify({ history }));
+});
+
+app.post("/inventory", upload.none(), (req, res) => {
+  let items = req.body.items;
+  items = items.map(item => {
+    return ObjectID(item);
+  });
+  dbo
+    .collection("items")
+    .find({ _id: { $in: items } })
+    .toArray((err, items) => {
+      if (err) {
+        return res.send(JSON.stringify({ success: false }));
+      }
+
+      return res.send(JSON.stringify({ success: true, items }));
+    });
+});
 
 //=============================== LISTENER ===============================//
 app.listen("4000", () => {
