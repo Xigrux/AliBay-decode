@@ -131,22 +131,28 @@ app.post("/rating", upload.none(), (req, res) => {
   let rating = req.body.rating;
   let id = req.body.id;
   let username = req.body.username;
+  if (rating > 5 || rating < 1) {
+    return res.send(JSON.stringify({ succes: false }));
+  }
   dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
-    let ratings = [...item.ratings];
-    console.log("item ratings:", ratings);
-    let keys = Object.keys(ratings);
-    keys = keys.filter(key => {
-      return key === username;
-    });
-    if (keys.length === 0) {
-      ratings[username] = rating;
-      dbo
-        .collection("items")
-        .updateOne({ _id: ObjectID(id) }, { $set: { ratings } });
-      return res.send(JSON.stringify({ succes: true }));
-    } else {
-      return res.send(JSON.stringify({ succes: false }));
-    }
+    console.log("item: ", item);
+    let ratings = { ...item.ratings };
+    ratings[username] = parseInt(rating);
+    dbo
+      .collection("items")
+      .findOneAndUpdate(
+        { _id: ObjectID(id) },
+        { $set: { ratings } },
+        (err, item) => {
+          if (err) {
+            return res.send(JSON.stringify({ succes: false }));
+          }
+          console.log("rating", item.value.ratings);
+          return res.send(
+            JSON.stringify({ succes: true, ratings: item.value.ratings })
+          );
+        }
+      );
   });
 });
 
@@ -213,16 +219,13 @@ app.post("/render-category", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo
-    .collections("items")
-    .find({ _id: userId })
-    .toArray((err, items) => {
-      if (err) {
-        console.log("Error getting merchant product list");
-        return res.send(JSON.stringify({ success: false }));
-      }
-      return res.send(JSON.stringify({ success: true, items }));
-    });
+  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
+    if (err) {
+      console.log("Error getting merchant product list");
+      return res.send(JSON.stringify({ success: false }));
+    }
+    return res.send(JSON.stringify({ success: true, items }));
+  });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
@@ -264,15 +267,14 @@ app.post("/confirm-payement", upload.none(), async (req, res) => {
     console.log("inventory:", purchaseOrder[id]);
     dbo
       .collection("items")
-      .updateMany(
+      .findOneAndUpdate(
         { _id: ObjectID(id) },
         { $inc: { inventory: purchaseOrder[id] * -1 } },
         (err, item) => {
-          console.log("inside of forEach", item.sellerId);
           dbo
             .collection("merchants")
             .updateOne(
-              { _id: ObjectID(item.sellerId) },
+              { _id: ObjectID(item.value.sellerId) },
               { $push: { salesHistory: cart[i] } }
             );
         }

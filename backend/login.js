@@ -127,6 +127,7 @@ let autoLogin = (req, res, dbo) => {
     }
     if (sid !== null) {
       signupType = sid.signupType;
+      console.log("signupType", typeof signupType);
       dbo
         .collection(signupType)
         .findOne({ username: sid.username }, (err, user) => {
