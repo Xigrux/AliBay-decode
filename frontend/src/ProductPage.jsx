@@ -71,7 +71,7 @@ class unconnectedProductPage extends Component {
         roundedRating += rating;
       });
       //devides the total of all of the ratings by the number of ratings to get the rounded value
-      roundedRating = roundedRating / ratings.length;
+      roundedRating = Math.round(roundedRating / ratings.length);
     }
 
     return (
@@ -84,8 +84,7 @@ class unconnectedProductPage extends Component {
         <div>Price: {this.state.itemDetails.price}$</div>
 
         <div>
-          Ratings: <b>{roundedRating}</b> - number of ratings: ({ratings.length}
-          )
+          Rating: <b>{roundedRating}</b> - number of ratings: ({ratings.length})
         </div>
         <div>Category: {this.state.itemDetails.category}</div>
         <div>Tags: {tags}</div>
