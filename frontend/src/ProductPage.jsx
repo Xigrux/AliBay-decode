@@ -29,6 +29,10 @@ class unconnectedProductPage extends Component {
   };
   handleRatingSubmit = async event => {
     event.preventDefault();
+    if (this.props.user === undefined) {
+      console.log("not logged in, can't review");
+      return;
+    }
     let rating = this.state.userRating;
     let itemId = this.props.id;
     let username = this.props.user.username;
