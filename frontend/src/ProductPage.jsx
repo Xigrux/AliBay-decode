@@ -34,8 +34,8 @@ class unconnectedProductPage extends Component {
       return;
     }
     let rating = this.state.userRating;
-    let itemId = this.props._id;
-    let userId = this.props.user.userId;
+    let itemId = this.props.id;
+    let userId = this.props.user._id;
     console.log("RATING:", rating, " - ITEM ID:", itemId, " - USERId:", userId);
     let data = new FormData();
     data.append("rating", rating);
