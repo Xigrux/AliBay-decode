@@ -70,7 +70,7 @@ class unconnectedProductPage extends Component {
       ratings.forEach(rating => {
         roundedRating += rating;
       });
-      //devides the total of all of the ratings by the number of ratings to get the rounded value
+      //devides the total of all of the ratings by the number of ratings to get the average value
       roundedRating = Math.round(roundedRating / ratings.length);
     }
 
