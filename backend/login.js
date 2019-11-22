@@ -116,16 +116,20 @@ let usernameTaken = () => {
 };
 
 let autoLogin = (req, res, dbo) => {
-  let sid = req.cookie.sid;
+  let sid = parseInt(req.cookies.sid);
   console.log("sid", sid);
   dbo.collection("cookies").findOne({ sid }, (err, sid) => {
+    console.log("sid: ********", sid);
+
     if (err || sid === null) {
       return res.send(JSON.stringify({ success: false }));
     }
     if (sid !== null) {
       dbo
-        .collection("users")
+        .collection("users") // XAV TODO: target collection based on signup type
         .findOne({ username: sid.username }, (err, user) => {
+          console.log("user: ", user);
+
           return res.send(JSON.stringify({ success: true, user }));
         });
     }
