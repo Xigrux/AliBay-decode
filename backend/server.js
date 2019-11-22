@@ -130,7 +130,7 @@ app.post("/rating", upload.none(), (req, res) => {
   console.log("RATING HIT------------------");
   let rating = req.body.rating;
   let id = req.body.id;
-  let userId = req.body.username;
+  let userId = req.body.userId;
   if (rating > 5 || rating < 1) {
     return res.send(JSON.stringify({ succes: false }));
   }
