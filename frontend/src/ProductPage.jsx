@@ -34,20 +34,13 @@ class unconnectedProductPage extends Component {
       return;
     }
     let rating = this.state.userRating;
-    let itemId = this.props.id;
-    let username = this.props.user.username;
-    console.log(
-      "RATING:",
-      rating,
-      " - ITEM ID:",
-      itemId,
-      " - USERNAME:",
-      username
-    );
+    let itemId = this.props._id;
+    let userId = this.props.user.userId;
+    console.log("RATING:", rating, " - ITEM ID:", itemId, " - USERId:", userId);
     let data = new FormData();
     data.append("rating", rating);
     data.append("id", itemId);
-    data.append("username", username);
+    data.append("userId", userId);
     let response = await fetch("/rating", { method: "POST", body: data });
     let body = await response.text();
     body = JSON.parse(body);
