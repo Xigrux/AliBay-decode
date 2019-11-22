@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import Checkout from "./Checkout.jsx"
 import ProductCard from "./ProductCard.jsx";
 
 class UnconnectedCart extends Component {
@@ -61,6 +61,9 @@ class UnconnectedCart extends Component {
     }
     return ret;
   };
+
+
+
   render = () => {
     // let items = this.props.itemIds.map((itemId, index) => {
     //   let quantityToBuy = 0;
@@ -96,11 +99,14 @@ class UnconnectedCart extends Component {
       this.props.cart.length > 0
     ) {
       console.log(this.state.displayItems);
-      return this.state.displayItems.map(o => {
+      return <div>
+      
+      {this.state.displayItems.map(o => {
         return <ProductCard itemContents={o}></ProductCard>;
-      });
+      })};
+        <Checkout user={this.props.user} />
+      </div>
     }
-
     return <>your cart is empty</>;
   };
 }
