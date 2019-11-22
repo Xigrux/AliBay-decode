@@ -19,6 +19,11 @@ let reducer = (state, action) => {
   if (action.type === "add-cart") {
     return { ...state, cart: action.cart };
   }
+
+  if (action.type === "clear-cart") {
+    return { ...state, cart: [] };
+  }
+
   return state;
 };
 

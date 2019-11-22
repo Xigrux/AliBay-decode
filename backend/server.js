@@ -269,13 +269,13 @@ app.post("/confirm-payment", upload.none(), async (req, res) => {
   console.log("ids: ", typeof ids);
   await Promise.all(
     ids.map((id, i) => {
-      console.log(typeof id);
+      console.log("========== is this a number", cart);
       return new Promise(res => {
         dbo
           .collection("items")
           .findOneAndUpdate(
             { _id: id },
-            { $inc: { inventory: cart[i][id] * -1 } },
+            { $inc: { inventory: cart[i].quantity * -1 } },
             (err, item) => {
               console.log(item);
               purchaseOrder.push({

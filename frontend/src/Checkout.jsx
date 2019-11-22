@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-class Checkout extends Component {
+class UnconnectedCheckout extends Component {
   handleCheckout = async e => {
     e.preventDefault();
     let data = new FormData();
-    console.log(this.props.user._id);
     data.append("id", this.props.user._id);
-    console.log(this.props.cart);
     data.append("cart", JSON.stringify(this.props.cart));
     let response = await fetch("/confirm-payment", {
       method: "POST",
@@ -16,18 +14,21 @@ class Checkout extends Component {
     });
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
+    if (parsed.success) {
+      this.props.dispatch({ type: "clear-cart" });
+    }
   };
   render = () => {
     return (
-      <Link to="/confirmation">
-        <div>
-          <button type="submit" onClick={this.handleCheckout}>
-            Checkout!
-          </button>
-        </div>
-      </Link>
+      <>
+        <button type="submit" onClick={this.handleCheckout}>
+          <Link to="/confirmation">Checkout!</Link>
+        </button>
+      </>
     );
   };
 }
+
+let Checkout = connect()(UnconnectedCheckout);
 
 export default Checkout;

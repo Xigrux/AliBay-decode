@@ -63,6 +63,7 @@ class UnconnectedCart extends Component {
       console.log(this.state.displayItems);
 
       let cartItem;
+      let total = 0;
       return (
         <>
           <div>YOUR CART</div>
@@ -70,6 +71,8 @@ class UnconnectedCart extends Component {
             this.props.cart.forEach(item => {
               if (o._id === item.itemId) {
                 cartItem = item;
+                console.log(typeof o.price, typeof item.quantity);
+                total += o.price * item.quantity;
               }
             });
             return (
@@ -83,7 +86,11 @@ class UnconnectedCart extends Component {
               </div>
             );
           })}
-
+          <div>
+            total: <sup>$</sup>
+            {total}
+            <small>CAD</small>
+          </div>
           <Checkout user={this.props.user} cart={this.props.cart} />
         </>
       );
