@@ -3,11 +3,14 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 class Checkout extends Component {
-  handleCheckout = async () => {
+  handleCheckout = async e => {
+    e.preventDefault();
     let data = new FormData();
-    data.append("id", this.props.user.id);
-    data.append("cart", this.state.cart);
-    let response = await fetch("/confirm-payement", {
+    console.log(this.props.user._id);
+    data.append("id", this.props.user._id);
+    console.log(this.props.cart);
+    data.append("cart", JSON.stringify(this.props.cart));
+    let response = await fetch("/confirm-payment", {
       method: "POST",
       body: data
     });
@@ -16,11 +19,13 @@ class Checkout extends Component {
   };
   render = () => {
     return (
-      <div>
-        <button type="submit" onClick={this.handleCheckout}>
-          Checkout!
-        </button>
-      </div>
+      <Link to="/confirmation">
+        <div>
+          <button type="submit" onClick={this.handleCheckout}>
+            Checkout!
+          </button>
+        </div>
+      </Link>
     );
   };
 }
