@@ -55,37 +55,6 @@ a {
   flex-wrap: wrap;
 }
 
-.center-text {
-  text-align: center;
-}
-
-.prod-name {
-  font-size: 14px;
-  line-height: 16px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.prod-desc {
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.prod-info {
-  font-size: 14px;
-  line-height: 20px;
-  margin-top: 6px;
-}
-
-.prod-image {
-  padding: 5px 0;
-  max-width: 240px;
-  width: 100%;
-  max-height: 320px;
-  height: 100% !important;
-  border-radius: 10px;
-}
-
 button {
   padding: 0;
   -webkit-appearance: none;

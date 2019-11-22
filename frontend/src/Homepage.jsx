@@ -17,23 +17,33 @@ class UnconnecterHomepage extends Component {
           Sparkin' Joy
         </div>
         <div class="homepage-card-container flex-container flex-center-v flex-evenly-h ">
-          <div class="homepage-cat-card cat-electro flex-container flex-center-v flex-center-h">
-            <Link to="/category/electronic">electro</Link>
-          </div>
-          <div class="homepage-cat-card cat-food flex-container flex-center-v flex-center-h">
-            <Link to="/category/food">food</Link>
-          </div>
-          <div class="homepage-cat-card cat-home flex-container flex-center-v flex-center-h">
-            <Link to="/category/home">home</Link>
-          </div>
-          <div class="homepage-cat-card cat-office flex-container flex-center-v flex-center-h">
-            <Link to="/category/office">office</Link>
-          </div>
+          <Link
+            to="/category/electronic"
+            class="homepage-cat-card cat-electro flex-container flex-center-v flex-center-h"
+          >
+            <div class="homepage-cat-card-content">electro</div>
+          </Link>
+          <Link
+            to="/category/food"
+            class="homepage-cat-card cat-food flex-container flex-center-v flex-center-h"
+          >
+            <div class="homepage-cat-card-content">food</div>
+          </Link>
+          <Link
+            to="/category/home"
+            class="homepage-cat-card cat-home flex-container flex-center-v flex-center-h"
+          >
+            <div class="homepage-cat-card-content">home</div>
+          </Link>
+          <Link
+            to="/category/office"
+            class="homepage-cat-card cat-office flex-container flex-center-v flex-center-h"
+          >
+            <div class="homepage-cat-card-content">office</div>
+          </Link>
         </div>
         <div>
-          <div className="center-text">
-            <h3>Featured Products</h3>
-          </div>
+          <h3>Featured Products</h3>
           <FeaturedProd />
         </div>
       </div>

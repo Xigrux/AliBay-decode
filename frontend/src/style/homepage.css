@@ -23,7 +23,7 @@
   overflow: hidden;
 }
 
-.homepage-cat-card a {
+.homepage-cat-card-content {
   z-index: 1;
   color: white;
   text-shadow: 0 0 20px black;
