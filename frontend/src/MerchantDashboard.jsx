@@ -18,8 +18,8 @@ class UnconnectedMerchantDashboard extends Component {
           <Inventory />
         </div>
         <div>
-          Items sold:
-          {/* <SalesRecord /> UNCOMMENT WHEN WORKING */}
+          Sales history:
+          <SalesRecord /> UNCOMMENT WHEN WORKING
         </div>
       </div>
     );
@@ -27,13 +27,9 @@ class UnconnectedMerchantDashboard extends Component {
 }
 
 let mapStateToProps = state => {
-  return (
-    // username: state.user.username,
-    // email: state.user.email,
-    // region: state.user.region,
-    // purchaseHistory: state.user.purchaseHistory
-    <>merchantDash</>
-  );
+  return {
+    user: state.user
+  };
 };
 
 let MerchantDashboard = connect(mapStateToProps)(UnconnectedMerchantDashboard);
