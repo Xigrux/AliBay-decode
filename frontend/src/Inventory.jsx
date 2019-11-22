@@ -20,20 +20,20 @@ class UnconnectedInventory extends Component {
     let responseBody = await response.text();
     console.log("RESPONSE*BODY******FROM INVENTORY ENPOINT", responseBody);
     let parsed = JSON.parse(responseBody);
-    this.setState({ items: parsed });
+    this.setState({ items: parsed.items });
   };
 
   render = () => {
     return (
       // UNCOMMENT CODE BELOW AND REMOVE DUMMY DATA ABOVE ONCE ACTUAL DATA IS ACTIVE
       <>
-        {console.log(this.state.items)}
+        {console.log("*********************************", this.state.items)}
 
-        {/* {this.state.items.map(item => {
+        {this.state.items.map(item => {
           console.log("mERCHANT.INVENTORY SINGLE ITEM", item);
 
           return <ProductCard itemContents={item} />;
-        })} */}
+        })}
       </>
     );
   };
