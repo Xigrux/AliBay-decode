@@ -300,6 +300,17 @@ app.post("/confirm-payement", upload.none(), async (req, res) => {
   return res.send(JSON.stringify({ success: true, cart: [], purchaseOrder }));
 });
 
+app.post("/merchant-page", upload.none(), (req, res) => {
+  let id = req.body.sellerId;
+  dbo
+    .collection("merchants")
+    .fineOne({ _id: ObjectID(id) }, (err, merchant) => {
+      if (err) {
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, merchant }));
+    });
+});
 // app.post("/update", upload.none(), (req, res) => {
 //   let username = "Xav";
 //   dbo.collection("items").updateMany({}, { $set: { username } });
