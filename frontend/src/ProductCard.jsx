@@ -16,7 +16,10 @@ class ProductCard extends Component {
           to={"/product/" + this.props.itemContents._id}
           class="productcard-container"
         >
-          {/* <img src={this.props.itemContents.posts[0]}></img>  you should map later*/}
+          {/* <img
+            class="productcard-img"
+            src={this.props.itemContents.posts[0]}
+          ></img> */}
           <img class="productcard-img" src="/img/hero.jpg"></img>
           <div class="productcard-body">
             <div class="productcard-product">

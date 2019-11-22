@@ -19,12 +19,16 @@ class UnconnectedCart extends Component {
     if (this.props.cart) {
       cart = this.props.cart;
       cart = cart.map(i => {
-        return i.itemId;
+        if (i.quantity > 0) {
+          return i.itemId;
+        }
       });
     } else if (this.props.user) {
       cart = this.props.user.cart;
       cart = cart.map(i => {
-        return i.itemId;
+        if (i.quantity > 0) {
+          return i.itemId;
+        }
       });
     }
     this.setState({ cart });
@@ -58,25 +62,24 @@ class UnconnectedCart extends Component {
     ) {
       console.log(this.state.displayItems);
 
-      let itemQty;
+      let cartItem;
       return (
         <>
           <div>YOUR CART</div>
           {this.state.displayItems.map(o => {
+            this.props.cart.forEach(item => {
+              if (o._id === item.itemId) {
+                cartItem = item;
+              }
+            });
             return (
               <div class="cart-item-container">
                 <div class="cart-item">
                   <ProductCard itemContents={o}></ProductCard>
-                  <RemoveItem />
+                  <RemoveItem itemContents={cartItem} />
                 </div>
 
-                {this.props.cart.forEach(item => {
-                  if (o._id === item.itemId) {
-                    itemQty = item.quantity;
-                  }
-                })}
-
-                <div class="cart-item-quantity">{itemQty}</div>
+                <div class="cart-item-quantity">{cartItem.quantity}</div>
               </div>
             );
           })}
