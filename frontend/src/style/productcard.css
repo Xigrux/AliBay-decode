@@ -1,6 +1,7 @@
 .productcard-container {
+  position: relative;
   display: block;
-  height: 185px;
+  height: 31vh;
   width: 100%;
   background-color: rgb(250, 250, 250);
   overflow: hidden;
@@ -16,7 +17,7 @@
 .productcard-body {
   width: inherit;
   height: 30%;
-  padding: 6% 5% 3%;
+  padding: 4% 5% 3%;
   position: relative;
 }
 
