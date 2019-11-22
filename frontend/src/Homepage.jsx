@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./style/homepage.css";
 import FeaturedProd from "./FeaturedProd";
+import { WiStars } from "react-icons/wi";
 
 class UnconnecterHomepage extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class UnconnecterHomepage extends Component {
         <div class="homepage-hero flex-container flex-center-v flex-center-h">
           Sparkin' Joy
         </div>
-        <div class="homepage-card-container flex-container flex-center-v flex-evenly-h ">
+        <div class="homepage-cat-container flex-container flex-center-v flex-evenly-h ">
           <Link
             to="/category/electronic"
             class="homepage-cat-card cat-electro flex-container flex-center-v flex-center-h"
@@ -43,8 +44,13 @@ class UnconnecterHomepage extends Component {
           </Link>
         </div>
         <div>
-          <h3>Featured Products</h3>
-          <FeaturedProd />
+          <div class="homepage-featured flex-container flex-center-v flex-center-h">
+            Our sparks
+            <WiStars />
+          </div>
+          <div class="homepage-card-containter">
+            <FeaturedProd />
+          </div>
         </div>
       </div>
     );

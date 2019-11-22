@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import "./style/addtocart.css";
 
 class UnconnectedAddToCart extends Component {
   constructor(props) {
@@ -79,28 +80,29 @@ class UnconnectedAddToCart extends Component {
           <>
             <button>
               <Link to="/dashboard">
-                <i>Add to cart!</i>
+                <i>ADD</i>
               </Link>
             </button>
           </>
         )}
 
         {this.props.isLoggedIn && this.props.user.userType === "users" && (
-          <>
+          <div class="addtocart-container">
+            <button onClick={this.handleAddToCart}>
+              <Link>
+                {/* <Link to="/cart"> */}
+                <i>ADD</i>
+              </Link>
+            </button>
             <input
               type="number"
               placeholder="1"
               min="0"
               max={this.props.inventory}
               onChange={this.handleQuantity}
+              class="addtocart-input"
             />
-            <button onClick={this.handleAddToCart}>
-              <Link>
-                {/* <Link to="/cart"> */}
-                <i>Add to cart!</i>
-              </Link>
-            </button>
-          </>
+          </div>
         )}
       </>
     );
