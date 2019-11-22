@@ -5,13 +5,7 @@ import { Link } from "react-router-dom";
 class UnconnectedAddToCart extends Component {
   handleAddToCart = async event => {
     event.preventDefault();
-    console.log(this.props.user);
-    //does not do anything yet...
-    //will make a call to the 'add-to-cart' endpoint
-    let data = new FormData();
-
     let isInCart = false;
-    console.log("this is the props cart", this.props.cart);
     this.props.cart.forEach(i => {
       if (i.itemId === this.props.item) {
         isInCart = true;
@@ -20,6 +14,7 @@ class UnconnectedAddToCart extends Component {
     });
     console.log("state of incarts", isInCart);
 
+    let data = new FormData();
     data.append("productId", this.props.item);
     data.append("userId", this.props.user._id);
     data.append("update", isInCart);
@@ -31,24 +26,28 @@ class UnconnectedAddToCart extends Component {
       body: data
     });
     let responseBody = await response.text();
-    console.log("response body: ", responseBody);
     let parsedBody = JSON.parse(responseBody);
-    console.log("parsed body: ", parsedBody);
+
     if (!parsedBody.success) {
       window.alert("Product submission failed");
     } else {
-      console.log("this is the cart ", this.props.cart);
-      // console.log(
-      //   "dispatching add cart",
-      //   this.props.cart.concat(parsedBody.item)
-      // );
-
+      let isMatching = false;
       this.props.cart.forEach(i => {
         if (i.itemId === parsedBody.item.itemId) {
           console.log("matching", i.itemId, "and ", parsedBody.item.itemId);
           i.quantity = i.quantity + quantity;
+          isMatching = true;
+          return;
         }
       });
+      if (!isMatching) {
+        console.log("did not match so pushing");
+        this.props.cart.push(parsedBody.item);
+      }
+
+      console.log("this is the Response item", parsedBody.item);
+
+      console.log("this is the new cart obj", this.props.cart);
 
       this.props.dispatch({
         type: "add-cart",
