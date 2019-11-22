@@ -124,7 +124,8 @@ app.post("/rating", upload.none(), (req, res) => {
   let id = req.body.id;
   let username = req.body.username;
   dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
-    let ratings = [item.ratings];
+    let ratings = [...item.ratings];
+    console.log("item ratings:", ratings);
     let keys = Object.keys(ratings);
     keys = keys.filter(key => {
       return key === username;
