@@ -9,7 +9,7 @@ let addToCart = (req, res, dbo) => {
   console.log("item id:", itemId);
   let userId = req.body.userId;
   console.log("user id:", userId);
-  let quantity = 1;
+  let quantity = parseInt(req.body.quantity);
   let item = { itemId, quantity };
   console.log("updated cart: ", item);
   if (update) {
@@ -54,12 +54,15 @@ let cart = (req, res, dbo) => {
     console.log("item in map: ", item);
     return ObjectID(item);
   });
-  dbo.collection("items").find({ _id: { $in: ids } }).toArray((err, items) => {
-    if (err) {
-      return res.send(JSON.stringify({ success: false }));
-    }
-    return res.send(JSON.stringify({ success: true, items }));
-  });
+  dbo
+    .collection("items")
+    .find({ _id: { $in: ids } })
+    .toArray((err, items) => {
+      if (err) {
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, items }));
+    });
 };
 
 module.exports.cart = cart;

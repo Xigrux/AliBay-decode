@@ -3,6 +3,12 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 class UnconnectedAddToCart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      quantitySelected: 1
+    };
+  }
   handleAddToCart = async event => {
     event.preventDefault();
     let isInCart = false;
@@ -18,7 +24,7 @@ class UnconnectedAddToCart extends Component {
     data.append("productId", this.props.item);
     data.append("userId", this.props.user._id);
     data.append("update", isInCart);
-    let quantity = 1;
+    data.append("quantity", this.state.quantitySelected);
 
     let response = await fetch("/add-to-cart", {
       // fix fetch request path
@@ -35,7 +41,8 @@ class UnconnectedAddToCart extends Component {
       this.props.cart.forEach(i => {
         if (i.itemId === parsedBody.item.itemId) {
           console.log("matching", i.itemId, "and ", parsedBody.item.itemId);
-          i.quantity = i.quantity + quantity;
+          console.log(typeof this.state.quantitySelected);
+          i.quantity = i.quantity + parseInt(this.state.quantitySelected);
           isMatching = true;
           return;
         }
@@ -62,7 +69,8 @@ class UnconnectedAddToCart extends Component {
 
   handleQuantity = e => {
     e.preventDefault();
-    // this.state.quantity
+    console.log(e.target.value);
+    this.setState({ quantitySelected: e.target.value });
   };
   render() {
     return (
