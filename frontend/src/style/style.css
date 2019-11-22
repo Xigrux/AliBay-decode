@@ -8,6 +8,10 @@
   user-select: none;
 }
 
+body {
+  background-color: #f6f6f6;
+}
+
 a {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -20,6 +24,7 @@ a {
 
 #root {
   width: 100vw;
+  background-color: #f6f6f6;
 }
 .flex-container {
   display: flex;

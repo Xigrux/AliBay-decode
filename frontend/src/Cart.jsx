@@ -84,7 +84,7 @@ class UnconnectedCart extends Component {
             );
           })}
 
-          <Checkout user={this.props.user} />
+          <Checkout user={this.props.user} cart={this.props.cart} />
         </>
       );
     }

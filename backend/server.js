@@ -253,28 +253,30 @@ app.post("/product-page", upload.none(), (req, res) => {
 //see the list of sold things
 //app.post("/sales-record")
 
-app.post("/confirm-payement", upload.none(), async (req, res) => {
+app.post("/confirm-payment", upload.none(), async (req, res) => {
+  console.log("in confirm-payment");
+  console.log(req.body.id);
   let id = req.body.id;
-  let cart = req.body.cart;
-  cart = cart.map(item => {
-    return JSON.parse(item);
-  });
+
+  let cart = JSON.parse(req.body.cart);
+
   let purchaseOrder = [];
-  let ids = cart.map((item, i) => {
-    let key = Object.keys(item);
+  let ids = cart.map(item => {
     // purchaseOrder[key] = cart[i][key];
-    return ObjectID(key[0]);
+    return ObjectID(item.itemId);
   });
-  console.log("ids: ", ids);
+  console.log("ids: ", typeof ids);
   await Promise.all(
     ids.map((id, i) => {
+      console.log(typeof id);
       return new Promise(res => {
         dbo
           .collection("items")
           .findOneAndUpdate(
-            { _id: ObjectID(id) },
+            { _id: id },
             { $inc: { inventory: cart[i][id] * -1 } },
             (err, item) => {
+              console.log(item);
               purchaseOrder.push({
                 item: item.value,
                 quantity: cart[i][item.value._id]
