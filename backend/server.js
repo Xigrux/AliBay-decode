@@ -143,13 +143,14 @@ app.post("/rating", upload.none(), (req, res) => {
       .findOneAndUpdate(
         { _id: ObjectID(id) },
         { $set: { ratings } },
+        { returnNewDocument: true },
         (err, item) => {
           if (err) {
-            return res.send(JSON.stringify({ succes: false }));
+            return res.send(JSON.stringify({ success: false }));
           }
           console.log("rating", item.value.ratings);
           return res.send(
-            JSON.stringify({ succes: true, ratings: item.value.ratings })
+            JSON.stringify({ success: true, ratings: item.value.ratings })
           );
         }
       );
