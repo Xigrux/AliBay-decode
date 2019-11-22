@@ -30,6 +30,7 @@ class UnconnecterNavbar extends Component {
   };
   logOut = () => {
     this.props.dispatch({ type: "logout-success" });
+    this.props.history.push("/");
   };
 
   render = () => {

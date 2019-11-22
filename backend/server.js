@@ -100,27 +100,30 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     }
     console.log("Found user");
     sellerId = user._id;
-    dbo.collection("items").insertOne({
-      productName,
-      sellerId,
-      price: parseInt(price),
-      descriptionHeader,
-      descriptionText,
-      location,
-      inventory: parseInt(inventory),
-      date,
-      ratings,
-      posts,
-      tags,
-      category
-    }, (err, item) => {
-      dbo
-        .collection("merchants")
-        .updateOne(
-          { _id: ObjectID(sellerId) },
-          { $push: { inventory: item.insertedId } }
-        );
-    });
+    dbo.collection("items").insertOne(
+      {
+        productName,
+        sellerId,
+        price: parseInt(price),
+        descriptionHeader,
+        descriptionText,
+        location,
+        inventory: parseInt(inventory),
+        date,
+        ratings,
+        posts,
+        tags,
+        category
+      },
+      (err, item) => {
+        dbo
+          .collection("merchants")
+          .updateOne(
+            { _id: ObjectID(sellerId) },
+            { $push: { inventory: item.insertedId } }
+          );
+      }
+    );
 
     return res.send(JSON.stringify({ success: true }));
   });
@@ -130,7 +133,7 @@ app.post("/rating", upload.none(), (req, res) => {
   console.log("RATING HIT------------------");
   let rating = req.body.rating;
   let id = req.body.id;
-  let userId = req.body.username;
+  let userId = req.body.userId;
   if (rating > 5 || rating < 1) {
     return res.send(JSON.stringify({ succes: false }));
   }
@@ -143,14 +146,13 @@ app.post("/rating", upload.none(), (req, res) => {
       .findOneAndUpdate(
         { _id: ObjectID(id) },
         { $set: { ratings } },
+        { returnNewDocument: true },
         (err, item) => {
           if (err) {
-            return res.send(JSON.stringify({ succes: false }));
+            return res.send(JSON.stringify({ success: false }));
           }
           console.log("rating", item.value.ratings);
-          return res.send(
-            JSON.stringify({ succes: true, ratings: item.value.ratings })
-          );
+          return res.send(JSON.stringify({ success: true, ratings: ratings }));
         }
       );
   });
@@ -219,13 +221,16 @@ app.post("/render-category", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
-    if (err) {
-      console.log("Error getting merchant product list");
-      return res.send(JSON.stringify({ success: false }));
-    }
-    return res.send(JSON.stringify({ success: true, items }));
-  });
+  dbo
+    .collections("items")
+    .find({ _id: userId })
+    .toArray((err, items) => {
+      if (err) {
+        console.log("Error getting merchant product list");
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, items }));
+    });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
@@ -295,6 +300,17 @@ app.post("/confirm-payement", upload.none(), async (req, res) => {
   return res.send(JSON.stringify({ success: true, cart: [], purchaseOrder }));
 });
 
+app.post("/merchant-page", upload.none(), (req, res) => {
+  let id = req.body.sellerId;
+  dbo
+    .collection("merchants")
+    .fineOne({ _id: ObjectID(id) }, (err, merchant) => {
+      if (err) {
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, merchant }));
+    });
+});
 // app.post("/update", upload.none(), (req, res) => {
 //   let username = "Xav";
 //   dbo.collection("items").updateMany({}, { $set: { username } });

@@ -8,6 +8,7 @@ class unconnectedProductPage extends Component {
     super(props);
     this.state = {
       itemDetails: [],
+      itemRatings: [],
       userRating: undefined
     };
   }
@@ -15,13 +16,14 @@ class unconnectedProductPage extends Component {
     console.log("did mount, id:", this.props.id);
     this.getItemDetails();
   };
+
   getItemDetails = async () => {
     let data = new FormData();
     data.append("id", this.props.id);
     let response = await fetch("/product-page", { method: "POST", body: data });
     let body = await response.text();
     body = JSON.parse(body);
-    this.setState({ itemDetails: body.item });
+    this.setState({ itemDetails: body.item, itemRatings: body.item.ratings });
     console.log("response body, item info:", body);
   };
   handleRatingChange = event => {
@@ -34,8 +36,8 @@ class unconnectedProductPage extends Component {
       return;
     }
     let rating = this.state.userRating;
-    let itemId = this.props._id;
-    let userId = this.props.user.userId;
+    let itemId = this.props.id;
+    let userId = this.props.user._id;
     console.log("RATING:", rating, " - ITEM ID:", itemId, " - USERId:", userId);
     let data = new FormData();
     data.append("rating", rating);
@@ -44,12 +46,13 @@ class unconnectedProductPage extends Component {
     let response = await fetch("/rating", { method: "POST", body: data });
     let body = await response.text();
     body = JSON.parse(body);
-    console.log("Rating success:", body.succes);
+    console.log("Rating success:", body);
+    this.setState({ itemRatings: body.ratings });
   };
 
   render = () => {
     console.log("itemDetails in the state:", this.state.itemDetails);
-    console.log("item tags...", this.state.itemDetails.tags);
+    console.log("Item Ratings:", this.state.itemRatings);
     let tags = [];
     if (this.state.itemDetails.tags !== undefined) {
       tags = this.state.itemDetails.tags.join(" ");
@@ -60,6 +63,17 @@ class unconnectedProductPage extends Component {
         return <img src={imgPath} />;
       });
     }
+    //adds the values of each of the ratings to the 'roundedRating' variable
+    let ratings = Object.values(this.state.itemRatings);
+    let roundedRating = 0;
+    if (ratings.length > 0) {
+      ratings.forEach(rating => {
+        roundedRating += rating;
+      });
+      //devides the total of all of the ratings by the number of ratings to get the average value
+      roundedRating = Math.round(roundedRating / ratings.length);
+    }
+
     return (
       <div>
         <h1>{this.state.itemDetails.productName}</h1>
@@ -68,7 +82,10 @@ class unconnectedProductPage extends Component {
         <div>{this.state.itemDetails.descriptionText}</div>
         <div>Location: {this.state.itemDetails.location}</div>
         <div>Price: {this.state.itemDetails.price}$</div>
-        {/* Ratings to be added ==----== */}
+
+        <div>
+          Rating: <b>{roundedRating}</b> - number of ratings: ({ratings.length})
+        </div>
         <div>Category: {this.state.itemDetails.category}</div>
         <div>Tags: {tags}</div>
         <div>
