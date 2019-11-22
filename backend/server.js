@@ -256,6 +256,7 @@ app.post("/product-page", upload.none(), (req, res) => {
 app.post("/confirm-payment", upload.none(), async (req, res) => {
   console.log("in confirm-payment");
   console.log(req.body.id);
+
   let id = req.body.id;
 
   let cart = JSON.parse(req.body.cart);
@@ -322,32 +323,19 @@ app.post("/merchant-page", upload.none(), (req, res) => {
 });
 
 app.post("/purchase-history", upload.none(), (req, res) => {
-  let purchaseOrders = req.body.POs;
+  let purchaseOrders = req.body.purchaseOrders;
   purchaseOrders = purchaseOrders.map(order => {
     return ObjectID(order);
   });
-  // console.log(purchaseOrders);
-  let history = [];
   dbo
     .collection("purchase-orders")
     .find({ _id: { $in: purchaseOrders } })
     .toArray((err, POs) => {
-      POs.forEach(PO => {
-        console.log("PO: ", PO);
-        let keys = Object.keys(PO.purchaseOrder);
-        keys.forEach(key => {
-          dbo
-            .collection("items")
-            .findOne({ _id: ObjectID(key) }, (err, item) => {
-              let quantity = PO.purchaseOrder[key];
-              history.push({ item, quantity });
-              // console.log("quantity:", quantity);
-              // console.log("item: ", item);
-            });
-        });
-      });
+      if (err) {
+        return res.send(JSON.stringify({ success: false }));
+      }
+      res.send(JSON.stringify({ success: true, POs }));
     });
-  res.send(JSON.stringify({ history }));
 });
 
 app.post("/inventory", upload.none(), (req, res) => {
@@ -365,6 +353,7 @@ app.post("/inventory", upload.none(), (req, res) => {
       if (err) {
         return res.send(JSON.stringify({ success: false }));
       }
+      console.log("superduper items", items);
 
       return res.send(JSON.stringify({ success: true, items }));
     });
