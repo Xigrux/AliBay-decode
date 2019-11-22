@@ -151,9 +151,7 @@ app.post("/rating", upload.none(), (req, res) => {
             return res.send(JSON.stringify({ success: false }));
           }
           console.log("rating", item.value.ratings);
-          return res.send(
-            JSON.stringify({ success: true, ratings: item.value.ratings })
-          );
+          return res.send(JSON.stringify({ success: true, ratings: ratings }));
         }
       );
   });

@@ -28,7 +28,6 @@ class UnconnectedAddToCart extends Component {
     data.append("quantity", this.state.quantitySelected);
 
     let response = await fetch("/add-to-cart", {
-      // fix fetch request path
       method: "POST",
       body: data
     });
