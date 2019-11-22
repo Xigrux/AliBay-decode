@@ -48,9 +48,9 @@ class UnconnecterHomepage extends Component {
             Our sparks
             <WiStars />
           </div>
-          {/* <div class="homepage-card-containter">
+          <div class="homepage-card-containter">
             <FeaturedProd />
-          </div> */}
+          </div>
         </div>
       </div>
     );
