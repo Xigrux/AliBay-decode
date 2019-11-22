@@ -101,31 +101,28 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     }
     console.log("Found user");
     sellerId = user._id;
-    dbo.collection("items").insertOne(
-      {
-        productName,
-        sellerId,
-        sellerName,
-        price: parseInt(price),
-        descriptionHeader,
-        descriptionText,
-        location,
-        inventory: parseInt(inventory),
-        date,
-        ratings,
-        posts,
-        tags,
-        category
-      },
-      (err, item) => {
-        dbo
-          .collection("merchants")
-          .updateOne(
-            { _id: ObjectID(sellerId) },
-            { $push: { inventory: item.insertedId } }
-          );
-      }
-    );
+    dbo.collection("items").insertOne({
+      productName,
+      sellerId,
+      sellerName,
+      price: parseInt(price),
+      descriptionHeader,
+      descriptionText,
+      location,
+      inventory: parseInt(inventory),
+      date,
+      ratings,
+      posts,
+      tags,
+      category
+    }, (err, item) => {
+      dbo
+        .collection("merchants")
+        .updateOne(
+          { _id: ObjectID(sellerId) },
+          { $push: { inventory: item.insertedId } }
+        );
+    });
 
     return res.send(JSON.stringify({ success: true }));
   });
@@ -223,16 +220,13 @@ app.post("/render-category", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo
-    .collections("items")
-    .find({ _id: userId })
-    .toArray((err, items) => {
-      if (err) {
-        console.log("Error getting merchant product list");
-        return res.send(JSON.stringify({ success: false }));
-      }
-      return res.send(JSON.stringify({ success: true, items }));
-    });
+  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
+    if (err) {
+      console.log("Error getting merchant product list");
+      return res.send(JSON.stringify({ success: false }));
+    }
+    return res.send(JSON.stringify({ success: true, items }));
+  });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
@@ -280,7 +274,7 @@ app.post("/confirm-payment", upload.none(), async (req, res) => {
               console.log(item);
               purchaseOrder.push({
                 item: item.value,
-                quantity: cart[i][item.value._id]
+                quantity: cart[i].quantity
               });
               res(
                 dbo
@@ -323,7 +317,7 @@ app.post("/merchant-page", upload.none(), (req, res) => {
 });
 
 app.post("/purchase-history", upload.none(), (req, res) => {
-  let purchaseOrders = req.body.purchaseOrders;
+  let purchaseOrders = JSON.parse(req.body.purchaseOrders);
   purchaseOrders = purchaseOrders.map(order => {
     return ObjectID(order);
   });

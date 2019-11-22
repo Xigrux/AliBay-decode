@@ -11,23 +11,26 @@ class UnconnectedPurchaseHistory extends Component {
   }
   getPurchaseHistory = async () => {
     let data = new FormData();
-    data.append("purchaseOrders", this.props.user.purchased);
+    data.append("purchaseOrders", JSON.stringify(this.props.user.purchased));
     let response = await fetch("/purchase-history", {
       method: "POST",
       body: data
     });
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
+    console.log(parsed);
     if (parsed.success) {
-      return POs;
+      return parsed.POs;
     } else {
       return false;
     }
   };
-  componentDidMount = () => {
-    let purchasedHistory = this.getPurchaseHistory();
-    if (!purchasedHistory) {
-      this.setState({ history: POs });
+  componentDidMount = async () => {
+    let purchasedHistory = await this.getPurchaseHistory();
+    // console.log("purchased history: ", purchasedHistory);
+    if (purchasedHistory) {
+      console.log("purchasedhist:", purchasedHistory);
+      this.setState({ history: purchasedHistory });
     }
   };
 
@@ -35,21 +38,31 @@ class UnconnectedPurchaseHistory extends Component {
     return (
       <div>
         {this.state.history.map(PO => {
-          return PO.purchaseOrder.map(item => {
-            return (
-              <div>
-                <div>
-                  {item.item.productName}
-                </div>
-                <div>
-                  {item.item.price}
-                </div>
-                <div>
-                  {item.quantity}
-                </div>
-              </div>
-            );
-          });
+          let total = 0;
+          return (
+            <div>
+              {PO.purchaseOrder.map(item => {
+                total += item.item.price * item.quantity;
+                return (
+                  <div style={{ marginTop: "15px" }}>
+                    <div>
+                      Product:
+                      {item.item.productName}
+                    </div>
+                    <div>
+                      Price:
+                      {item.item.price}
+                    </div>
+                    <div>
+                      Quantity bought:
+                      {item.quantity}
+                    </div>
+                  </div>
+                );
+              })}
+              Total: {total}
+            </div>
+          );
         })}
       </div>
     );

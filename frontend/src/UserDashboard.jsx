@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PurchaseHistory from "./PurchaseHistory.jsx";
 
 class UnconnectedUserDashboard extends Component {
   render = () => {
@@ -12,7 +13,10 @@ class UnconnectedUserDashboard extends Component {
       //   <div>{this.props.region}</div>
       //   <div>{this.props.purchaseHistory}</div>
       // </div>
-      <>userdash</>
+      <div>
+        Purchase History
+        <PurchaseHistory />
+      </div>
     );
   };
 }
