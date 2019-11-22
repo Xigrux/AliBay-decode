@@ -127,6 +127,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
 });
 
 app.post("/rating", upload.none(), (req, res) => {
+  console.log("RATING HIT------------------");
   let rating = req.body.rating;
   let id = req.body.id;
   let username = req.body.username;
