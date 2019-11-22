@@ -27,7 +27,9 @@ class UnconnectedMerchantPage extends Component {
     console.log("MERCHANT-PAGE RESP****", responseBody);
     let parsed = JSON.parse(responseBody);
     console.log("Parsed RESP****", parsed);
-    this.setState({ merchant: parsed.merchant });
+    if (parsed.success) {
+      this.setState({ merchant: parsed.merchant });
+    }
   };
 
   getInventory = async () => {
@@ -41,7 +43,9 @@ class UnconnectedMerchantPage extends Component {
     console.log("Inventory RESP****", responseBody);
     let parsed = JSON.parse(responseBody);
     console.log("Parsed RESP****", parsed);
-    this.setState({ inventory: parsed.items });
+    if (parsed.success) {
+      this.setState({ inventory: parsed.items });
+    }
   };
 
   render = () => {
