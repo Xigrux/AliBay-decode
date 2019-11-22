@@ -113,30 +113,46 @@ app.post("/add-product", upload.array("files"), (req, res) => {
       posts,
       tags,
       category
+    }, (err, item) => {
+      dbo
+        .collection("merchants")
+        .updateOne(
+          { _id: ObjectID(sellerId) },
+          { $push: { inventory: item.insertedId } }
+        );
     });
+
     return res.send(JSON.stringify({ success: true }));
   });
 });
 
 app.post("/rating", upload.none(), (req, res) => {
+  console.log("RATING HIT------------------");
   let rating = req.body.rating;
   let id = req.body.id;
-  let username = req.body.username;
+  let userId = req.body.username;
+  if (rating > 5 || rating < 1) {
+    return res.send(JSON.stringify({ succes: false }));
+  }
   dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
-    let ratings = [...item.ratings];
-    let keys = Object.keys(ratings);
-    keys = keys.filter(key => {
-      return key === username;
-    });
-    if (keys.length === 0) {
-      ratings[username] = rating;
-      dbo
-        .collection("items")
-        .updateOne({ _id: ObjectID(id) }, { $set: { ratings } });
-      return res.send(JSON.stringify({ succes: true }));
-    } else {
-      return res.send(JSON.stringify({ succes: false }));
-    }
+    console.log("item: ", item);
+    let ratings = { ...item.ratings };
+    ratings[userId] = parseInt(rating);
+    dbo
+      .collection("items")
+      .findOneAndUpdate(
+        { _id: ObjectID(id) },
+        { $set: { ratings } },
+        (err, item) => {
+          if (err) {
+            return res.send(JSON.stringify({ succes: false }));
+          }
+          console.log("rating", item.value.ratings);
+          return res.send(
+            JSON.stringify({ succes: true, ratings: item.value.ratings })
+          );
+        }
+      );
   });
 });
 
@@ -247,17 +263,26 @@ app.post("/confirm-payement", upload.none(), async (req, res) => {
   console.log("ids: ", ids);
   console.log("purchaseOrder: ", purchaseOrder);
 
-  ids.forEach(id => {
+  ids.forEach((id, i) => {
     console.log("inventory:", purchaseOrder[id]);
     dbo
       .collection("items")
-      .updateMany(
+      .findOneAndUpdate(
         { _id: ObjectID(id) },
-        { $inc: { inventory: purchaseOrder[id] * -1 } }
+        { $inc: { inventory: purchaseOrder[id] * -1 } },
+        (err, item) => {
+          dbo
+            .collection("merchants")
+            .updateOne(
+              { _id: ObjectID(item.value.sellerId) },
+              { $push: { salesHistory: cart[i] } }
+            );
+        }
       );
   });
 
   dbo.collection("purchase-orders").insertOne({ purchaseOrder }, (err, PO) => {
+    purchaseOrder[id] = PO.insertedId;
     dbo.collection("users").updateOne(
       { _id: ObjectID(id) },
       {
@@ -267,7 +292,7 @@ app.post("/confirm-payement", upload.none(), async (req, res) => {
     );
   });
 
-  return res.send(JSON.stringify({ success: true }));
+  return res.send(JSON.stringify({ success: true, cart: [], purchaseOrder }));
 });
 
 // app.post("/update", upload.none(), (req, res) => {

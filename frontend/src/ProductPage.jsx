@@ -7,7 +7,8 @@ class unconnectedProductPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemDetails: []
+      itemDetails: [],
+      userRating: undefined
     };
   }
   componentDidMount = () => {
@@ -23,6 +24,36 @@ class unconnectedProductPage extends Component {
     this.setState({ itemDetails: body.item });
     console.log("response body, item info:", body);
   };
+  handleRatingChange = event => {
+    this.setState({ userRating: event.target.value });
+  };
+  handleRatingSubmit = async event => {
+    event.preventDefault();
+    if (this.props.user === undefined) {
+      console.log("not logged in, can't review");
+      return;
+    }
+    let rating = this.state.userRating;
+    let itemId = this.props.id;
+    let username = this.props.user.username;
+    console.log(
+      "RATING:",
+      rating,
+      " - ITEM ID:",
+      itemId,
+      " - USERNAME:",
+      username
+    );
+    let data = new FormData();
+    data.append("rating", rating);
+    data.append("id", itemId);
+    data.append("username", username);
+    let response = await fetch("/rating", { method: "POST", body: data });
+    let body = await response.text();
+    body = JSON.parse(body);
+    console.log("Rating success:", body.succes);
+  };
+
   render = () => {
     console.log("itemDetails in the state:", this.state.itemDetails);
     console.log("item tags...", this.state.itemDetails.tags);
@@ -53,6 +84,42 @@ class unconnectedProductPage extends Component {
             {this.state.itemDetails.sellerId}
           </Link>
         </div>
+        {/* Rating inputs! */}
+        <form onSubmit={this.handleRatingSubmit}>
+          Rate this product
+          <input
+            type="radio"
+            name="stars"
+            value={1}
+            onChange={this.handleRatingChange}
+            required
+          ></input>
+          <input
+            type="radio"
+            name="stars"
+            value={2}
+            onChange={this.handleRatingChange}
+          ></input>
+          <input
+            type="radio"
+            name="stars"
+            value={3}
+            onChange={this.handleRatingChange}
+          ></input>
+          <input
+            type="radio"
+            name="stars"
+            value={4}
+            onChange={this.handleRatingChange}
+          ></input>
+          <input
+            type="radio"
+            name="stars"
+            value={5}
+            onChange={this.handleRatingChange}
+          ></input>
+          <button>Submit rating!</button>
+        </form>
 
         <AddToCart
           item={this.props.id}
@@ -63,6 +130,10 @@ class unconnectedProductPage extends Component {
   };
 }
 
-let ProductPage = connect()(unconnectedProductPage);
+let mapStateToProps = st => {
+  return { user: st.user };
+};
+
+let ProductPage = connect(mapStateToProps)(unconnectedProductPage);
 
 export default ProductPage;

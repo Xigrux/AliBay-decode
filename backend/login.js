@@ -91,7 +91,7 @@ let login = (req, res, dbo) => {
 
       //password match. login success. generate session ID
       let sid = generateSID();
-      dbo.collection("cookies").insertOne({ username, sid });
+      dbo.collection("cookies").insertOne({ username, sid, signupType });
       res.cookie("sid", sid);
       return res.send(JSON.stringify({ success: true, user }));
     }
@@ -117,6 +117,7 @@ let usernameTaken = () => {
 
 let autoLogin = (req, res, dbo) => {
   let sid = parseInt(req.cookies.sid);
+  let signupType;
   console.log("sid", sid);
   dbo.collection("cookies").findOne({ sid }, (err, sid) => {
     console.log("sid: ********", sid);
@@ -125,8 +126,10 @@ let autoLogin = (req, res, dbo) => {
       return res.send(JSON.stringify({ success: false }));
     }
     if (sid !== null) {
+      signupType = sid.signupType;
+      console.log("signupType", typeof signupType);
       dbo
-        .collection("users") // XAV TODO: target collection based on signup type
+        .collection(signupType)
         .findOne({ username: sid.username }, (err, user) => {
           console.log("user: ", user);
 

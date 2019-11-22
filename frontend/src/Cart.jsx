@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import Checkout from "./Checkout.jsx";
 import ProductCard from "./ProductCard.jsx";
 import RemoveItem from "./RemoveItem.jsx";
 import "./style/cart.css";
@@ -49,6 +49,7 @@ class UnconnectedCart extends Component {
 
     return parsedBody.items;
   };
+
   render = () => {
     if (
       this.state.displayItems &&
@@ -56,6 +57,7 @@ class UnconnectedCart extends Component {
       this.props.cart.length > 0
     ) {
       console.log(this.state.displayItems);
+
       let itemQty;
       return (
         <>
@@ -78,10 +80,11 @@ class UnconnectedCart extends Component {
               </div>
             );
           })}
+
+          <Checkout user={this.props.user} />
         </>
       );
     }
-
     return <>your cart is empty</>;
   };
 }

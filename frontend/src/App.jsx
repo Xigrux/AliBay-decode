@@ -30,7 +30,6 @@ class UnconnectedApp extends Component {
 
   // Autologin
   componentDidMount = async () => {
-    console.log("auto-login hit");
     let response = await fetch("/auto-login", {
       method: "POST"
     });
