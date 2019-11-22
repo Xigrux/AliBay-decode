@@ -13,10 +13,6 @@ class Checkout extends Component {
     });
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
-
-    if (parsed.success) {
-      this.setState({ cart: parsed.cart });
-    }
   };
   render = () => {
     return (
