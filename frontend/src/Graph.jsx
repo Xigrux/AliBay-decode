@@ -13,272 +13,54 @@ class Graph extends Component {
         <ResponsiveLine
           data={[
             {
-              id: "japan",
+              id: "Page Views",
               color: "hsl(196, 70%, 50%)",
               data: [
                 {
-                  x: "plane",
+                  x: "JUL",
                   y: 125
                 },
                 {
-                  x: "helicopter",
-                  y: 250
-                },
-                {
-                  x: "boat",
-                  y: 122
-                },
-                {
-                  x: "train",
-                  y: 94
-                },
-                {
-                  x: "subway",
-                  y: 207
-                },
-                {
-                  x: "bus",
-                  y: 215
-                },
-                {
-                  x: "car",
-                  y: 283
-                },
-                {
-                  x: "moto",
-                  y: 268
-                },
-                {
-                  x: "bicycle",
-                  y: 194
-                },
-                {
-                  x: "horse",
-                  y: 281
-                },
-                {
-                  x: "skateboard",
-                  y: 231
-                },
-                {
-                  x: "others",
-                  y: 268
-                }
-              ]
-            },
-            {
-              id: "france",
-              color: "hsl(303, 70%, 50%)",
-              data: [
-                {
-                  x: "plane",
-                  y: 89
-                },
-                {
-                  x: "helicopter",
-                  y: 91
-                },
-                {
-                  x: "boat",
-                  y: 14
-                },
-                {
-                  x: "train",
-                  y: 43
-                },
-                {
-                  x: "subway",
-                  y: 241
-                },
-                {
-                  x: "bus",
-                  y: 59
-                },
-                {
-                  x: "car",
-                  y: 119
-                },
-                {
-                  x: "moto",
-                  y: 260
-                },
-                {
-                  x: "bicycle",
-                  y: 192
-                },
-                {
-                  x: "horse",
-                  y: 223
-                },
-                {
-                  x: "skateboard",
-                  y: 245
-                },
-                {
-                  x: "others",
-                  y: 55
-                }
-              ]
-            },
-            {
-              id: "us",
-              color: "hsl(261, 70%, 50%)",
-              data: [
-                {
-                  x: "plane",
-                  y: 20
-                },
-                {
-                  x: "helicopter",
-                  y: 140
-                },
-                {
-                  x: "boat",
-                  y: 169
-                },
-                {
-                  x: "train",
-                  y: 258
-                },
-                {
-                  x: "subway",
-                  y: 270
-                },
-                {
-                  x: "bus",
-                  y: 137
-                },
-                {
-                  x: "car",
-                  y: 250
-                },
-                {
-                  x: "moto",
-                  y: 188
-                },
-                {
-                  x: "bicycle",
-                  y: 122
-                },
-                {
-                  x: "horse",
-                  y: 181
-                },
-                {
-                  x: "skateboard",
-                  y: 194
-                },
-                {
-                  x: "others",
-                  y: 55
-                }
-              ]
-            },
-            {
-              id: "germany",
-              color: "hsl(274, 70%, 50%)",
-              data: [
-                {
-                  x: "plane",
-                  y: 53
-                },
-                {
-                  x: "helicopter",
-                  y: 194
-                },
-                {
-                  x: "boat",
-                  y: 207
-                },
-                {
-                  x: "train",
-                  y: 120
-                },
-                {
-                  x: "subway",
-                  y: 56
-                },
-                {
-                  x: "bus",
-                  y: 156
-                },
-                {
-                  x: "car",
-                  y: 237
-                },
-                {
-                  x: "moto",
-                  y: 157
-                },
-                {
-                  x: "bicycle",
+                  x: "AUG",
                   y: 150
                 },
                 {
-                  x: "horse",
+                  x: "SEP",
+                  y: 122
+                },
+                {
+                  x: "OCT",
+                  y: 94
+                },
+                {
+                  x: "NOV",
                   y: 207
-                },
-                {
-                  x: "skateboard",
-                  y: 211
-                },
-                {
-                  x: "others",
-                  y: 55
                 }
               ]
             },
             {
-              id: "norway",
-              color: "hsl(86, 70%, 50%)",
+              id: "Monthly Sales",
+              color: "hsl(196, 70%, 50%)",
               data: [
                 {
-                  x: "plane",
-                  y: 45
+                  x: "JUL",
+                  y: 25
                 },
                 {
-                  x: "helicopter",
-                  y: 244
+                  x: "AUG",
+                  y: 50
                 },
                 {
-                  x: "boat",
-                  y: 167
+                  x: "SEP",
+                  y: 22
                 },
                 {
-                  x: "train",
-                  y: 249
+                  x: "OCT",
+                  y: 94
                 },
                 {
-                  x: "subway",
-                  y: 13
-                },
-                {
-                  x: "bus",
-                  y: 110
-                },
-                {
-                  x: "car",
-                  y: 285
-                },
-                {
-                  x: "moto",
-                  y: 177
-                },
-                {
-                  x: "bicycle",
-                  y: 73
-                },
-                {
-                  x: "horse",
-                  y: 36
-                },
-                {
-                  x: "skateboard",
-                  y: 211
-                },
-                {
-                  x: "others",
-                  y: 45
+                  x: "NOV",
+                  y: 70
                 }
               ]
             }
@@ -286,7 +68,7 @@ class Graph extends Component {
           margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
           xScale={{ type: "point" }}
           yScale={{ type: "linear", stacked: true, min: "auto", max: "auto" }}
-          curve="cardinal"
+          curve="catmullRom"
           axisTop={null}
           axisRight={null}
           axisBottom={{
@@ -294,7 +76,7 @@ class Graph extends Component {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: "transportation",
+            // legend: "transportation",
             legendOffset: 36,
             legendPosition: "middle"
           }}
@@ -303,7 +85,7 @@ class Graph extends Component {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: "count",
+            // legend: "count",
             legendOffset: -40,
             legendPosition: "middle"
           }}
