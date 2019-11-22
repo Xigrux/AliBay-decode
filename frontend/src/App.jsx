@@ -55,7 +55,12 @@ class UnconnectedApp extends Component {
     return <ProductPage id={productId} />;
   };
 
-  render() {
+  renderMerchantPage = routerData => {
+    let merchantId = routerData.match.params.sellerId;
+    return <MerchantPage id={merchantId} />;
+  };
+
+  render = () => {
     return (
       <>
         <BrowserRouter>
@@ -87,9 +92,11 @@ class UnconnectedApp extends Component {
           <Route path="/merchant/:merchantId" exact={true}>
             <MerchantPage />
           </Route>
-          <Route path="/seller/:sellerId" exact={true}>
-            <MerchantPage />
-          </Route>
+          <Route
+            path="/seller/:sellerId"
+            exact={true}
+            render={this.renderMerchantPage}
+          ></Route>
           <Route path="/dashboard" exact={true}>
             {!this.props.isLoggedIn && (
               <>
@@ -116,7 +123,7 @@ class UnconnectedApp extends Component {
         </BrowserRouter>
       </>
     );
-  }
+  };
 }
 
 //COMPONENT REDUX

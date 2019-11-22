@@ -304,7 +304,9 @@ app.post("/merchant-page", upload.none(), (req, res) => {
   let id = req.body.sellerId;
   dbo
     .collection("merchants")
-    .fineOne({ _id: ObjectID(id) }, (err, merchant) => {
+    .findOne({ _id: ObjectID(id) }, (err, merchant) => {
+      console.log("MERCHANT IN FINDONE", merchant);
+
       if (err) {
         return res.send(JSON.stringify({ success: false }));
       }
