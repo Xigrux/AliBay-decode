@@ -16,16 +16,19 @@ class UnconnectedLogin extends Component {
   }
 
   handleUsernameChange = event => {
+    event.preventDefault();
     console.log("new login username", event.target.value);
     this.setState({ username: event.target.value });
   };
 
   handlePasswordChange = event => {
+    event.preventDefault();
     console.log("new login password", event.target.value);
     this.setState({ password: event.target.value });
   };
 
   handleSignupType = event => {
+    event.preventDefault();
     console.log("login type? ", event.target.value);
     this.setState({ signupType: event.target.value });
   };
@@ -50,12 +53,12 @@ class UnconnectedLogin extends Component {
     let parsedBody = JSON.parse(responseBody);
     console.log("parsed /login response body: ", parsedBody);
     if (!parsedBody.success) {
-      window.alert("Login failed, check your credentials");
+      console.log("Login failed, check your credentials");
       return;
     }
 
     this.setState({ user: parsedBody.user, cart: parsedBody.user.cart });
-    window.alert("Login successful");
+    console.log("Login successful");
     this.props.dispatch({
       type: "login-success",
       user: this.state.user, // LULU UPDATE: SEND OBJECT TO STORE REGION ETC
@@ -79,8 +82,7 @@ class UnconnectedLogin extends Component {
               checked
             />
             <label class="user" for="user">
-              {" "}
-              User{" "}
+              {" "}User{" "}
             </label>
             <span style={{ order: 3 }}> or </span>
             <input
@@ -92,8 +94,7 @@ class UnconnectedLogin extends Component {
               name="account-type"
             />
             <label class="merchant" for="merchant">
-              {" "}
-              Merchant{" "}
+              {" "}Merchant{" "}
             </label>
           </div>
           <input
