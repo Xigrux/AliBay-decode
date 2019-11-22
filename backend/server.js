@@ -127,11 +127,13 @@ app.post("/add-product", upload.array("files"), (req, res) => {
 });
 
 app.post("/rating", upload.none(), (req, res) => {
+  console.log("RATING HIT------------------");
   let rating = req.body.rating;
   let id = req.body.id;
   let username = req.body.username;
   dbo.collection("items").findOne({ _id: ObjectID(id) }, (err, item) => {
     let ratings = [...item.ratings];
+    console.log("item ratings:", ratings);
     let keys = Object.keys(ratings);
     keys = keys.filter(key => {
       return key === username;
@@ -211,13 +213,16 @@ app.post("/render-category", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
-    if (err) {
-      console.log("Error getting merchant product list");
-      return res.send(JSON.stringify({ success: false }));
-    }
-    return res.send(JSON.stringify({ success: true, items }));
-  });
+  dbo
+    .collections("items")
+    .find({ _id: userId })
+    .toArray((err, items) => {
+      if (err) {
+        console.log("Error getting merchant product list");
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, items }));
+    });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
