@@ -6,6 +6,18 @@ import { FiStar } from "react-icons/fi";
 
 class ProductCard extends Component {
   render = () => {
+    console.log("============itemcontents========", this.props.itemContents);
+    //adds the values of each of the ratings to the 'roundedRating' variable
+    let allRatings = Object.values(this.props.itemContents.ratings);
+    let roundedRating = 0;
+    if (allRatings.length > 0) {
+      allRatings.forEach(rating => {
+        roundedRating += rating;
+      });
+      //devides the total of all of the ratings by the number of ratings to get the average value
+      roundedRating = Math.round(roundedRating / allRatings.length);
+    }
+
     return (
       <div>
         {/* //Each item card will link to that item page. //The data displayed on
@@ -28,6 +40,10 @@ class ProductCard extends Component {
               <div class="productcard-desc">
                 {/* smol desc:*/}
                 {this.props.itemContents.descriptionHeader}
+              </div>
+              <div class="productcard-desc">
+                {/* Placeholder ratings information ---- Feel free to use these numbers however you like  */}
+                Rating: {roundedRating} - number of reviews:{allRatings.length}
               </div>
             </div>
 
