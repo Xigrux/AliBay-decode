@@ -20,7 +20,9 @@ class UnconnectedInventory extends Component {
     let responseBody = await response.text();
     console.log("RESPONSE*BODY******FROM INVENTORY ENPOINT", responseBody);
     let parsed = JSON.parse(responseBody);
-    this.setState({ items: parsed.items });
+    if (parsed.success) {
+      this.setState({ items: parsed.items });
+    }
   };
 
   render = () => {

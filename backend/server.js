@@ -363,6 +363,7 @@ app.post("/inventory", upload.none(), (req, res) => {
       if (err) {
         return res.send(JSON.stringify({ success: false }));
       }
+      console.log("superduper items", items);
 
       return res.send(JSON.stringify({ success: true, items }));
     });
