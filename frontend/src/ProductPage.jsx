@@ -8,6 +8,7 @@ class unconnectedProductPage extends Component {
     super(props);
     this.state = {
       itemDetails: [],
+      itemRatings: [],
       userRating: undefined
     };
   }
@@ -15,13 +16,14 @@ class unconnectedProductPage extends Component {
     console.log("did mount, id:", this.props.id);
     this.getItemDetails();
   };
+
   getItemDetails = async () => {
     let data = new FormData();
     data.append("id", this.props.id);
     let response = await fetch("/product-page", { method: "POST", body: data });
     let body = await response.text();
     body = JSON.parse(body);
-    this.setState({ itemDetails: body.item });
+    this.setState({ itemDetails: body.item, itemRatings: body.item.ratings });
     console.log("response body, item info:", body);
   };
   handleRatingChange = event => {
@@ -44,12 +46,13 @@ class unconnectedProductPage extends Component {
     let response = await fetch("/rating", { method: "POST", body: data });
     let body = await response.text();
     body = JSON.parse(body);
-    console.log("Rating success:", body.succes);
+    console.log("Rating success:", body);
   };
 
   render = () => {
     console.log("itemDetails in the state:", this.state.itemDetails);
     console.log("item tags...", this.state.itemDetails.tags);
+    console.log("Item Ratings:", this.state.itemRatings);
     let tags = [];
     if (this.state.itemDetails.tags !== undefined) {
       tags = this.state.itemDetails.tags.join(" ");
