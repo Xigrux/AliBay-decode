@@ -24,6 +24,12 @@ let reducer = (state, action) => {
     return { ...state, cart: [] };
   }
 
+  if (action.type === "new-po") {
+    let user = state.user;
+    user.purchased = action.purchased;
+    return { ...state, user };
+  }
+
   return state;
 };
 

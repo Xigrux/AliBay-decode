@@ -290,18 +290,22 @@ app.post("/confirm-payment", upload.none(), async (req, res) => {
     })
   );
 
+  let purchased;
+
   dbo.collection("purchase-orders").insertOne({ purchaseOrder }, (err, PO) => {
     purchaseOrder[id] = PO.insertedId;
-    dbo.collection("users").updateOne(
-      { _id: ObjectID(id) },
-      {
-        $set: { cart: [] },
-        $push: { purchased: PO.insertedId }
-      }
-    );
+    dbo.collection("users").findOneAndUpdate({ _id: ObjectID(id) }, {
+      $set: { cart: [] },
+      $push: { purchased: PO.insertedId }
+    }, { returnOriginal: false }, (err, user) => {
+      console.log("value:", user.value.purchased);
+      purchased = user.value.purchased;
+      console.log("purchased", purchased);
+      return res.send(
+        JSON.stringify({ success: true, cart: [], purchaseOrder, purchased })
+      );
+    });
   });
-
-  return res.send(JSON.stringify({ success: true, cart: [], purchaseOrder }));
 });
 
 app.post("/merchant-page", upload.none(), (req, res) => {
