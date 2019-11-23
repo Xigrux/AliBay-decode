@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProductCard from "./ProductCard.jsx";
+import "./style/categorypage.css";
 
 //======================dummy data========================
 
@@ -102,9 +103,18 @@ class UnconnectedProductCategory extends Component {
     } else {
       itemCards = <div>Loading...</div>;
     }
+    let style = {
+      backgroundImage: "url(/img/" + this.props.category + ".jpg)"
+    };
 
     return (
       <div>
+        <div
+          class="categorypage-hero flex-container flex-center-v flex-center-h"
+          style={style}
+        >
+          {this.props.category}
+        </div>
         {tagButtons}
         {itemCards}
       </div>

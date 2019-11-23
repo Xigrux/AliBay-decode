@@ -52,7 +52,7 @@
 }
 
 .cat-electro::before {
-  background-image: url(/img/catElectronic.jpg);
+  background-image: url(/img/electronic.jpg);
   background-size: cover;
   display: inline-block;
   width: 32vw;
@@ -64,7 +64,7 @@
 }
 
 .cat-food::before {
-  background-image: url(/img/catFood.jpg);
+  background-image: url(/img/food.jpg);
   background-size: cover;
   display: inline-block;
   width: 32vw;
@@ -76,7 +76,7 @@
 }
 
 .cat-home::before {
-  background-image: url(/img/catHome.jpg);
+  background-image: url(/img/home.jpg);
   background-size: cover;
   display: inline-block;
   width: 32vw;
@@ -88,7 +88,7 @@
 }
 
 .cat-office::before {
-  background-image: url(/img/catOffice.jpg);
+  background-image: url(/img/office.jpg);
   background-size: cover;
   display: inline-block;
   width: 32vw;
