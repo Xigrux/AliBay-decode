@@ -29,7 +29,6 @@ class UnconnectedPurchaseHistory extends Component {
     let purchasedHistory = await this.getPurchaseHistory();
     // console.log("purchased history: ", purchasedHistory);
     if (purchasedHistory) {
-      console.log("purchasedhist:", purchasedHistory);
       this.setState({ history: purchasedHistory });
     }
   };

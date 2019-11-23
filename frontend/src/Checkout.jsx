@@ -16,6 +16,7 @@ class UnconnectedCheckout extends Component {
     let parsed = JSON.parse(responseBody);
     if (parsed.success) {
       this.props.dispatch({ type: "clear-cart" });
+      this.props.dispatch({type: "new-po", purchased: parsed.purchased})
     }
   };
   render = () => {
