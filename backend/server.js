@@ -384,6 +384,7 @@ app.post("/update-password", upload.none(), (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
   let signupType = req.body.signupType;
+
   dbo
     .collection(signupType)
     .updateOne({ username }, { $set: { password } }, (err, user) => {
@@ -395,15 +396,19 @@ app.post("/update-password", upload.none(), (req, res) => {
 });
 
 app.post("/update-email", upload.none(), (req, res) => {
-  let username = req.body.username;
+  let id = req.body.id;
   let email = req.body.email;
   let signupType = req.body.signupType;
+  console.log("username: ", id);
+  console.log("email: ", email);
+  console.log("signupType: ", signupType);
   dbo
     .collection(signupType)
-    .updateOne({ username }, { $set: { email } }, (err, user) => {
+    .updateOne({ _id: ObjectID(id) }, { $set: { email } }, (err, user) => {
       if (err || user === null) {
         return res.send(JSON.stringify({ success: false }));
       }
+      console.log("user:", user);
       res.send(JSON.stringify({ success: true }));
     });
 });

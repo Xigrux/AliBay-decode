@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom"
 
 class UnconnectedCheckout extends Component {
+  constructor() {
+    super() 
+    this.state = {
+      checkedOut: false,
+      item: {}
+    }
+  }
   handleCheckout = async e => {
     e.preventDefault();
     let data = new FormData();
@@ -16,20 +24,24 @@ class UnconnectedCheckout extends Component {
     let parsed = JSON.parse(responseBody);
     if (parsed.success) {
       this.props.dispatch({ type: "clear-cart" });
-      this.props.dispatch({type: "new-po", purchased: parsed.purchased})
+      console.log(parsed.purchaseOrder)
+      this.props.dispatch({type: "new-po", purchased: parsed.purchased, purchaseOrder: parsed.purchaseOrder})
+      this.props.history.push("/confirmation")
     }
+    
+    this.setState({checkedOut: true, item: parsed.purchased})
   };
   render = () => {
     return (
       <>
         <button type="submit" onClick={this.handleCheckout}>
-          <Link to="/confirmation">Checkout!</Link>
+          Checkout!
         </button>
       </>
     );
   };
 }
 
-let Checkout = connect()(UnconnectedCheckout);
+let Checkout = connect()(withRouter(UnconnectedCheckout));
 
 export default Checkout;
