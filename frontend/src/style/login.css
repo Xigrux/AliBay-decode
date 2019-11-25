@@ -17,22 +17,18 @@
   order: 1;
 }
 
-label.user {
-  order: 4;
-  font-weight: 500;
-}
-
+label.user,
 label.merchant {
   order: 4;
   font-weight: 500;
 }
 
-.login-account:checked + label.user {
+.login-account[type="radio"]:checked + label {
   font-weight: bold;
   font-size: 20px;
   order: 2;
 }
-.login-account:checked + label.merchant {
+.login-account[type="radio"]:checked + label {
   font-weight: bold;
   font-size: 20px;
   order: 2;
@@ -48,6 +44,7 @@ input.login::placeholder {
   opacity: 1;
   transition: ease-in-out 300ms all;
 }
+
 input:focus.login::placeholder,
 input:active.login::placeholder {
   color: #33333380;

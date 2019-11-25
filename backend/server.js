@@ -206,10 +206,25 @@ app.post("/render-category", upload.none(), (req, res) => {
   // let currentPage = pageNo * max;
   // let sort = {};
   // sort[sortParam] = direction;
-
   dbo
     .collection("items")
     .find({ category }) // .sort(sort)
+    // .limit(max)
+    // .skip(currentPage)
+    .toArray((err, items) => {
+      if (err) {
+        console.log("Error getting product list", err);
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ items }));
+    });
+});
+
+app.post("/render-featured", upload.none(), (req, res) => {
+  let featured = req.body.featured;
+  dbo
+    .collection("items")
+    .find({ featured }) // .sort(sort)
     // .limit(max)
     // .skip(currentPage)
     .toArray((err, items) => {
@@ -300,17 +315,22 @@ app.post("/confirm-payment", upload.none(), async (req, res) => {
 
   dbo.collection("purchase-orders").insertOne({ purchaseOrder }, (err, PO) => {
     purchaseOrder[id] = PO.insertedId;
-    dbo.collection("users").findOneAndUpdate({ _id: ObjectID(id) }, {
-      $set: { cart: [] },
-      $push: { purchased: PO.insertedId }
-    }, { returnOriginal: false }, (err, user) => {
-      console.log("value:", user.value.purchased);
-      purchased = user.value.purchased;
-      console.log("purchased", purchased);
-      return res.send(
-        JSON.stringify({ success: true, cart: [], purchaseOrder, purchased })
-      );
-    });
+    dbo.collection("users").findOneAndUpdate(
+      { _id: ObjectID(id) },
+      {
+        $set: { cart: [] },
+        $push: { purchased: PO.insertedId }
+      },
+      { returnOriginal: false },
+      (err, user) => {
+        console.log("value:", user.value.purchased);
+        purchased = user.value.purchased;
+        console.log("purchased", purchased);
+        return res.send(
+          JSON.stringify({ success: true, cart: [], purchaseOrder, purchased })
+        );
+      }
+    );
   });
 });
 

@@ -55,13 +55,16 @@ class UnconnectedProductCategory extends Component {
 
   handleTagUpdate = event => {
     //if innactive, set the class to active and add the value to the filters array in the state
-    if (event.target.className === "innactive") {
-      event.target.className = "active";
+    console.log(event.target.value);
+    if (event.target.classList.contains("innactive")) {
+      event.target.classList.remove("innactive");
+      event.target.classList.add("active");
       this.setState({ filters: this.state.filters.concat(event.target.value) });
     }
     // if already active, set the calss to innactive and filter out that tag from the filters array in the state
-    else if (event.target.className === "active") {
-      event.target.className = "innactive";
+    else if (event.target.classList.contains("active")) {
+      event.target.classList.remove("active");
+      event.target.classList.add("innactive");
       this.setState({
         filters: this.state.filters.filter(tag => {
           return tag !== event.target.value;
@@ -75,13 +78,16 @@ class UnconnectedProductCategory extends Component {
     let tagButtons = this.state.tagButtons.map(tag => {
       //"-" in place temporarily to visually differenciate the buttons
       return (
-        <button
-          value={tag}
-          className="innactive"
-          onClick={this.handleTagUpdate}
-        >
-          {tag} -
-        </button>
+        <>
+          <input
+            id={"prod-tag-" + tag}
+            class="hidden producttag innactive"
+            value={tag}
+            type="checkbox"
+            onChange={this.handleTagUpdate}
+          />
+          <label for={"prod-tag-" + tag}>{tag}</label>
+        </>
       );
     });
     //Creates a product card component for each of the Items in the items array
@@ -115,8 +121,15 @@ class UnconnectedProductCategory extends Component {
         >
           {this.props.category}
         </div>
-        {tagButtons}
-        {itemCards}
+        <section>
+          <details class="categorypage-filter-conatiner">
+            <summary>Filters</summary>
+            <div class="categorypage-taglist flex-container flex-center-v">
+              {tagButtons}
+            </div>
+          </details>
+          {itemCards}
+        </section>
       </div>
     );
   };

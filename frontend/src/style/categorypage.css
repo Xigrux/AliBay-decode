@@ -4,9 +4,61 @@
   height: 17vh;
   font-size: 5vw;
   text-shadow: 0 0 20px white;
-  background-image: url(/img/hero.jpg);
   background-size: cover;
   font-family: "Playfair Display", serif;
   text-transform: capitalize;
   letter-spacing: 3px;
+}
+
+.categorypage-filter-conatiner {
+  border: 2px #333333 solid;
+  border-radius: 20px;
+  display: initial;
+  padding: 5px 10px;
+  margin: 10px 0;
+}
+.categorypage-filter-conatiner[open] {
+  border-radius: 20px;
+  border: none;
+  display: block;
+  animation-name: fadeInDown;
+  animation-duration: 0.5s;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-1.25em);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.categorypage-taglist {
+  position: relative;
+  width: 100%;
+  overflow-x: scroll;
+  height: 55px;
+}
+
+input.producttag + label {
+  font-size: 17px;
+  border: 2px #bbbbbb solid;
+  color: #333333;
+  padding: 3px 10px 2px;
+  border-radius: 20px;
+  margin: 6px 3px -1px;
+  transition: ease-in-out 150ms all;
+  text-transform: capitalize;
+}
+
+input:checked.producttag + label {
+  border: 2px #333333 solid;
+  padding: 3px 10px 2px;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
 }

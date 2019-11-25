@@ -1,0 +1,37 @@
+.productpage-container {
+  width: 100%;
+  font-size: 15px;
+}
+
+.productpage-input {
+  margin: 20px 10px;
+}
+
+.productpage-container .bump-button {
+  text-align: center;
+  padding: 10px 15px;
+  margin: 10px;
+  border-radius: 50px;
+  box-shadow: 1px 0 5px #33333355;
+  width: 50vw;
+}
+
+.prod-radios {
+  height: auto;
+}
+
+input.productform + label {
+  font-size: 17px;
+  border: 2px #979797 solid;
+  color: #bebebe;
+  padding: 3px 10px 2px;
+  border-radius: 20px;
+  margin: 6px 3px -1px;
+  transition: ease-in-out 150ms all;
+}
+
+input:checked.productform + label {
+  border: 2px #333333 solid;
+  color: #333333;
+  padding: 3px 10px 2px;
+}

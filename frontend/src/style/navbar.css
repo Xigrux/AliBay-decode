@@ -5,6 +5,8 @@ nav {
   padding: 10px 20px;
   top: 0;
   z-index: 1;
+  box-shadow: 0 0 6px #33333312;
+  background-color: #f7f7f7;
 }
 
 .logo {

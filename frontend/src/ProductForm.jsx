@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import "./style/productform.css";
+
 class UnconnectedProductForm extends Component {
   constructor(props) {
     super(props);
@@ -111,145 +113,196 @@ class UnconnectedProductForm extends Component {
   };
   render = () => {
     return (
-      <div>
-        <h2>New Product</h2>
+      <section>
+        <h2>Add a product</h2>
         <form onSubmit={this.handleSubmit}>
-          {/* NAME */}
-          <label htmlFor="prod-name">Name</label>
-          <input
-            id="prod-name"
-            type="text"
-            value={this.state.productName}
-            onChange={this.handleNameChange}
-            required
-          />
-          {/* DESC */}
-          <label htmlFor="prod-desc-header">Description header</label>
-          <input
-            id="prod-desc-header"
-            type="text"
-            value={this.state.productDescHeader}
-            onChange={this.handleDescHeaderChange}
-            required
-          />
-          <label htmlFor="prod-desc-text">Description text</label>
-          <input
-            id="prod-desc-text"
-            type="text"
-            value={this.state.productDescText}
-            onChange={this.handleDescTextChange}
-            required
-          />
-          {/* CATEGORY */}
-          <label htmlFor="prod-category">Category</label>
-          Electronics
-          <form reqired>
-            <input
-              type="radio"
-              name="category-select"
-              value="electronic"
-              onClick={this.handleCategoryChange}
-            />
-            Food
-            <input
-              type="radio"
-              name="category-select"
-              value="food"
-              onClick={this.handleCategoryChange}
-            />
-            Home
-            <input
-              type="radio"
-              name="category-select"
-              value="home"
-              onClick={this.handleCategoryChange}
-            />
-            Office
-            <input
-              type="radio"
-              name="category-select"
-              value="office"
-              onClick={this.handleCategoryChange}
-            />
-          </form>
-          {/* TAGS */}
-          <label htmlFor="prod-tags">Tags</label>
-          <input
-            id="prod-tags"
-            type="text"
-            value={this.state.assocTags}
-            onChange={this.handleTagChange}
-          />
-          {/* LOCATION */}
-          Select product location: Americas
-          <input
-            type="radio"
-            name="region-select"
-            value="Americas"
-            onClick={this.handleLocationChange}
-            required
-          />
-          Asia
-          <input
-            type="radio"
-            name="region-select"
-            value="Asia"
-            onClick={this.handleLocationChange}
-          />
-          Europe
-          <input
-            type="radio"
-            name="region-select"
-            value="Europe"
-            onClick={this.handleLocationChange}
-          />
-          Africa
-          <input
-            type="radio"
-            name="region-select"
-            value="Africa"
-            onClick={this.handleLocationChange}
-          />
-          Oceania
-          <input
-            type="radio"
-            name="region-select"
-            value="Oceania"
-            onClick={this.handleLocationChange}
-          />
-          {/* INVENTORY */}
-          <label htmlFor="prod-inventory">Inventory</label>
-          <input
-            id="prod-inventory"
-            type="number"
-            min="0"
-            value={this.state.inventory}
-            onChange={this.handleInventoryChange}
-            required
-          />
-          {/* PRICE */}
-          <label htmlFor="prod-price">Price</label>
-          <input
-            id="prod-price"
-            type="number"
-            min="0.01"
-            step="0.01"
-            value={this.state.prodPrice}
-            onChange={this.handlePriceChange}
-            required
-          />
-          {/* IMAGES */}
-          <label htmlFor="prod-images">Product images</label>
-          <input
-            id="prod-images"
-            type="file"
-            onChange={this.handleFilesChange}
-            name="files"
-            multiple
-          />
-          <input type="submit" value="Submit product" />
+          <div class="productpage-container">
+            {/* NAME */}
+            <div class="productpage-input">
+              <label htmlFor="prod-name">Product Name</label>
+              <input
+                id="prod-name"
+                type="text"
+                value={this.state.productName}
+                onChange={this.handleNameChange}
+                required
+              />
+            </div>
+            {/* DESC */}
+            <div class="productpage-input">
+              <label htmlFor="prod-desc-header">Description Title</label>
+              <input
+                id="prod-desc-header"
+                type="text"
+                value={this.state.productDescHeader}
+                onChange={this.handleDescHeaderChange}
+                required
+              />
+            </div>
+            <div class="productpage-input">
+              <label htmlFor="prod-desc-text">Description Body</label>
+              <textarea
+                id="prod-desc-text"
+                type="text"
+                value={this.state.productDescText}
+                onChange={this.handleDescTextChange}
+                required
+                cols="40"
+                rows="5"
+              ></textarea>
+            </div>
+            {/* CATEGORY */}
+            <div class="productpage-input">
+              <label htmlFor="prod-category">Pick a Category</label>
+              <form class="prod-radios flex-container flex-wrap" required>
+                <input
+                  id="prod-cat-ele"
+                  type="radio"
+                  class="hidden productform"
+                  name="category-select"
+                  value="electronic"
+                  onClick={this.handleCategoryChange}
+                />
+                <label For="prod-cat-ele">Electronics</label>
+                <input
+                  id="prod-cat-food"
+                  type="radio"
+                  class="hidden productform"
+                  name="category-select"
+                  value="food"
+                  onClick={this.handleCategoryChange}
+                />
+                <label For="prod-cat-food">Food</label>
+                <input
+                  id="prod-cat-home"
+                  type="radio"
+                  class="hidden productform"
+                  name="category-select"
+                  value="home"
+                  onClick={this.handleCategoryChange}
+                />
+                <label For="prod-cat-home">Home</label>
+                <input
+                  id="prod-cat-office"
+                  type="radio"
+                  class="hidden productform"
+                  name="category-select"
+                  value="office"
+                  onClick={this.handleCategoryChange}
+                />
+                <label For="prod-cat-office">Office</label>
+              </form>
+            </div>
+            {/* TAGS */}
+            <div class="productpage-input">
+              <label htmlFor="prod-tags">
+                Product Tags
+                <div>
+                  <small>Separate by spaces</small>
+                </div>
+              </label>
+              <input
+                id="prod-tags"
+                type="text"
+                value={this.state.assocTags}
+                onChange={this.handleTagChange}
+              />
+            </div>
+            {/* LOCATION */}
+            <div class="productpage-input">
+              Select product location:
+              <form class="prod-radios flex-container flex-wrap" required>
+                <input
+                  type="radio"
+                  class="hidden productform"
+                  id="region-select-americas"
+                  name="region-select"
+                  value="Americas"
+                  onClick={this.handleLocationChange}
+                />
+                <label For="region-select-americas">Americas</label>
+                <input
+                  type="radio"
+                  class="hidden productform"
+                  id="region-select-asia"
+                  name="region-select"
+                  value="Asia"
+                  onClick={this.handleLocationChange}
+                />
+                <label For="region-select-asia">Asia</label>
+                <input
+                  type="radio"
+                  class="hidden productform"
+                  id="region-select-europe"
+                  name="region-select"
+                  value="Europe"
+                  onClick={this.handleLocationChange}
+                />
+                <label For="region-select-europe">Europe</label>
+                <input
+                  type="radio"
+                  class="hidden productform"
+                  id="region-select-africa"
+                  name="region-select"
+                  value="Africa"
+                  onClick={this.handleLocationChange}
+                />
+                <label For="region-select-africa">Africa</label>
+                <input
+                  type="radio"
+                  class="hidden productform"
+                  id="region-select-oceania"
+                  name="region-select"
+                  value="Oceania"
+                  onClick={this.handleLocationChange}
+                />
+                <label For="region-select-oceania">Oceania</label>
+              </form>
+            </div>
+            {/* INVENTORY */}
+            <div class="productpage-input">
+              <label htmlFor="prod-inventory">Inventory</label>
+              <input
+                id="prod-inventory"
+                type="number"
+                min="0"
+                value={this.state.inventory}
+                onChange={this.handleInventoryChange}
+                required
+              />
+            </div>
+            {/* PRICE */}
+            <div class="productpage-input">
+              <label htmlFor="prod-price">Price</label>
+              <input
+                id="prod-price"
+                type="number"
+                min="0.01"
+                step="0.01"
+                value={this.state.prodPrice}
+                onChange={this.handlePriceChange}
+                required
+              />
+            </div>
+            {/* IMAGES */}
+            <div class="productpage-input">
+              <label htmlFor="prod-images">Product images</label>
+              <div>
+                <input
+                  id="prod-images"
+                  type="file"
+                  onChange={this.handleFilesChange}
+                  name="files"
+                  multiple
+                />
+              </div>
+            </div>
+            <div class="bump-button">
+              <button type="submit">Add product</button>
+            </div>
+          </div>
         </form>
-      </div>
+      </section>
     );
   };
 }

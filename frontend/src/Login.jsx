@@ -79,10 +79,10 @@ class UnconnectedLogin extends Component {
               onChange={this.handleSignupType}
               value="users"
               name="account-type"
-              checked
             />
             <label class="user" for="user">
-              {" "}User{" "}
+              {" "}
+              User{" "}
             </label>
             <span style={{ order: 3 }}> or </span>
             <input
@@ -94,7 +94,8 @@ class UnconnectedLogin extends Component {
               name="account-type"
             />
             <label class="merchant" for="merchant">
-              {" "}Merchant{" "}
+              {" "}
+              Merchant{" "}
             </label>
           </div>
           <input

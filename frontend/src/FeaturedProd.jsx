@@ -15,8 +15,8 @@ class FeaturedProd extends Component {
 
   getTenObjects = async () => {
     let data = new FormData();
-    data.append("category", "featured");
-    let response = await fetch("/render-category", {
+    data.append("featured", "featured");
+    let response = await fetch("/render-featured", {
       method: "POST",
       body: data
     });

@@ -29,6 +29,10 @@ a {
   display: flex;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .flex-dir-h {
   flex-direction: row;
 }
@@ -125,4 +129,9 @@ section {
 
 .hidden {
   display: none;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProductCard from "./ProductCard";
+import "./style/categorypage.css";
 
 class UnconnectedSearchResults extends Component {
   constructor(props) {
@@ -43,13 +44,16 @@ class UnconnectedSearchResults extends Component {
 
   handleTagUpdate = event => {
     //if innactive, set the class to active and add the value to the filters array in the state
-    if (event.target.className === "innactive") {
-      event.target.className = "active";
+    console.log(event.target.value);
+    if (event.target.classList.contains("innactive")) {
+      event.target.classList.remove("innactive");
+      event.target.classList.add("active");
       this.setState({ filters: this.state.filters.concat(event.target.value) });
     }
     // if already active, set the calss to innactive and filter out that tag from the filters array in the state
-    else if (event.target.className === "active") {
-      event.target.className = "innactive";
+    else if (event.target.classList.contains("active")) {
+      event.target.classList.remove("active");
+      event.target.classList.add("innactive");
       this.setState({
         filters: this.state.filters.filter(tag => {
           return tag !== event.target.value;
@@ -70,13 +74,16 @@ class UnconnectedSearchResults extends Component {
     let tagButtons = this.state.tagButtons.map(tag => {
       //"-" in place temporarily to visually differenciate the buttons
       return (
-        <button
-          value={tag}
-          className="innactive"
-          onClick={this.handleTagUpdate}
-        >
-          {tag} -
-        </button>
+        <>
+          <input
+            id={"prod-tag-" + tag}
+            class="hidden producttag innactive"
+            value={tag}
+            type="checkbox"
+            onChange={this.handleTagUpdate}
+          />
+          <label for={"prod-tag-" + tag}>{tag}</label>
+        </>
       );
     });
     //creates a product card for each of the items found in the search
@@ -94,12 +101,16 @@ class UnconnectedSearchResults extends Component {
 
     console.log("Items found:", this.props.results.array);
     return (
-      <div>
+      <section>
         <h1>Search Results:</h1>
-        <h3>Filter Tags:</h3>
-        <div>{tagButtons}</div>
+        <details class="categorypage-filter-conatiner">
+          <summary>Filters</summary>
+          <div class="categorypage-taglist flex-container flex-center-v">
+            {tagButtons}
+          </div>
+        </details>
         <div>{itemCards}</div>
-      </div>
+      </section>
     );
   }
 }
