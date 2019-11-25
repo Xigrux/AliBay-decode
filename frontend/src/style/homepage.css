@@ -98,3 +98,9 @@
   left: 0px;
   filter: blur(2px) brightness(0.8);
 }
+
+@media (min-width: 700px) {
+  .homepage-featured {
+    margin-bottom: 2vh;
+  }
+}
