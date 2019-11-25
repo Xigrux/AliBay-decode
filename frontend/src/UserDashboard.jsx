@@ -49,7 +49,7 @@ class UnconnectedUserDashboard extends Component {
     event.preventDefault();
     console.log("password chage form submitted");
     let data = new FormData();
-    data.append("username", this.props.user._id);
+    data.append("id", this.props.user._id);
     data.append("password", this.state.newPassword);
     data.append("signupType", this.props.signupType);
     let response = await fetch("/update-password", {
