@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import AddToCart from "./AddToCart.jsx";
 import "./style/productpage.css";
 
@@ -34,6 +34,7 @@ class unconnectedProductPage extends Component {
     event.preventDefault();
     if (this.props.user === undefined) {
       console.log("not logged in, can't review");
+      this.props.history.push("/dashboard");
       return;
     }
     let rating = this.state.userRating;
@@ -145,6 +146,6 @@ let mapStateToProps = st => {
   return { user: st.user };
 };
 
-let ProductPage = connect(mapStateToProps)(unconnectedProductPage);
+let ProductPage = connect(mapStateToProps)(withRouter(unconnectedProductPage));
 
 export default ProductPage;
