@@ -57,7 +57,7 @@ class UnconnectedUserDashboard extends Component {
       body: data
     });
     let responseBody = await response.text();
-    let parsed = JSON.parsed(responseBody);
+    let parsed = JSON.parse(responseBody);
     console.log("parsed response from /update-password endpoint", parsed);
     if (parsed.success) {
       this.setState({ newPassword: "" });
