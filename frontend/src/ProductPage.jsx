@@ -82,13 +82,13 @@ class unconnectedProductPage extends Component {
       tags = this.state.itemDetails.tags.join(" ");
     }
     let images = [];
+
     if (this.state.itemDetails.posts !== undefined) {
       images = this.state.itemDetails.posts.map((imgPath, index) => {
-        return (
-          <>
-            <span id={"target-item-" + index}></span>
-            <div class={"carousel-item item-" + index}>
-              <img class="productpage-image" src={imgPath} />
+        let navigation;
+        if (this.state.itemDetails.posts.length > 1) {
+          navigation = (
+            <>
               <a
                 class="arrow arrow-prev"
                 href={
@@ -115,6 +115,16 @@ class unconnectedProductPage extends Component {
                   <FiChevronRight />
                 </IconContext.Provider>
               </a>
+            </>
+          );
+        }
+
+        return (
+          <>
+            <span id={"target-item-" + index}></span>
+            <div class={"carousel-item item-" + index}>
+              <img class="productpage-image" src={imgPath} />
+              {navigation}
             </div>
           </>
         );
