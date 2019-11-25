@@ -128,7 +128,7 @@ class UnconnectedProductCategory extends Component {
               {tagButtons}
             </div>
           </details>
-          {itemCards}
+          <div class="homepage-card-containter"> {itemCards}</div>
         </section>
       </div>
     );

@@ -113,8 +113,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 section {
-  padding: 10vw;
+  padding: 1vw;
 }
+
 .ellipsis {
   text-overflow: ellipsis;
 
@@ -134,4 +135,10 @@ section {
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent; /* make scrollbar transparent */
+}
+
+@media (min-width: 700px) {
+  section {
+    padding: 10vw;
+  }
 }

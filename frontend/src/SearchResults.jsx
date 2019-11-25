@@ -109,7 +109,7 @@ class UnconnectedSearchResults extends Component {
             {tagButtons}
           </div>
         </details>
-        <div>{itemCards}</div>
+        <div class="homepage-card-containter">{itemCards}</div>
       </section>
     );
   }
