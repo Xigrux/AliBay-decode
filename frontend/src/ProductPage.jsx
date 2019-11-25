@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AddToCart from "./AddToCart.jsx";
+import "./style/productpage.css";
 
 class unconnectedProductPage extends Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class unconnectedProductPage extends Component {
     let images = [];
     if (this.state.itemDetails.posts !== undefined) {
       images = this.state.itemDetails.posts.map(imgPath => {
-        return <img src={imgPath} />;
+        return <img class="productpage-image" src={imgPath} />;
       });
     }
     //adds the values of each of the ratings to the 'roundedRating' variable
@@ -75,7 +76,7 @@ class unconnectedProductPage extends Component {
     }
 
     return (
-      <div>
+      <section>
         <h1>{this.state.itemDetails.productName}</h1>
         <h3>{this.state.itemDetails.descriptionHeader}</h3>
         <div>{images}</div>
@@ -135,7 +136,7 @@ class unconnectedProductPage extends Component {
           item={this.props.id}
           inventory={this.state.itemDetails.inventory}
         ></AddToCart>
-      </div>
+      </section>
     );
   };
 }
