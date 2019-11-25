@@ -101,28 +101,31 @@ app.post("/add-product", upload.array("files"), (req, res) => {
     }
     console.log("Found user");
     sellerId = user._id;
-    dbo.collection("items").insertOne({
-      productName,
-      sellerId,
-      sellerName,
-      price: parseInt(price),
-      descriptionHeader,
-      descriptionText,
-      location,
-      inventory: parseInt(inventory),
-      date,
-      ratings,
-      posts,
-      tags,
-      category
-    }, (err, item) => {
-      dbo
-        .collection("merchants")
-        .updateOne(
-          { _id: ObjectID(sellerId) },
-          { $push: { inventory: item.insertedId } }
-        );
-    });
+    dbo.collection("items").insertOne(
+      {
+        productName,
+        sellerId,
+        sellerName,
+        price: parseInt(price),
+        descriptionHeader,
+        descriptionText,
+        location,
+        inventory: parseInt(inventory),
+        date,
+        ratings,
+        posts,
+        tags,
+        category
+      },
+      (err, item) => {
+        dbo
+          .collection("merchants")
+          .updateOne(
+            { _id: ObjectID(sellerId) },
+            { $push: { inventory: item.insertedId } }
+          );
+      }
+    );
 
     return res.send(JSON.stringify({ success: true }));
   });
@@ -235,13 +238,16 @@ app.post("/render-featured", upload.none(), (req, res) => {
 
 app.post("/merchant-dashboard", upload.none(), (req, res) => {
   let userId = req.body.userId;
-  dbo.collections("items").find({ _id: userId }).toArray((err, items) => {
-    if (err) {
-      console.log("Error getting merchant product list");
-      return res.send(JSON.stringify({ success: false }));
-    }
-    return res.send(JSON.stringify({ success: true, items }));
-  });
+  dbo
+    .collections("items")
+    .find({ _id: userId })
+    .toArray((err, items) => {
+      if (err) {
+        console.log("Error getting merchant product list");
+        return res.send(JSON.stringify({ success: false }));
+      }
+      return res.send(JSON.stringify({ success: true, items }));
+    });
 });
 
 app.post("/product-page", upload.none(), (req, res) => {
@@ -309,17 +315,22 @@ app.post("/confirm-payment", upload.none(), async (req, res) => {
 
   dbo.collection("purchase-orders").insertOne({ purchaseOrder }, (err, PO) => {
     purchaseOrder[id] = PO.insertedId;
-    dbo.collection("users").findOneAndUpdate({ _id: ObjectID(id) }, {
-      $set: { cart: [] },
-      $push: { purchased: PO.insertedId }
-    }, { returnOriginal: false }, (err, user) => {
-      console.log("value:", user.value.purchased);
-      purchased = user.value.purchased;
-      console.log("purchased", purchased);
-      return res.send(
-        JSON.stringify({ success: true, cart: [], purchaseOrder, purchased })
-      );
-    });
+    dbo.collection("users").findOneAndUpdate(
+      { _id: ObjectID(id) },
+      {
+        $set: { cart: [] },
+        $push: { purchased: PO.insertedId }
+      },
+      { returnOriginal: false },
+      (err, user) => {
+        console.log("value:", user.value.purchased);
+        purchased = user.value.purchased;
+        console.log("purchased", purchased);
+        return res.send(
+          JSON.stringify({ success: true, cart: [], purchaseOrder, purchased })
+        );
+      }
+    );
   });
 });
 
@@ -381,13 +392,13 @@ app.post("/inventory", upload.none(), (req, res) => {
 });
 
 app.post("/update-password", upload.none(), (req, res) => {
-  let username = req.body.username;
+  let id = req.body.id;
   let password = req.body.password;
   let signupType = req.body.signupType;
 
   dbo
     .collection(signupType)
-    .updateOne({ username }, { $set: { password } }, (err, user) => {
+    .updateOne({ _id: ObjectID(id) }, { $set: { password } }, (err, user) => {
       if (err || user === null) {
         return res.send(JSON.stringify({ success: false }));
       }

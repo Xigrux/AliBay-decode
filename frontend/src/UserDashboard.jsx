@@ -33,6 +33,7 @@ class UnconnectedUserDashboard extends Component {
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
     if (parsed.success) {
+      this.setState({ newEmail: "" });
       window.alert("Email updated");
       return;
     }
@@ -48,7 +49,7 @@ class UnconnectedUserDashboard extends Component {
     event.preventDefault();
     console.log("password chage form submitted");
     let data = new FormData();
-    data.append("username", this.props.username);
+    data.append("username", this.props.user._id);
     data.append("password", this.state.newPassword);
     data.append("signupType", this.props.signupType);
     let response = await fetch("/update-password", {
@@ -59,6 +60,7 @@ class UnconnectedUserDashboard extends Component {
     let parsed = JSON.parsed(responseBody);
     console.log("parsed response from /update-password endpoint", parsed);
     if (parsed.success) {
+      this.setState({ newPassword: "" });
       window.alert("Password updated");
       return;
     }
@@ -72,20 +74,19 @@ class UnconnectedUserDashboard extends Component {
           <div>
             This account belongs to <strong>{this.props.username}</strong>
           </div>
-          <div>
-            {this.props.email}
-          </div>
-          <div>
-            {this.props.region}
-          </div>
-          <div>
-            {this.props.purchaseHistory}
-          </div>
+          <div>{this.props.email}</div>
+          <div>{this.props.region}</div>
+          <div>{this.props.purchaseHistory}</div>
         </div>
 
         <form onSubmit={this.handleEmailSubmit}>
           <label htmlFor="email">Update email</label>
-          <input id="email" type="text" onChange={this.handleEmailChange} />
+          <input
+            id="email"
+            type="text"
+            onChange={this.handleEmailChange}
+            value={this.state.newEmail}
+          />
           <input type="submit" />
         </form>
         <form onSubmit={this.handlePasswordSubmit}>
@@ -94,6 +95,7 @@ class UnconnectedUserDashboard extends Component {
             id="password"
             type="text"
             onChange={this.handlePasswordChange}
+            value={this.state.newPassword}
           />
           <input type="submit" />
         </form>
@@ -112,7 +114,7 @@ let mapStateToProps = state => {
     email: state.user.email,
     region: state.user.region,
     purchaseHistory: state.user.purchaseHistory,
-    signupType: state.user.singupType,
+    signupType: state.user.userType,
     user: state.user
   };
 };
