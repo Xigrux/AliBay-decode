@@ -86,7 +86,7 @@ class UnconnectedSignup extends Component {
               <input type="email" onChange={this.handleEmailChange} required />
               Password
               <input
-                type="text"
+                type="password"
                 onChange={this.handlePasswordChange}
                 required
               />

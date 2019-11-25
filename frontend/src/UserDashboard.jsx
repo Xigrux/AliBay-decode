@@ -93,7 +93,7 @@ class UnconnectedUserDashboard extends Component {
           <label htmlFor="password">Update password</label>
           <input
             id="password"
-            type="text"
+            type="password"
             onChange={this.handlePasswordChange}
             value={this.state.newPassword}
           />

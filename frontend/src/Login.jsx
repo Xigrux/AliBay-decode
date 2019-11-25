@@ -78,7 +78,8 @@ class UnconnectedLogin extends Component {
               name="account-type"
             />
             <label class="user" for="user">
-              {" "}User{" "}
+              {" "}
+              User{" "}
             </label>
             <span style={{ order: 3 }}> or </span>
             <input
@@ -90,7 +91,8 @@ class UnconnectedLogin extends Component {
               name="account-type"
             />
             <label class="merchant" for="merchant">
-              {" "}Merchant{" "}
+              {" "}
+              Merchant{" "}
             </label>
           </div>
           <input
@@ -102,7 +104,7 @@ class UnconnectedLogin extends Component {
           <span class="input-prompt">></span>
           <input
             class="login"
-            type="text"
+            type="password"
             onChange={this.handlePasswordChange}
             placeholder="Password"
           />
