@@ -75,10 +75,7 @@ class UnconnectedUserDashboard extends Component {
           <div>{this.props.region}</div>
           <div>{this.props.purchaseHistory}</div>
         </div>
-        <div>
-          Purchase History
-          <PurchaseHistory />
-        </div>
+
         <form onSubmit={this.handleEmailSubmit}>
           <label htmlFor="email">Update email</label>
           <input id="email" type="text" onChange={this.handleEmailChange} />
@@ -93,6 +90,10 @@ class UnconnectedUserDashboard extends Component {
           />
           <input type="submit" />
         </form>
+        <div>
+          Purchase History
+          <PurchaseHistory />
+        </div>
       </div>
     );
   };
