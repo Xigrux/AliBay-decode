@@ -72,7 +72,11 @@ let login = (req, res, dbo) => {
   let enteredPassword = req.body.password;
   console.log("credentials", signupType, username, enteredPassword);
 
-  if (username === undefined || enteredPassword === undefined) {
+  if (
+    username === undefined ||
+    enteredPassword === undefined ||
+    signupType === undefined
+  ) {
     return res.send(JSON.stringify({ success: false }));
   }
 

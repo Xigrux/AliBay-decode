@@ -39,10 +39,7 @@ class UnconnectedLogin extends Component {
     let data = new FormData();
     data.append("username", this.state.username);
     data.append("password", this.state.password);
-    data.append(
-      "signupType",
-      this.state.signupType === "" ? "users" : "merchants"
-    );
+    data.append("signupType", this.state.signupType);
     let response = await fetch("/login", {
       method: "POST",
       body: data,
@@ -81,8 +78,7 @@ class UnconnectedLogin extends Component {
               name="account-type"
             />
             <label class="user" for="user">
-              {" "}
-              User{" "}
+              {" "}User{" "}
             </label>
             <span style={{ order: 3 }}> or </span>
             <input
@@ -94,8 +90,7 @@ class UnconnectedLogin extends Component {
               name="account-type"
             />
             <label class="merchant" for="merchant">
-              {" "}
-              Merchant{" "}
+              {" "}Merchant{" "}
             </label>
           </div>
           <input
