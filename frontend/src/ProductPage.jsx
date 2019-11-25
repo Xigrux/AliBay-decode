@@ -58,6 +58,18 @@ class unconnectedProductPage extends Component {
   render = () => {
     console.log("itemDetails in the state:", this.state.itemDetails);
     console.log("Item Ratings:", this.state.itemRatings);
+
+    //checks to see whether the item on display is part of the current user's inventory
+    //if it is, then display the option to update the item details
+    let soldByCurrentMerchant = false;
+    if (this.props.user !== undefined) {
+      console.log("User's inventory:", this.props.user.inventory);
+      if (this.props.user.inventory.includes(this.props.id)) {
+        soldByCurrentMerchant = true;
+      } else {
+        console.log("not my item");
+      }
+    }
     let tags = [];
     if (this.state.itemDetails.tags !== undefined) {
       tags = this.state.itemDetails.tags.join(" ");
@@ -176,6 +188,13 @@ class unconnectedProductPage extends Component {
           item={this.props.id}
           inventory={this.state.itemDetails.inventory}
         ></AddToCart>
+        {soldByCurrentMerchant && (
+          <div>
+            <button>
+              <i>UPDATE ITEM</i>
+            </button>
+          </div>
+        )}
       </section>
     );
   };
