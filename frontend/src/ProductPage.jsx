@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import AddToCart from "./AddToCart.jsx";
+import UpdateItem from "./UpdateItem.jsx";
 import "./style/productpage.css";
 
 class unconnectedProductPage extends Component {
@@ -10,7 +11,8 @@ class unconnectedProductPage extends Component {
     this.state = {
       itemDetails: [],
       itemRatings: [],
-      userRating: undefined
+      userRating: undefined,
+      showUpdateForm: false
     };
   }
   componentDidMount = () => {
@@ -50,6 +52,11 @@ class unconnectedProductPage extends Component {
     body = JSON.parse(body);
     console.log("Rating success:", body);
     this.setState({ itemRatings: body.ratings });
+  };
+
+  handleShowUpdateItem = event => {
+    event.preventDefault();
+    this.setState({ showUpdateForm: !this.state.showUpdateForm });
   };
 
   render = () => {
@@ -151,10 +158,13 @@ class unconnectedProductPage extends Component {
         ></AddToCart>
         {soldByCurrentMerchant && (
           <div>
-            <button>
+            <button onClick={this.handleShowUpdateItem}>
               <i>UPDATE ITEM</i>
             </button>
           </div>
+        )}
+        {this.state.showUpdateForm && (
+          <UpdateItem item={this.props.id}></UpdateItem>
         )}
       </section>
     );
