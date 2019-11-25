@@ -92,7 +92,7 @@ class unconnectedProductPage extends Component {
         <div>
           Seller:{" "}
           <Link to={"/seller/" + this.state.itemDetails.sellerId}>
-            {this.state.itemDetails.sellerId}
+            {this.state.itemDetails.sellerName}
           </Link>
         </div>
         {/* Rating inputs! */}
