@@ -40,16 +40,30 @@ class UnconnectedUpdateItem extends Component {
         <b>Update fields:</b>
         <form onSubmit={this.handleShortDescSubmit}>
           Short description:
-          <input type="text" onChange={this.handleShortDescChange}></input>
+          <input
+            type="text"
+            onChange={this.handleShortDescChange}
+            required
+          ></input>
           <input type="submit"></input>
         </form>
         <form onSubmit={this.handleLongDescSubmit}>
           Long description:
-          <input type="text" onChange={this.handleLongDescChange}></input>
+          <input
+            type="text"
+            onChange={this.handleLongDescChange}
+            required
+          ></input>
           <input type="submit"></input>
         </form>
         <form onSubmit={this.handlePriceSubmit}>
-          Price:<input type="text" onChange={this.handlePriceChange}></input>
+          Price:
+          <input
+            type="number"
+            min="0"
+            onChange={this.handlePriceChange}
+            required
+          ></input>
           <input type="submit"></input>
         </form>
       </div>
