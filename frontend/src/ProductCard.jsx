@@ -18,6 +18,13 @@ class ProductCard extends Component {
       roundedRating = Math.round(roundedRating / allRatings.length);
     }
 
+    let stars = [];
+
+    for (let i = 0; i < roundedRating; i++) {
+      stars.push(<FiStar />);
+      console.log(stars);
+    }
+
     return (
       <div>
         {/* //Each item card will link to that item page. //The data displayed on
@@ -41,10 +48,6 @@ class ProductCard extends Component {
                 {/* smol desc:*/}
                 {this.props.itemContents.descriptionHeader}
               </div>
-              <div class="productcard-desc">
-                {/* Placeholder ratings information ---- Feel free to use these numbers however you like  */}
-                Rating: {roundedRating} - number of reviews:{allRatings.length}
-              </div>
             </div>
 
             <div class="productcard-price">
@@ -55,11 +58,14 @@ class ProductCard extends Component {
             {/* will need to get the average from all of the ratings in the ratings object */}
             {/* <div>rating:{this.props.itemContents.ratings[0]}</div> disabled for now */}
             <div class="productcard-rating">
-              <FiStar />
-              <FiStar />
-              <FiStar />
-              <FiStar />
-              <FiStar />
+              <div class="rating-star">{stars}</div>
+              <div class="rating-blank">
+                <FiStar />
+                <FiStar />
+                <FiStar />
+                <FiStar />
+                <FiStar /> ({allRatings.length})
+              </div>
             </div>
           </div>
         </Link>
