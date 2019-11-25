@@ -16,7 +16,7 @@
   font-size: 23px;
   font-weight: 500;
   letter-spacing: 8px;
-  margin: 10vh 0;
+  margin-bottom: 10vh;
 }
 
 .homepage-card-containter {
@@ -29,7 +29,7 @@
 }
 
 .homepage-cat-container {
-  margin: 3.5vh 1vw;
+  margin: 3.5vh 1vw 0;
 }
 
 .homepage-cat-card {

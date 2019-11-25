@@ -43,7 +43,7 @@ class UnconnecterHomepage extends Component {
             <div class="homepage-cat-card-content">office</div>
           </Link>
         </div>
-        <div>
+        <section>
           <div class="homepage-featured flex-container flex-center-v flex-center-h">
             Our sparks
             <WiStars />
@@ -51,7 +51,7 @@ class UnconnecterHomepage extends Component {
           <div class="homepage-card-containter">
             <FeaturedProd />
           </div>
-        </div>
+        </section>
       </div>
     );
   };
