@@ -73,7 +73,7 @@ nav {
 }
 .search-input:focus,
 .search-input:active {
-  width: 190px;
+  width: 200px;
   right: 30px;
   color: #333333;
   background-color: #f6f6f6;

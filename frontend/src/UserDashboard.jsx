@@ -21,10 +21,11 @@ class UnconnectedUserDashboard extends Component {
   handleEmailSubmit = async event => {
     event.preventDefault();
     console.log("email change form submitted");
+    console.log("user", this.props.user);
     let data = new FormData();
-    data.append("username", this.props.username);
+    data.append("id", this.props.user._id);
     data.append("email", this.state.newEmail);
-    data.append("signupType", this.props.signupType);
+    data.append("signupType", this.props.user.userType);
     let response = await fetch("/update-email", {
       method: "POST",
       body: data
@@ -71,9 +72,15 @@ class UnconnectedUserDashboard extends Component {
           <div>
             This account belongs to <strong>{this.props.username}</strong>
           </div>
-          <div>{this.props.email}</div>
-          <div>{this.props.region}</div>
-          <div>{this.props.purchaseHistory}</div>
+          <div>
+            {this.props.email}
+          </div>
+          <div>
+            {this.props.region}
+          </div>
+          <div>
+            {this.props.purchaseHistory}
+          </div>
         </div>
 
         <form onSubmit={this.handleEmailSubmit}>
@@ -105,7 +112,8 @@ let mapStateToProps = state => {
     email: state.user.email,
     region: state.user.region,
     purchaseHistory: state.user.purchaseHistory,
-    signupType: state.user.singupType
+    signupType: state.user.singupType,
+    user: state.user
   };
 };
 

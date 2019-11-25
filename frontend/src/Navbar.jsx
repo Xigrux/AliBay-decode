@@ -4,7 +4,6 @@ import { Link, withRouter } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { FiSearch, FiShoppingBag } from "react-icons/fi";
-import Login from "./Login.jsx";
 
 class UnconnecterNavbar extends Component {
   constructor(props) {

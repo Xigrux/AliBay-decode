@@ -27,7 +27,8 @@ let reducer = (state, action) => {
   if (action.type === "new-po") {
     let user = state.user;
     user.purchased = action.purchased;
-    return { ...state, user };
+    let purchaseOrder = action.purchaseOrder;
+    return { ...state, user, purchaseOrder };
   }
 
   return state;
@@ -38,7 +39,8 @@ let initialState = {
   loggedIn: false,
   user: undefined, // user object containing all user info
   cart: undefined,
-  searchResult: []
+  searchResult: [],
+  purchaseOrder: undefined
 };
 
 let store = createStore(
