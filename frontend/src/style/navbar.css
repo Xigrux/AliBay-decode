@@ -94,3 +94,11 @@ nav {
   width: inherit;
   height: inherit;
 }
+
+@media only screen and (min-width: 700px) {
+  /* For desktop view: */
+  .cart {
+    left: 91vw;
+    top: 80vh;
+  }
+}
