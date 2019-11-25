@@ -424,6 +424,67 @@ app.post("/update-email", upload.none(), (req, res) => {
     });
 });
 
+app.post("/update-item-description-header", upload.none(), (req, res) => {
+  console.log("Update item desc header HIT::::::::::");
+  let id = req.body.id;
+  let descriptionHeader = req.body.shortDescription;
+  console.log("Item Id:", id);
+  dbo
+    .collection("items")
+    .updateOne(
+      { _id: ObjectID(id) },
+      { $set: { descriptionHeader } },
+      (err, item) => {
+        if (err || item === null) {
+          return res.send(JSON.stringify({ success: false }));
+        }
+        console.log("item:", item);
+        res.send(JSON.stringify({ success: true }));
+      }
+    );
+});
+
+app.post("/update-item-description-text", upload.none(), (req, res) => {
+  console.log("Update item desc header HIT::::::::::");
+  let id = req.body.id;
+  let descriptionText = req.body.longDescription;
+  console.log("Item Id:", id);
+  dbo
+    .collection("items")
+    .updateOne(
+      { _id: ObjectID(id) },
+      { $set: { descriptionText } },
+      (err, item) => {
+        if (err || item === null) {
+          return res.send(JSON.stringify({ success: false }));
+        }
+        console.log("item:", item);
+        res.send(JSON.stringify({ success: true }));
+      }
+    );
+});
+
+app.post("/update-item-price", upload.none(), (req, res) => {
+  console.log("Update item desc header HIT::::::::::");
+  let id = req.body.id;
+  let price = req.body.price;
+  price = parseInt(price);
+  console.log("Item Id:", id);
+  dbo
+    .collection("items")
+    .updateOne(
+      { _id: ObjectID(id) },
+      { $set: { price } },
+      (err, item) => {
+        if (err || item === null) {
+          return res.send(JSON.stringify({ success: false }));
+        }
+        console.log("item:", item);
+        res.send(JSON.stringify({ success: true }));
+      }
+    );
+});
+
 //=============================== LISTENER ===============================//
 app.listen("4000", () => {
   console.log("Server up");
