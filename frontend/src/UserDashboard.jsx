@@ -43,8 +43,25 @@ class UnconnectedUserDashboard extends Component {
     this.setState({ newPassword: event.target.value });
   };
 
-  handlePasswordSubmit = event => {
+  handlePasswordSubmit = async event => {
     event.preventDefault();
+    console.log("password chage form submitted");
+    let data = new FormData();
+    data.append("username", this.props.username);
+    data.append("password", this.state.newPassword);
+    data.append("signupType", this.props.signupType);
+    let response = await fetch("/update-password", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parsed(responseBody);
+    console.log("parsed response from /update-password endpoint", parsed);
+    if (parsed.success) {
+      window.alert("Password updated");
+      return;
+    }
+    window.alert("Something went wrong");
   };
 
   render = () => {
