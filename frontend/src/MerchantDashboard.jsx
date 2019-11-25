@@ -6,6 +6,21 @@ import SalesRecord from "./SalesRecord";
 import Graph from "./Graph";
 
 class UnconnectedMerchantDashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newEmail: "",
+      newPassword: ""
+    };
+  }
+  handleEmailChange = event => {};
+
+  handlePasswordChange = event => {};
+
+  handleEmailSubmit = event => {};
+
+  handlePasswordSubmit = event => {};
+
   render = () => {
     return (
       <div>
