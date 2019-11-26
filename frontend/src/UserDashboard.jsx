@@ -4,6 +4,8 @@ import PurchaseHistory from "./PurchaseHistory.jsx";
 import { appendFile } from "fs";
 import { join } from "path";
 
+import "./style/merchantdashboard.css";
+
 class UnconnectedUserDashboard extends Component {
   constructor(props) {
     super(props);
@@ -70,38 +72,55 @@ class UnconnectedUserDashboard extends Component {
   render = () => {
     return (
       <section>
-        <div>
-          <div>
-            This account belongs to <strong>{this.props.username}</strong>
-          </div>
-          <div>{this.props.email}</div>
-          <div>{this.props.region}</div>
-          <div>{this.props.purchaseHistory}</div>
+        <div
+          class="categorypage-hero flex-container flex-center-v flex-center-h"
+          style={{
+            backgroundImage: "url(/img/user.jpg)"
+          }}
+        >
+          {this.props.username}
         </div>
 
-        <form onSubmit={this.handleEmailSubmit}>
-          <label htmlFor="email">Update email</label>
-          <input
-            id="email"
-            type="text"
-            onChange={this.handleEmailChange}
-            value={this.state.newEmail}
-          />
-          <input type="submit" />
-        </form>
-        <form onSubmit={this.handlePasswordSubmit}>
-          <label htmlFor="password">Update password</label>
-          <input
-            id="password"
-            type="password"
-            onChange={this.handlePasswordChange}
-            value={this.state.newPassword}
-          />
-          <input type="submit" />
-        </form>
-        <div>
-          Purchase History
-          <PurchaseHistory />
+        <div class="dash-card dash-title-card flex-container flex-around-h ">
+          <div>{this.props.email}</div>
+          <div>{this.props.region}</div>
+        </div>
+
+        <div class="dash-card flex-container flex-dir-v flex-evenly-h flex-wrap flex-center-v">
+          <div class="dash-card-title">Purchase History</div>
+          <div class="puchase-item-containter ">
+            <PurchaseHistory />
+          </div>
+        </div>
+
+        <div class="dash-card flex-container  flex-dir-v flex-evenly-h flex-wrap flex-center-v">
+          <div class="dash-card-title">Account settings</div>
+          <div>
+            <form onSubmit={this.handleEmailSubmit}>
+              <label htmlFor="email">Update email</label>
+              <input
+                id="email"
+                type="text"
+                onChange={this.handleEmailChange}
+                value={this.state.newEmail}
+              />
+              <button class="bump-button" type="submit">
+                Update
+              </button>
+            </form>
+            <form onSubmit={this.handlePasswordSubmit}>
+              <label htmlFor="password">Update password</label>
+              <input
+                id="password"
+                type="password"
+                onChange={this.handlePasswordChange}
+                value={this.state.newPassword}
+              />
+              <button class="bump-button" type="submit">
+                Update
+              </button>
+            </form>
+          </div>
         </div>
       </section>
     );

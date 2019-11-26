@@ -1,5 +1,11 @@
 .addtocart-container {
   position: absolute;
+  top: calc(100% - -3px);
+  right: 1px;
+  background-color: white;
+  box-shadow: 0 1px 3px #33333311;
+  padding: 6px 10px;
+  border-radius: 20px;
 }
 
 .addtocart-input {

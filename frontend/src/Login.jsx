@@ -9,7 +9,7 @@ class UnconnectedLogin extends Component {
     this.state = {
       username: "",
       password: "",
-      signupType: "",
+      signupType: "users",
       user: undefined,
       cart: undefined
     };
@@ -76,6 +76,7 @@ class UnconnectedLogin extends Component {
               onChange={this.handleSignupType}
               value="users"
               name="account-type"
+              checked
             />
             <label class="user" for="user">
               {" "}

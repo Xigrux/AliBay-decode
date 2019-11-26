@@ -88,7 +88,7 @@ class UnconnectedCart extends Component {
           })}
           <div>
             total: <sup>$</sup>
-            {total}
+            {Math.round(total * 100) / 100}
             <small>CAD</small>
           </div>
           <Checkout user={this.props.user} cart={this.props.cart} />

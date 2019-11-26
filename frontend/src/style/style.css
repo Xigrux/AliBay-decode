@@ -65,6 +65,10 @@ a {
   align-items: center;
 }
 
+.flex-end-v {
+  align-items: flex-end;
+}
+
 .flex-stretch-v {
   align-items: stretch;
 }

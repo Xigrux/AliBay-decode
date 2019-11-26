@@ -151,7 +151,11 @@ class unconnectedProductPage extends Component {
 
         <div>{this.state.itemDetails.descriptionText}</div>
         <div>Location: {this.state.itemDetails.location}</div>
-        <div>Price: {this.state.itemDetails.price}$</div>
+        <div>
+          Price: <sup>$</sup>
+          {this.state.itemDetails.price}
+          <small>CAD</small>
+        </div>
 
         <div>
           Rating: <b>{roundedRating}</b> - number of ratings: ({ratings.length})

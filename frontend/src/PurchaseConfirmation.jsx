@@ -16,14 +16,17 @@ class UnconnectedPurchaseConfirmation extends Component {
                 {item.item.productName}
               </div>
               <div>
-                Price:
+                Price:<sup>$</sup>
                 {item.item.price}
+                <small>CAD</small>
               </div>
               <div>
                 Quantity bought:
                 {item.quantity}
               </div>
-              Total: {total}
+              Total: <sup>$</sup>
+              {Math.round(total * 100) / 100}
+              <small>CAD</small>
             </div>
           );
         })}

@@ -42,6 +42,10 @@
 .cart-item .addtocart-container {
   bottom: 30px;
   right: -50%;
+  top: unset;
+  background-color: unset;
+  box-shadow: unset;
+  padding: unset;
 }
 
 .cart-item .productcard-rating {

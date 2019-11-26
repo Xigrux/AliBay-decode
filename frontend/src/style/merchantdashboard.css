@@ -50,6 +50,30 @@
   margin: 10px 0;
 }
 
+.dash-title-card {
+  padding: 10px 15vw;
+  font-size: 12px;
+}
+
+.puchase-item-containter {
+  width: 100%;
+  padding: 2vh 10vw;
+}
+
+.puchasehistory-item-card {
+  margin: 10px;
+}
+.puchasehistory-item-card-detail {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  width: 100%;
+  text-align: right;
+}
+.puchasehistory-item-total {
+  border-top: dotted #333333 1px;
+  margin: 20px 0;
+}
+
 @media (min-width: 700px) {
   .merchant-inventory-container {
     grid-template-columns: repeat(3, 1fr);

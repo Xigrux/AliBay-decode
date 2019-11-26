@@ -27,7 +27,7 @@ class UnconnectedPurchaseHistory extends Component {
   };
   componentDidMount = async () => {
     let purchasedHistory = await this.getPurchaseHistory();
-    // console.log("purchased history: ", purchasedHistory);
+    console.log("purchased history: ", purchasedHistory);
     if (purchasedHistory) {
       this.setState({ history: purchasedHistory });
     }
@@ -35,35 +35,39 @@ class UnconnectedPurchaseHistory extends Component {
 
   render = () => {
     return (
-      <div>
+      <>
         {this.state.history.map(PO => {
           let total = 0;
           return (
-            <div>
+            <div class="puchasehistory-item-card flex-container flex-dir-v flex-end-v">
               {PO.purchaseOrder.map(item => {
                 total += item.item.price * item.quantity;
                 return (
-                  <div style={{ marginTop: "15px" }}>
+                  <div class="puchasehistory-item-card-detail">
                     <div>
-                      Product:
-                      {item.item.productName}
+                      <b>{item.item.productName}</b>
                     </div>
+
+                    <div>{item.quantity}x</div>
+
                     <div>
-                      Price:
+                      <sup>$</sup>
                       {item.item.price}
-                    </div>
-                    <div>
-                      Quantity bought:
-                      {item.quantity}
+                      <small>CAD</small>
                     </div>
                   </div>
                 );
               })}
-              Total: {total}
+              <b class="puchasehistory-item-total">
+                Total
+                <sup>$</sup>
+                {Math.round(total * 100) / 100}
+                <small>CAD</small>
+              </b>
             </div>
           );
         })}
-      </div>
+      </>
     );
   };
 }

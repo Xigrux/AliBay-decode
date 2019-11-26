@@ -52,7 +52,9 @@ class UnconnecterNavbar extends Component {
             <Link to="/dashboard">
               <div>{this.props.user.username}</div>
             </Link>
-            <button onClick={this.logOut}>log-out</button>
+            <button onClick={this.logOut}>
+              <small>logout</small>
+            </button>
           </div>
         )}
 
