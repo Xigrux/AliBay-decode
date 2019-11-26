@@ -27,6 +27,8 @@ class UnconnectedUpdateItem extends Component {
     body = JSON.parse(body);
     if (!body.success) {
       window.alert("something went wrong...");
+    } else {
+      window.location.reload();
     }
   };
 
@@ -47,6 +49,8 @@ class UnconnectedUpdateItem extends Component {
     body = JSON.parse(body);
     if (!body.success) {
       window.alert("something went wrong...");
+    } else {
+      window.location.reload();
     }
   };
 
@@ -67,6 +71,8 @@ class UnconnectedUpdateItem extends Component {
     body = JSON.parse(body);
     if (!body.success) {
       window.alert("something went wrong...");
+    } else {
+      window.location.reload();
     }
   };
 
@@ -81,26 +87,29 @@ class UnconnectedUpdateItem extends Component {
             onChange={this.handleShortDescChange}
             required
           ></input>
-          <input type="submit"></input>
+          <button type="submit">Update</button>
         </form>
         <form onSubmit={this.handleLongDescSubmit}>
           Long description:
-          <input
+          <textarea
             type="text"
             onChange={this.handleLongDescChange}
             required
-          ></input>
-          <input type="submit"></input>
+          ></textarea>
+          <button type="submit">Update</button>
         </form>
         <form onSubmit={this.handlePriceSubmit}>
           Price:
           <input
+            id="prod-price"
             type="number"
-            min="0"
+            min="0.01"
+            step="0.01"
+            value={this.state.prodPrice}
             onChange={this.handlePriceChange}
             required
-          ></input>
-          <input type="submit"></input>
+          />
+          <button type="submit">Update</button>
         </form>
       </div>
     );

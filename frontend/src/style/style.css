@@ -65,6 +65,10 @@ a {
   align-items: center;
 }
 
+.flex-stretch-v {
+  align-items: stretch;
+}
+
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -137,8 +141,13 @@ section {
   background: transparent; /* make scrollbar transparent */
 }
 
+.explicit-link {
+  border-bottom: 1px dotted #000;
+  text-decoration: none;
+}
+
 @media (min-width: 700px) {
   section {
-    padding: 10vw;
+    padding: 2vh 10vw;
   }
 }

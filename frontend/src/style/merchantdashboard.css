@@ -1,0 +1,60 @@
+.merchant-inventory-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  position: relative;
+  margin: 0 2vw;
+  grid-column-gap: 2%;
+  grid-row-gap: 2%;
+}
+
+.achor-link {
+  color: #333333;
+  background-color: #fafafa;
+  box-shadow: 0 2px 3px #33333311;
+  padding: 8px 10px 6px;
+  border-radius: 20px;
+  transition: ease-in-out 150ms all;
+  text-transform: capitalize;
+}
+
+.marchantdash-anchor-container {
+  height: 14vh;
+  margin: 1vh 0 2vh;
+}
+
+.dash-card {
+  width: 100%;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 20px #33333311;
+  position: relative;
+  padding: 1vh 0 4vh;
+  margin-bottom: 2vh;
+}
+
+.merchantdash-inventory {
+  flex: 3;
+}
+.merchantdash-salesrecord {
+  flex: 1;
+  padding: 1vw;
+}
+
+.item-card {
+  padding: 5px;
+  margin-bottom: 10px;
+  font-size: 1.4vw;
+}
+
+.dash-card-title {
+  margin: 10px 0;
+}
+
+@media (min-width: 700px) {
+  .merchant-inventory-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .marchantdash-anchor-container {
+    height: 5vh;
+  }
+}

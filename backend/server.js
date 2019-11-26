@@ -106,7 +106,7 @@ app.post("/add-product", upload.array("files"), (req, res) => {
         productName,
         sellerId,
         sellerName,
-        price: parseInt(price),
+        price: parseFloat(price),
         descriptionHeader,
         descriptionText,
         location,
@@ -362,6 +362,25 @@ app.post("/purchase-history", upload.none(), (req, res) => {
     });
 });
 
+app.post("/sales-record", upload.none(), (req, res) => {
+  console.log("in sales record");
+  let salesRecord = JSON.parse(req.body.salesRecord);
+  console.log("in sales record");
+  salesRecord = salesRecord.map(order => {
+    return ObjectID(order.itemId);
+  });
+
+  dbo
+    .collection("items")
+    .find({ _id: { $in: salesRecord } })
+    .toArray((err, POs) => {
+      if (err) {
+        return res.send(JSON.stringify({ success: false }));
+      }
+      res.send(JSON.stringify({ success: true, POs }));
+    });
+});
+
 app.post("/inventory", upload.none(), (req, res) => {
   if (req.body.items === undefined) {
     res.send(JSON.stringify({ success: false }));
@@ -468,21 +487,17 @@ app.post("/update-item-price", upload.none(), (req, res) => {
   console.log("Update item desc header HIT::::::::::");
   let id = req.body.id;
   let price = req.body.price;
-  price = parseInt(price);
+  price = parseFloat(price);
   console.log("Item Id:", id);
   dbo
     .collection("items")
-    .updateOne(
-      { _id: ObjectID(id) },
-      { $set: { price } },
-      (err, item) => {
-        if (err || item === null) {
-          return res.send(JSON.stringify({ success: false }));
-        }
-        console.log("item:", item);
-        res.send(JSON.stringify({ success: true }));
+    .updateOne({ _id: ObjectID(id) }, { $set: { price } }, (err, item) => {
+      if (err || item === null) {
+        return res.send(JSON.stringify({ success: false }));
       }
-    );
+      console.log("item:", item);
+      res.send(JSON.stringify({ success: true }));
+    });
 });
 
 //=============================== LISTENER ===============================//

@@ -69,7 +69,7 @@ class UnconnectedUserDashboard extends Component {
 
   render = () => {
     return (
-      <div>
+      <section>
         <div>
           <div>
             This account belongs to <strong>{this.props.username}</strong>
@@ -103,7 +103,7 @@ class UnconnectedUserDashboard extends Component {
           Purchase History
           <PurchaseHistory />
         </div>
-      </div>
+      </section>
     );
   };
 }

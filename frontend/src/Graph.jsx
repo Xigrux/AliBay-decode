@@ -9,7 +9,7 @@ import { ResponsiveLine } from "@nivo/line";
 class Graph extends Component {
   render() {
     return (
-      <div style={{ height: 400 }}>
+      <div style={{ height: 400, width: "100%" }}>
         <ResponsiveLine
           data={[
             {

@@ -16,7 +16,7 @@
   font-size: 23px;
   font-weight: 500;
   letter-spacing: 8px;
-  margin-bottom: 10vh;
+  margin: 7vh 0;
 }
 
 .homepage-card-containter {
@@ -100,7 +100,4 @@
 }
 
 @media (min-width: 700px) {
-  .homepage-featured {
-    margin-bottom: 2vh;
-  }
 }
