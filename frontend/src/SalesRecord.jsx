@@ -63,7 +63,7 @@ class UnconnectedSalesRecord extends Component {
           let quantity = this.state.displayItems[sale._id];
           return (
             <div class="item-card">
-              <b>{sale.productName}</b> : {quantity}
+              <b>{sale.productName}</b> : {quantity} units
               <div>
                 <Link to={"/product/" + sale._id}>
                   <small class="explicit-link">{sale._id}</small>
