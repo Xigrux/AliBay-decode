@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   position: relative;
-  width: 90vw;
   margin: 0 2vw;
 }
 

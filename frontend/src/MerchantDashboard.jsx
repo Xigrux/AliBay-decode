@@ -103,7 +103,7 @@ class UnconnectedMerchantDashboard extends Component {
               <Inventory />
             </div>
           </div>
-          <div id="Sales Record" class="dash-card merchantdash-salesrecord ">
+          <div id="salesrecord" class="dash-card merchantdash-salesrecord ">
             <div class="dash-card-title">Sales Record</div>
             <SalesRecord />
           </div>

@@ -37,6 +37,7 @@ label.merchant {
 input.login {
   width: 200px;
   transition: ease-in-out 300ms all;
+  padding-left: 14px;
 }
 
 input.login::placeholder {
@@ -53,14 +54,16 @@ input:active.login::placeholder {
 
 .input-prompt {
   position: absolute;
+  left: 0;
+  top: 3px;
 }
 
 input:focus.login,
 input:active.login {
 }
 
-input:focus ~ .input-prompt,
-input:active ~ .input-prompt {
+input:focus + .input-prompt,
+input:active + .input-prompt {
   animation: alternate-reverse infinite cubic-bezier(1, 0, 0, 1) 500ms
     side-bounce;
 }

@@ -52,7 +52,7 @@
   color: white;
   text-shadow: 0 0 20px black;
   letter-spacing: 3px;
-  font-size: 9px;
+  font-size: 2vh;
 }
 
 .cat-electro::before {

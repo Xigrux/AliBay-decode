@@ -65,7 +65,7 @@ class UnconnectedCart extends Component {
       let cartItem;
       let total = 0;
       return (
-        <>
+        <section>
           <div>YOUR CART</div>
           {this.state.displayItems.map(o => {
             this.props.cart.forEach(item => {
@@ -92,7 +92,7 @@ class UnconnectedCart extends Component {
             <small>CAD</small>
           </div>
           <Checkout user={this.props.user} cart={this.props.cart} />
-        </>
+        </section>
       );
     }
     return <>your cart is empty</>;

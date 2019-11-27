@@ -96,20 +96,24 @@ class UnconnectedLogin extends Component {
               Merchant{" "}
             </label>
           </div>
-          <input
-            class="login"
-            type="text"
-            onChange={this.handleUsernameChange}
-            placeholder="Username"
-          />
-          <span class="input-prompt">></span>
-          <input
-            class="login"
-            type="password"
-            onChange={this.handlePasswordChange}
-            placeholder="Password"
-          />
-          <span class="input-prompt">></span>
+          <span style={{ position: "relative" }}>
+            <input
+              class="login"
+              type="text"
+              onChange={this.handleUsernameChange}
+              placeholder="Username"
+            />
+            <span class="input-prompt">></span>
+          </span>
+          <span style={{ position: "relative" }}>
+            <input
+              class="login"
+              type="password"
+              onChange={this.handlePasswordChange}
+              placeholder="Password"
+            />
+            <span class="input-prompt">></span>
+          </span>
 
           <button class="bump-button" type="submit">
             Login
@@ -117,7 +121,7 @@ class UnconnectedLogin extends Component {
         </form>
 
         <Link to="/signup">
-          <button class="subtle-button">signup instead</button>
+          <button class="subtle-button">Signup instead</button>
         </Link>
       </section>
     );

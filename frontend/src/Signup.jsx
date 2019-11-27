@@ -72,7 +72,7 @@ class UnconnectedSignup extends Component {
 
   render = () => {
     return (
-      <>
+      <section>
         {!this.props.isLoggedIn && (
           <form onSubmit={this.handleSubmit}>
             <div class="signup-container">
@@ -147,7 +147,9 @@ class UnconnectedSignup extends Component {
                   onClick={this.handleRegionSelect}
                 />
               </div>
-              <input type="submit" />
+              <button class="bump-button" type="submit">
+                Sign up
+              </button>
             </div>
           </form>
         )}
@@ -161,7 +163,7 @@ class UnconnectedSignup extends Component {
             <MerchantDashboard />
           </>
         )}
-      </>
+      </section>
     );
   };
 }
